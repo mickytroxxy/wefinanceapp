@@ -20,7 +20,7 @@ const SignUp = () => {
     const btnstyle={margin:'8px 0'}
     const [userDetails,setUserDetails] = useState({fname:"",lname:"",phoneNumber:"",email:"",password:""});
     const paperStyle={padding :!mobileView && 20,height:!mobileView && '73vh',width:!mobileView && 300, margin:"0 auto"}
-    const [setConfirmPass,confirmPass]=useState("");
+    const [confirmPass,setConfirmPass]=useState("");
     const [isTerms,setIsTerms]= React.useState(false);
     const sign_up_btn_clicked = () => {
       if(userDetails.fname!=="" && userDetails.lname!=="" && userDetails.email!=="" && userDetails.password!==""){
