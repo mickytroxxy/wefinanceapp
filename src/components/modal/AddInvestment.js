@@ -11,7 +11,7 @@ import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import LocalAtmOutlinedIcon from '@mui/icons-material/LocalAtmOutlined';
 import {createData} from "../../context/api";
 export default function AddInvestment() {
-    const { investmentInterests, setDialogData, loggedUser, currentInterests, formatToCurrency, getCurrentInterests,setInvestmentInterests,getMilSecsByPeriod } = React.useContext(AppContext); 
+    const { investmentInterests, setToastData, setDialogData, loggedUser, currentInterests, formatToCurrency, getCurrentInterests,setInvestmentInterests,getMilSecsByPeriod } = React.useContext(AppContext); 
     const [interestObj, setInterestObj] = React.useState(investmentInterests[0]);
     const [investmentAmount,setInvestmentAmount]=React.useState(1000);
     const [investmentReturns,setInvestmentReturns]=React.useState(null);
@@ -47,7 +47,7 @@ export default function AddInvestment() {
         if(createData("investments",docId,totalInvestments)){
             setDialogData({visible:true,title:'MAKE PAYMENT FOR YOUR INVESTMENT',data:{amount:investmentAmount, docId }})
         }else{
-            alert("Failed")
+            setToastData({visible:true,text:'Sorry there was an error while trying to process your request',severity:'error'})
         }
     }
     React.useEffect(()=>{})

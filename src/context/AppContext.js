@@ -1,12 +1,14 @@
 import React,{useState} from 'react';
 import history from '../components/history';
 import CustomizedDialogs from "../components/CustomizedDialogs";
+import ShowToast from "../components/Showtoast";
 import {getTotalAmounts,getWithdrawals} from "./api";
 export const AppContext = React.createContext();
 export const AppProvider = (props) =>{
     const [loggedUser,setLoggedUser]=React.useState(null);
     const [mobileView, setMobileView] = useState(false);
-    const [accountBalance,setAccountBalance]=useState(0)
+    const [accountBalance,setAccountBalance]=useState(0);
+    const [toastData,setToastData]=useState({visible:false,text:'Test text in here',severity:'success'})
     const [currentInterests,setCurrentInterests] = useState({loanAmount:0,investmentAmount:0,newLoanInterest:0,newInvestmentInterest:0,canLoan:false});
     const [investmentInterests, setInvestmentInterests] = useState([
         {period:'7 DAYS',interestArray:[{amountBelow:2000,interest:35,selected:true},{amountBelow:5000,interest:42,selected:false},{amountBelow:10000,interest:50.5,selected:false}]},
@@ -63,9 +65,10 @@ export const AppProvider = (props) =>{
     const getCurrentInterests = (loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest,isInit) => isInit ? setCurrentInterests(calculateInterest(loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest)) : calculateInterest(loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest);
     
     return(
-        <AppContext.Provider value={{loggedUser,setLoggedUser,signOutFn,navigate,userHasLoggedIn,mobileView,currentInterests,formatToCurrency,investmentInterests,loanInterests,getCurrentInterests,setInvestmentInterests,setLoanInterests,getMilSecsByPeriod,setDialogData,accountBalance,setAccountBalance}}>
+        <AppContext.Provider value={{loggedUser,setLoggedUser,setToastData,signOutFn,navigate,userHasLoggedIn,mobileView,currentInterests,formatToCurrency,investmentInterests,loanInterests,getCurrentInterests,setInvestmentInterests,setLoanInterests,getMilSecsByPeriod,setDialogData,accountBalance,setAccountBalance}}>
             {props.children}
             <CustomizedDialogs dialogData={dialogData} setDialogData={setDialogData}/>
+            <ShowToast toastData={toastData} setToastData={setToastData}/>
         </AppContext.Provider>
     )
 }

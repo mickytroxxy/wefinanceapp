@@ -11,7 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 const SignIn=({handleChange})=>{
-    const { userHasLoggedIn,mobileView } = React.useContext(AppContext);
+    const { userHasLoggedIn,mobileView,setToastData } = React.useContext(AppContext);
     const paperStyle={padding :!mobileView && 20,height:!mobileView && '73vh',width:!mobileView && 300, margin:"0 auto",borderRadius:15}
     const avatarStyle={backgroundColor:'#1bbd7e',marginTop:15}
     const btnstyle={margin:'8px 0'}
@@ -19,9 +19,9 @@ const SignIn=({handleChange})=>{
     const [isRememberMe,setIsRememberMe]= React.useState(false);
     const login_btn_clicked = () => {
         if(loginDetails.phoneNumber !== "" && loginDetails.password !== ""){
-            userLogin(loginDetails.phoneNumber, loginDetails.password, (response) => userHasLoggedIn(response,isRememberMe) )
+            userLogin(loginDetails.phoneNumber, loginDetails.password, (response) => response.length > 0 ? userHasLoggedIn(response[0],isRememberMe) : setToastData({visible:true,text:'Invalid login credentials, try again!',severity:'error'}) )
         }else{
-            alert("All fields are required!");
+            setToastData({visible:true,text:'All fields are required to proceed!',severity:'error'})
         }
     }
     return(

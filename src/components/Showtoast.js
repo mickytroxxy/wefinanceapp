@@ -1,28 +1,26 @@
 import * as React from 'react';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+import Box from '@mui/material/Box';
+import { Alert } from '@material-ui/lab';
 
 export default function Showtoast (props) {
-  const [open, setOpen] = React.useState(props.visible);
+  const {toastData,setToastData} = props;
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-    setOpen(false);
+    setToastData({visible:false});
   };
   return (
-    <Stack spacing={2} sx={{ width: '100%' }}>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          {props.text}
-        </Alert>
+    <Box textAlign="center">
+      <Snackbar open={toastData.visible} autoHideDuration={4000} onClose={handleClose} style={{position:'fixed',marginBottom:50}} 
+        anchorOrigin={{
+          vertical: "center",
+          horizontal: "center"
+        }}
+      >
+        <Alert onClose={handleClose} severity={toastData.severity}>{toastData.text}</Alert>
       </Snackbar>
-    </Stack>
+    </Box>
   );
 }

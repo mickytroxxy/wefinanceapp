@@ -11,6 +11,7 @@ import MakePayment from "./modal/MakePayment";
 import LoanTerms from "./modal/LoanTerms";
 import Typography from '@mui/material/Typography';
 import WithdrawFunds from "./modal/WithdrawFunds";
+import ContactUs from "./modal/ContactUs";
 import SignInOutContainer from '../screens/containers/index';
 import "../App.css"
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -36,7 +37,8 @@ export default function CustomizedDialogs(props) {
             {dialogData.title === "MAKE PAYMENT FOR YOUR INVESTMENT" && (<MakePayment data={dialogData.data}/>)}
             {dialogData.title === "TERMS & CONDITIONS" && (<LoanTerms data={dialogData.data}/>)}
             {dialogData.title === "WITHDRAW YOUR FUNDS" && (<WithdrawFunds/>)}
-            {dialogData.title === "ACCESS YOUR ACCOUNT" && (<SignInOutContainer/>)}
+            {dialogData.title === "GET STARTED" && (<SignInOutContainer/>)}
+            {dialogData.title === "CONTACT US" && (<ContactUs/>)}
           </Typography>
         </DialogContent>
         <DialogActions>

@@ -16,6 +16,12 @@ import Toolbar from '@mui/material/Toolbar';
 import { Grid, Paper, Avatar, Typography, TextField, Button, makeStyles } from '@material-ui/core';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import DescriptionIcon from '@mui/icons-material/Description';
+import SendIcon from '@mui/icons-material/Send';
+import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import AtmIcon from '@mui/icons-material/Atm';
 import '../App.css';
 import { AppContext } from '../context/AppContext';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
@@ -61,7 +67,7 @@ function Dashboard(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
-  const { loggedUser,accountBalance,formatToCurrency,signOutFn,mobileView} = React.useContext(AppContext);
+  const { loggedUser,accountBalance,formatToCurrency,signOutFn,mobileView, setToastData, setDialogData} = React.useContext(AppContext);
   const [value,setValue]=React.useState(0)
   const handleChange = (event, newValue) => setValue(newValue);
   const [sideBarElem,setSideBarElem] = React.useState([
@@ -71,13 +77,34 @@ function Dashboard(props) {
     {name:'Transfers',selected:false,index:3},
     {name:'Documents',selected:false,index:4},
     {name:'Withdraw',selected:false,index:5},
-    {name:'Referral Link',selected:false,index:6},
+    {name:'Contact Us',selected:false,index:6},
   ]);
+  const renderDashboardIcons = name =>{
+    if(name === "Dashboard"){
+      return <DashboardIcon />
+    }else if(name === "Loans"){
+      return <AccountBalanceIcon />
+    }else if(name === "Investments"){
+      return <MonetizationOnOutlinedIcon />
+    }else if(name === "Transfers"){
+      return <SendIcon />
+    }else if(name === "Documents"){
+      return <DescriptionIcon />
+    }else if(name === "Withdraw"){
+      return <AtmIcon />
+    }else if(name === "Contact Us"){
+      return <MailIcon />
+    }
+  }
   const changeTabs = (index) =>{
     if(index !== 3 && index!==6){
       setMobileOpen(false)
       handleChange("event",index)
       setSideBarElem(sideBarElem.map(item => item.index !== index ? {...item,selected:false} : {...item,selected:true}))
+    }else if(index === 3){
+      setToastData({visible:true,text:'Your account is not yet verified for transfers',severity:'error'})
+    }else if(index === 6){
+      setDialogData({visible:true,title:'CONTACT US'})
     }
   }
   const drawer = (
@@ -87,7 +114,7 @@ function Dashboard(props) {
         {sideBarElem.map(({name,selected,index}, i) => (
           <ListItem button key={name} onClick={() => changeTabs(index)} style={{background: selected ? "#bbc9f7" : "none",margin:5,padding:5,borderRadius:10,width:'90%'}} >
             <ListItemIcon style={{color: selected ? "#fff" : "#787b79"}}>
-              {i % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              {renderDashboardIcons(name)}
             </ListItemIcon>
             <ListItemText><div className="fontBold" style={{color: selected ? "#fff" : "#787b79"}}>{name}</div></ListItemText>
           </ListItem>

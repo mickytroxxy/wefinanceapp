@@ -23,9 +23,8 @@ export const createData = async (tableName,docId,data) => {
 export const userLogin = async (phoneNumber,password,cb) => {
     try {
         const querySnapshot = await getDocs(query(collection(db, "users"), where("phoneNumber", "==", phoneNumber), where("password", "==", password)));
-        querySnapshot.forEach((doc) => {
-            cb(doc.data())
-        });
+        const data = querySnapshot.docs.map(doc => doc.data());
+        cb(data)
     } catch (e) {
         cb(e);
     }

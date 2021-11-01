@@ -1,7 +1,5 @@
 import React,{useState,useEffect} from "react";
 import { Button, Box,Typography,Container,makeStyles, Card, CardContent, CardMedia,Snackbar  } from '@material-ui/core';
-
-import { Alert } from '@material-ui/lab';
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 import img1 from '../img/image1.png';
 import img2 from '../img/img2.png';
@@ -64,20 +62,13 @@ const faq = [
 export default function Body() {
     const classes = useStyles();
     const [state, setState] = useState({mobileView: false});
-    const [open, setOpen] = React.useState(false);
+    
     const [readMore,setReadMore]=useState(false);
     const { setDialogData } = React.useContext(AppContext);
     const { mobileView } = state;
-    const handleClick = () => setOpen(true);
     const [expanded, setExpanded] = React.useState(false);
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
-    };
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
     };
     useEffect(() => {
         const setResponsiveness = () => {
@@ -97,12 +88,7 @@ export default function Body() {
                         <div style={{paddingLeft:50,paddingRight:50,paddingBottom:30}}>
                             <center><h1 style={{color:'#3f4750',fontWeight:"bolder",fontSize:36}} className="fontBold1">AN EASY WAY TO BECOME <span style={{color:"#bbc9f7"}}>A LOAN SHARK</span></h1></center>
                             <center><p style={{color:'#757575'}} className="fontBold">Easily apply for a quick loan or loan out your funds to our trusted clients all over the nation. Invest your money wisely and allow it to work for you and earn a massive interest within a short period of time! Loan in at low rate and loan out at high rate. Scroll down for more info</p></center>
-                            <center><Button onClick={()=>setDialogData({visible:true,title:'ACCESS YOUR ACCOUNT'})} style={{borderTopRightRadius:30,borderBottomLeftRadius:30}} className={classes.button} variant="outlined">GET STARTED</Button></center>
-                            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                                <Alert onClose={handleClose} severity="success">
-                                    Because of work, I would have implemented a lot
-                                </Alert>
-                            </Snackbar>
+                            <center><Button onClick={()=>setDialogData({visible:true,title:'GET STARTED'})} style={{borderTopRightRadius:30,borderBottomLeftRadius:30}} className={classes.button} variant="outlined">GET STARTED</Button></center>
                         </div>
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -127,7 +113,7 @@ export default function Body() {
                                     </p>
                                     <p style={{paddingTop:10,paddingLeft:50,paddingRight:50,color:'#757575'}} className="fontBold">We believe in our moto which is <span className="fontBold1" style={{color:"#3488a7"}}>"ALLOW YOUR MONEY TO WORK FOR YOU"</span></p>
                                 </center>
-                                <center><Button onClick={()=>setDialogData({visible:true,title:'ACCESS YOUR ACCOUNT'})} variant="outlined" className={classes.button} style={{borderRadius:20}}>I'M CURIOUS ALREADY</Button></center>
+                                <center><Button onClick={()=>setDialogData({visible:true,title:'GET STARTED'})} variant="outlined" className={classes.button} style={{borderRadius:20}}>I'M CURIOUS ALREADY</Button></center>
                             </div>
                         </Grid>
                     </Grid>

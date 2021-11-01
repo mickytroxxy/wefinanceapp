@@ -14,7 +14,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import EmailIcon from '@mui/icons-material/Email';
 const SignUp = () => {
-    const { userHasLoggedIn,mobileView, setDialogData } = React.useContext(AppContext);
+    const { userHasLoggedIn,mobileView, setDialogData, setToastData } = React.useContext(AppContext);
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e',marginTop:15 }
     const btnstyle={margin:'8px 0'}
@@ -27,10 +27,10 @@ const SignUp = () => {
         if(confirmPass===userDetails.password){
           setDialogData({visible:true,title:'TERMS & CONDITIONS',data:{isLoanTermsAccepted}})
         }else{
-          alert("Password fields must match")
+          setToastData({visible:true,text:'Password fields do not match!',severity:'error'})
         }
       }else{
-        alert("Please fill in all fields to proceed")
+        setToastData({visible:true,text:'Please fill in all fields to proceed!',severity:'error'})
       }
     }
     const createAccount =()=>{

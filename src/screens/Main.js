@@ -3,7 +3,7 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { Grid, Paper, Typography, Button } from '@material-ui/core';
 import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
-import LocalAtmOutlinedIcon from '@mui/icons-material/LocalAtmOutlined';
+import AtmIcon from '@mui/icons-material/Atm';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import DoNotDisturbAltOutlinedIcon from '@mui/icons-material/DoNotDisturbAltOutlined';
 import { Doughnut } from 'react-chartjs-2';
@@ -22,7 +22,7 @@ function MainDashboard(props) {
     }else if(type === "Total Investments"){
       return <MonetizationOnOutlinedIcon style={{fill: "#bbc9f7",fontSize:80}} />
     }else if(type === "Total Withdrawals"){
-      return <LocalAtmOutlinedIcon style={{fill: "#bbc9f7",fontSize:80}} />
+      return <AtmIcon style={{fill: "#bbc9f7",fontSize:80}} />
     }else if(type === "Total Profit"){
       return <TrendingUpIcon style={{fill: "#bbc9f7",fontSize:80}} />
     }
@@ -73,7 +73,7 @@ function MainDashboard(props) {
                     <Paper elevation={0} style={{borderRadius:10,paddingTop:10,paddingBottom:10}}>
                     {renderFirstFourCardIcon(item)}
                     <h3 className="fontBold" style={{color:'#757575'}}>{formatToCurrency(item.value)}</h3>
-                    <h5 className="fontLight" style={{color:'#757575'}}>{item.type}</h5>
+                    <h5 className="fontBold" style={{color:'#757575'}}>{item.type}</h5>
                     </Paper>
                 </Grid>
                 )
@@ -83,8 +83,7 @@ function MainDashboard(props) {
         <Typography style={{marginTop:20}}>
             <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={8} lg={8}>
-                <h3 className="fontBold" style={{color:'#757575'}}>TODAY'S STATISTICS</h3>
-
+                <Typography style={{backgroundColor:"#bbc9f7",padding:2,paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150,marginBottom:15}}><h2 className="fontBold1" style={{color:"#fff",fontSize:15}}>CURRENT STATISTICS</h2></Typography>
                 <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={6} lg={6}>
                     <Card sx={{ minWidth: 275 }} style={{backgroundColor:'#bbc9f7',borderRadius:10}} elevation={0}>
@@ -98,7 +97,7 @@ function MainDashboard(props) {
                     </CardContent>
                     <CardActions style={{backgroundColor:'#fff',borderRadius:10,padding:5,margin:5}}>
                         <Button style={{height:50}}>
-                            <h4 className="fontBold" style={{color:'#757575'}}>TOTAL INVESTMENTS {formatToCurrency(currentInterests.investmentAmount)}</h4>
+                            <h5 className="fontBold1" style={{color:'#757575',fontSize:12}}>TOTAL INVESTMENTS {formatToCurrency(currentInterests.investmentAmount)}</h5>
                         </Button>
                     </CardActions>
                     </Card>
@@ -119,7 +118,7 @@ function MainDashboard(props) {
                     </CardContent>
                     <CardActions style={{backgroundColor:'#fff',borderRadius:10,padding:5,margin:5}}>
                         <Button style={{height:50}}>
-                            <h4 className="fontBold" style={{color:'#757575'}}>TOTAL LOAN {formatToCurrency(currentInterests.loanAmount)}</h4>
+                            <h5 className="fontBold1" style={{color:'#757575',fontSize:12}}>TOTAL LOAN {formatToCurrency(currentInterests.loanAmount)}</h5>
                         </Button>
                     </CardActions>
                     </Card>
@@ -133,7 +132,7 @@ function MainDashboard(props) {
             </Grid>
         </Typography>
         <Typography style={{marginTop:20}}>
-            <h4 className="fontBold">MY INVESTMENT HISTORY</h4>
+            <Typography style={{backgroundColor:"#bbc9f7",padding:2,paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150,marginBottom:15}}><h2 className="fontBold1" style={{color:"#fff",fontSize:15}}>INVESTMENT HISTORY</h2></Typography>
         </Typography>
     </Typography>
   );
