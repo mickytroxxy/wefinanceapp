@@ -48,11 +48,11 @@ export const AppProvider = (props) =>{
             })
         })
     },[]);
-    const userHasLoggedIn = userDetails => {
+    const userHasLoggedIn = (userDetails,isRememberMe) => {
         setLoggedUser(userDetails);
         setDialogData({visible:false});
-        localStorage.setItem("userDetails", JSON.stringify(userDetails));
         navigate("Dashboard");
+        isRememberMe && localStorage.setItem("userDetails", JSON.stringify(userDetails));
     }
     const signOutFn = async() => {
         localStorage.removeItem("userDetails");

@@ -34,7 +34,7 @@ export default function CustomizedDialogs(props) {
             {dialogData.title === "UPLOAD DOCUMENTS" && (<UploadDocs />)}
             {dialogData.title === "ADD NEW INVESTMENT" && (<AddInvestment />)}
             {dialogData.title === "MAKE PAYMENT FOR YOUR INVESTMENT" && (<MakePayment data={dialogData.data}/>)}
-            {dialogData.title === "LOAN TERMS & CONDITIONS" && (<LoanTerms data={dialogData.data}/>)}
+            {dialogData.title === "TERMS & CONDITIONS" && (<LoanTerms data={dialogData.data}/>)}
             {dialogData.title === "WITHDRAW YOUR FUNDS" && (<WithdrawFunds/>)}
             {dialogData.title === "ACCESS YOUR ACCOUNT" && (<SignInOutContainer/>)}
           </Typography>

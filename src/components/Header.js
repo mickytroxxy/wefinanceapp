@@ -70,15 +70,15 @@ export default function Header() {
     setResponsiveness();
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
-
+  const isLoanTermsAccepted = isAccepted => {}
   const displayDesktop = () => {
     return (
       <Toolbar className={toolbar} style={{padding:0,margin:0}}>
         {femmecubatorLogo}
         <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
-            <IconButton> <span style={{fontSize:14}}>PRIVACY POLICY</span></IconButton>
-            <IconButton> <span style={{fontSize:14}}>CONTACT US</span></IconButton>
+            <IconButton onClick={()=>setDialogData({visible:true,title:'TERMS & CONDITIONS',data:{isLoanTermsAccepted}})}> <span style={{fontSize:14}}>TERMS & CONDITIONS</span></IconButton>
+            <IconButton onClick={()=>setDialogData({visible:true,title:'CONTACT US'})}> <span style={{fontSize:14}}>CONTACT US</span></IconButton>
             <IconButton onClick={()=>setDialogData({visible:true,title:'ACCESS YOUR ACCOUNT'})}>
               <span style={{fontSize:14}}>LOG IN</span>
               <ExitToAppIcon style={{fill: "#bbc9f7",fontSize:36}}/>
@@ -89,26 +89,9 @@ export default function Header() {
   };
 
   const displayMobile = () => {
-    const handleDrawerOpen = () => setState((prevState) => ({ ...prevState, drawerOpen: true }));
-    const handleDrawerClose = () => setState((prevState) => ({ ...prevState, drawerOpen: false }));
     return (
       <Toolbar className={toolbar}>
         <div className={toolbar}>
-          <IconButton
-            {...{
-              edge: "start",
-              color: "#598fd5",
-              "aria-label": "menu",
-              "aria-haspopup": "true",
-              onClick: handleDrawerOpen,
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-
-          <Drawer {...{anchor: "left",open: drawerOpen,onClose: handleDrawerClose,}}>
-            <div className={drawerContainer}>{getDrawerChoices()}</div>
-          </Drawer>
           <div style={{marginTop:8}}>{femmecubatorLogo}</div>
         </div>
         <Box textAlign="right">
@@ -118,22 +101,6 @@ export default function Header() {
         </Box>
       </Toolbar>
     );
-  };
-
-  const getDrawerChoices = () => {
-    return ["PRIVACY POLICY","CONTACT US","LOG IN"].map((item,i) => {
-      return (
-        <Link
-          {...{
-            color: "#757575",
-            style: { textDecoration: "none" },
-            key: item,
-          }}
-        >
-          <MenuItem>{item}</MenuItem>
-        </Link>
-      );
-    });
   };
 
   const femmecubatorLogo = (

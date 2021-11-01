@@ -14,22 +14,18 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import EmailIcon from '@mui/icons-material/Email';
 const SignUp = () => {
-    const { userHasLoggedIn,mobileView } = React.useContext(AppContext);
+    const { userHasLoggedIn,mobileView, setDialogData } = React.useContext(AppContext);
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e',marginTop:15 }
     const btnstyle={margin:'8px 0'}
     const [userDetails,setUserDetails] = useState({fname:"",lname:"",phoneNumber:"",email:"",password:""});
     const paperStyle={padding :!mobileView && 20,height:!mobileView && '73vh',width:!mobileView && 300, margin:"0 auto"}
     const [confirmPass,setConfirmPass]=useState("");
-    const [isTerms,setIsTerms]= React.useState(false);
+    const [isRememberMe,setIsRememberMe]= React.useState(false);
     const sign_up_btn_clicked = () => {
       if(userDetails.fname!=="" && userDetails.lname!=="" && userDetails.email!=="" && userDetails.password!==""){
         if(confirmPass===userDetails.password){
-          if(createData("users",userDetails.email,userDetails)){
-            userHasLoggedIn(userDetails);
-          }else{
-            alert("Failed")
-          }
+          setDialogData({visible:true,title:'TERMS & CONDITIONS',data:{isLoanTermsAccepted}})
         }else{
           alert("Password fields must match")
         }
@@ -37,6 +33,14 @@ const SignUp = () => {
         alert("Please fill in all fields to proceed")
       }
     }
+    const createAccount =()=>{
+      if(createData("users",userDetails.email,userDetails)){
+        userHasLoggedIn(userDetails,isRememberMe);
+      }else{
+        alert("Failed")
+      }
+    }
+    const isLoanTermsAccepted = isAccepted => isAccepted && createAccount();
     return (
         <Grid>
             <div style={paperStyle}>
@@ -55,7 +59,18 @@ const SignUp = () => {
                   <TextField style={{marginTop:25}} id="outlined-start-adornment" required onKeyUp={(e)=>setUserDetails({...userDetails,password:e.target.value})} type='password' sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><LockOpenIcon style={{fill: "#b6b8b7",fontSize:25}} /></InputAdornment>}} label="ENTER PASSWORD" variant="outlined"/>
                   <TextField style={{marginTop:25}} id="outlined-start-adornment" required onKeyUp={(e)=>setConfirmPass(e.target.value)} type='password' sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><LockOpenIcon style={{fill: "#b6b8b7",fontSize:25}} /></InputAdornment>}} label="ENTER PASSWORD AGAIN" variant="outlined"/>
                 </FormControl>
-                <Button color='primary' variant="contained" style={btnstyle} fullWidth onClick={sign_up_btn_clicked}>Sign Up</Button>
+                <FormControlLabel
+                    control={
+                    <Checkbox
+                        name="checkedB"
+                        color="primary"
+                        checked={isRememberMe}
+                        onChange={()=>setIsRememberMe(!isRememberMe)}
+                    />
+                    }
+                    label="Remember me"
+                 />
+                <Button color='primary' variant="contained" style={btnstyle} fullWidth onClick={sign_up_btn_clicked}>ACCEPT TERMS & CONDITIONS</Button>
             </div>
         </Grid>
     )

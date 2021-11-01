@@ -52,7 +52,7 @@ export default function AddLoan() {
     }
     const goToTerms =()=>{
         if(loanDetails.idNo.length === 13 && loanDetails.physicalAddress!=="" && loanDetails.companyName!=="" && loanDetails.totalExpenses!=="" && loanDetails.loanAmount!=="" && loanDetails.netSalary!=="" && loanDetails.gender!=="" && loanDetails.employmentStatus!==""){
-            setDialogData({visible:true,title:'LOAN TERMS & CONDITIONS',data:{isLoanTermsAccepted}})
+            setDialogData({visible:true,title:'TERMS & CONDITIONS',data:{isLoanTermsAccepted}})
         }else{
             setFieldError(true);
             setTimeout(() => setFieldError(false) , 3000);

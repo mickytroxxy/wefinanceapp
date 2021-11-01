@@ -21,7 +21,8 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
+import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
+import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import Grid from '@mui/material/Grid';
 import "../App.css"
 const clientsArray = [
@@ -87,6 +88,7 @@ export default function Body() {
         setResponsiveness();
         window.addEventListener("resize", () => setResponsiveness());
     }, []);
+    const isLoanTermsAccepted = isAccepted => {}
     return (
         <Container maxWidth="xl" component="main" className={classes.heroContent}>
             <div className={classes.root}>
@@ -157,18 +159,19 @@ export default function Body() {
                         <Grid item xs={12} md={6}>
                             <h5 style={{color:'#737a81'}} className="fontBold1">LOAN IN</h5>
                             <center><img src={loan} style={{maxWidth:160}} alt=""/></center>
-                            <p className="fontBold1" style={{color:'#757575',padding:25}}>This is a quick short-term loan service allowing you to borrow money from us, It could be for your business needs, emergency or anything you want. Our team is always available 9am-5pm for you. Our loan amount starts from R 1 000.00 - R 30 000. Please note, interest rate may vary according to demand</p>
+                            <p className="fontBold" style={{color:'#757575',padding:25}}>This is a quick short-term loan service allowing you to borrow money from us, It could be for your business needs, emergency or anything you want. Our team is always available 9am-5pm for you. Our loan amount starts from R 1 000.00 - R 30 000. Please note, interest rate may vary according to demand</p>
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <h5 style={{color:'#737a81'}} className="fontBold1">LOAN OUT</h5>
                             <center><img src={funds} style={{maxWidth:160}} alt=""/></center>
-                            <p className="fontBold1" style={{color:'#757575',padding:25}}>
+                            <p className="fontBold" style={{color:'#757575',padding:25}}>
                                 This is when you give in your funds for profit. You funds will be then be given out to our trusted clients as loans. Why would you keep your money without it making you profit? You can easily become a loan shark in minutes. Interest rate may also vary according to demand. Scroll down to read more about how this system works
                             </p>
                         </Grid>
                     </Grid>
                 </Typography>
-                <Typography style={{padding:10,backgroundColor:'#eef1f4',width:'100%',marginTop:50}}>
+                <Typography style={{backgroundColor:"#bbc9f7",paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150}}><h3 className="fontBold1" style={{color:"#fff",fontSize:15}}>WHAT OUR PARTNERS SAY</h3></Typography>
+                <Typography style={{padding:10,backgroundColor:'#eef1f4',width:'100%',marginTop:15}}>
                     <div className={classes.root}>
                         <ScrollMenu
                             data={clientsArray.map(({name}, i) => (
@@ -211,18 +214,33 @@ export default function Body() {
                         <center><Button onClick={()=>setReadMore(!readMore)} variant="outlined" className={classes.button} style={{borderRadius:20}}>{readMore?(<span>Read Less</span>):(<span>Read More</span>)}</Button></center>
                     </Container>
                 </Typography>
-                <div>
-                    {faq.map(({header,text,panel,control})=>(
-                        <Accordion expanded={expanded === panel} onChange={handleChange(panel)}>
-                            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={control} id={panel}>
-                                <Typography sx={{ width: '100%', flexShrink: 0 }}>{header}</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Typography>{text}</Typography>
-                            </AccordionDetails>
-                        </Accordion>
-                    ))}
-                </div>
+                <Typography>
+                    <center>
+                        <Typography style={{backgroundColor:"#bbc9f7",padding:2,paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150,width:'76%',marginBottom:30}}><h3 className="fontBold1" style={{color:"#fff",fontSize:15}}>FREQUENTLY ASKED QUESTIONS</h3></Typography>
+                    </center>
+                    <Box textAlign="left">
+                        {faq.map(({header,text,panel,control})=>(
+                            <Accordion expanded={expanded === panel} onChange={handleChange(panel)} elevation={0} sx={{ borderRadius:0 }}>
+                                <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={control} id={panel}>
+                                    <Typography sx={{ width: '100%', flexShrink: 0 }}><span className="fontBold1" style={{fontSize:13}}>{header}</span></Typography>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <Typography><span className="fontBold">{text}</span></Typography>
+                                </AccordionDetails>
+                            </Accordion>
+                        ))}
+                    </Box>
+                </Typography>
+                {mobileView && (
+                    <Grid container style={{marginTop:20}}>
+                        <Grid item xs={12} sm={12}>
+                            <Button variant="outlined" onClick={()=>setDialogData({visible:true,title:'TERMS & CONDITIONS',data:{isLoanTermsAccepted}})} style={{borderTopRightRadius:30,borderBottomLeftRadius:30}}  component="label"startIcon={<PrivacyTipIcon style={{fill: "#bbc9f7",fontSize:24}}/>}>TERMS & CONDITIONS</Button>
+                        </Grid>
+                        <Grid item xs={12} sm={12} style={{marginTop:30}}>
+                            <Button variant="outlined" onClick={()=>setDialogData({visible:true,title:'CONTACT US'})} style={{borderTopRightRadius:30,borderBottomLeftRadius:30}}  component="label"startIcon={<ContactPhoneIcon style={{fill: "#bbc9f7",fontSize:24}}/>}>CONTACT US</Button>
+                        </Grid>
+                    </Grid>
+                )}
             </div>
         </Container>
     )

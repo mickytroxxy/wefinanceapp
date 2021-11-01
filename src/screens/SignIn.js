@@ -16,9 +16,10 @@ const SignIn=({handleChange})=>{
     const avatarStyle={backgroundColor:'#1bbd7e',marginTop:15}
     const btnstyle={margin:'8px 0'}
     const [loginDetails,setLoginDetails] = React.useState({phoneNumber:'',password:''});
+    const [isRememberMe,setIsRememberMe]= React.useState(false);
     const login_btn_clicked = () => {
         if(loginDetails.phoneNumber !== "" && loginDetails.password !== ""){
-            userLogin(loginDetails.phoneNumber, loginDetails.password, (response) => userHasLoggedIn(response) )
+            userLogin(loginDetails.phoneNumber, loginDetails.password, (response) => userHasLoggedIn(response,isRememberMe) )
         }else{
             alert("All fields are required!");
         }
@@ -40,6 +41,8 @@ const SignIn=({handleChange})=>{
                     <Checkbox
                         name="checkedB"
                         color="primary"
+                        checked={isRememberMe}
+                        onChange={()=>setIsRememberMe(!isRememberMe)}
                     />
                     }
                     label="Remember me"
