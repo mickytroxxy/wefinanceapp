@@ -1,18 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Aclonica&display=swap');
 .App {
   text-align: center;
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-
+.lightBackground{
+  background-color: #f7f9fa;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+.fontBold{
+  font-family: 'Chakra Petch', sans-serif;
+}
+.fontBold1{
+  font-family: 'Aclonica', sans-serif;
+}
+.fontLight{
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 500;
+}
+.MuiTab-wrapper {
+  align-items: self-start;
+  justify-content: flex-start;
+}
+.my-custom-class{
+  align-items: self-start;
+  justify-content: flex-start;
+  text-align:'left';
+  align-content:'left';
+  align-items:'left';
+}
+.wrapper {
+  alignItems: "flex-start"
+}
+.paper_container {
+  overflow-x: auto;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 50px;
+  padding: 10px;
+  margin: 10px;
+  width:100%;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -35,4 +71,7 @@
   to {
     transform: rotate(360deg);
   }
+}
+.linearGradient{
+  background-image: linear-gradient(to bottom right, red, yellow);
 }
