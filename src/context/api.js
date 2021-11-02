@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, doc, setDoc, query, where, deleteDoc  } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, doc, setDoc, query, where, deleteDoc, updateDoc   } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 const firebaseConfig = {
   apiKey: "AIzaSyDGWHMK1C7wX1ac5eAguCTBvKf49MAmDMA",
@@ -50,6 +50,15 @@ export const getApprovedInvestments = async (phoneNumber,cb) => {
 export const getDocuments = async (phoneNumber,cb) => {
     try {
         const querySnapshot = await getDocs(query(collection(db, "documents"), where("phoneNumber", "==", phoneNumber)));
+        const data = querySnapshot.docs.map(doc => doc.data());
+        cb(data)
+    } catch (e) {
+        cb(e);
+    }
+}
+export const getTransactionInProgress = async (phoneNumber,cb) => {
+    try {
+        const querySnapshot = await getDocs(query(collection(db, "paymentInProgress"), where("phoneNumber", "==", phoneNumber)));
         const data = querySnapshot.docs.map(doc => doc.data());
         cb(data)
     } catch (e) {
@@ -117,6 +126,17 @@ export const deleteData = async (tableName,docId) => {
     try {
         const q = await deleteDoc(doc(db, tableName, docId));
         return q;
+    } catch (e) {
+        return false;
+    }
+}
+export const updateTransaction = async (tableName,docId,status) => {
+    try {
+        const docRef = doc(db, tableName, docId);
+        const res = await updateDoc(docRef, {
+            status
+        });
+        return true;
     } catch (e) {
         return false;
     }

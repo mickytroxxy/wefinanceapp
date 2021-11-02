@@ -9,7 +9,7 @@ export const AppProvider = (props) =>{
     const [mobileView, setMobileView] = useState(false);
     const [accountBalance,setAccountBalance]=useState(0);
     const [toastData,setToastData]=useState({visible:false,text:'Test text in here',severity:'success'})
-    const [currentInterests,setCurrentInterests] = useState({loanAmount:0,investmentAmount:0,newLoanInterest:0,newInvestmentInterest:0,canLoan:false});
+    const [currentInterests,setCurrentInterests] = useState({loanAmount:0,investmentAmount:0,currentLoanInterest:0,currentInvestmentInterest:0,canLoan:false});
     const [investmentInterests, setInvestmentInterests] = useState([
         {period:'7 DAYS',interestArray:[{amountBelow:2000,interest:35,selected:true},{amountBelow:5000,interest:42,selected:false},{amountBelow:10000,interest:50.5,selected:false}]},
         {period:'14 DAYS',interestArray:[{amountBelow:2000,interest:42.5,selected:true},{amountBelow:5000,interest:52.7,selected:false},{amountBelow:10000,interest:66.1,selected:false}]},
@@ -82,21 +82,6 @@ const calculateInterest = (loanAmount,investmentAmount,currentLoanInterest,curre
     const investmentAmountIsGreator =  ((investmentAmount - loanAmount) / investmentAmount ) * 100;
     const loanAmountIsGreator =  ((loanAmount - investmentAmount) / loanAmount ) * 100;
     if(investmentAmount > loanAmount){
-        /*if(investmentAmountIsGreator > 35){
-            const newRate = (investmentAmountIsGreator / 5);
-            currentLoanInterest = currentLoanInterest - newRate;
-            currentInvestmentInterest = currentInvestmentInterest - (newRate / 3) ;
-            return {loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest,canLoan:true}
-        }else if((investmentAmountIsGreator < 35 ) && (investmentAmountIsGreator > 10)){
-            const newRate = (investmentAmountIsGreator / 8);
-            currentLoanInterest = currentLoanInterest - newRate;
-            currentInvestmentInterest = currentInvestmentInterest - (newRate / 6) ;
-            return {loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest,canLoan:true}
-        }else{
-            const newRate = (investmentAmountIsGreator / 2);
-            currentInvestmentInterest = currentInvestmentInterest + newRate;
-            return {loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest,canLoan:false}
-        }*/
         let newRate = investmentAmountIsGreator, canLoan = true;
         if(investmentAmountIsGreator > 90){
             newRate = investmentAmountIsGreator / 1.5;

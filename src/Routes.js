@@ -5,6 +5,8 @@ import Dashboard from "./screens/Dashboard";
 import Landing from "./screens/Landing";
 import SignUp from "./screens/SignUp";
 import SignIn from "./screens/SignIn";
+import PaymentSuccess from "./screens/PaymentSuccess";
+import PaymentFailed from "./screens/PaymentFailed";
 import history from './components/history';
 
 export default class Routes extends Component {
@@ -16,6 +18,8 @@ export default class Routes extends Component {
                     <Route path="/SignIn" component={SignIn} />
                     <Route path="/SignUp" component={SignUp} />
                     <Route path="/Dashboard" component={Dashboard} />
+                    <Route path="/PaymentSuccess" component={PaymentSuccess} />
+                    <Route path="/PaymentFailed" component={PaymentFailed} />
                 </Switch>
             </Router>
         )

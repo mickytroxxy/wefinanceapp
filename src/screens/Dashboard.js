@@ -157,7 +157,7 @@ function Dashboard(props) {
             <MenuIcon />
           </IconButton>
           <Typography noWrap>
-            <h4 className="fontBold1" style={{color:"#757575"}}>Hi, {loggedUser.fname.toUpperCase()}</h4>
+            <h4 className="fontBold1" style={{color:"#757575"}}>Hi, {loggedUser && loggedUser.fname.toUpperCase()}</h4>
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>

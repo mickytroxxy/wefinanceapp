@@ -46,7 +46,7 @@ function MainDashboard(props) {
     ],
   };
   React.useEffect(()=>{
-    getApprovedLoans(loggedUser.phoneNumber,(loanData)=>{
+    loggedUser && getApprovedLoans(loggedUser.phoneNumber,(loanData)=>{
       getApprovedInvestments(loggedUser.phoneNumber,(investData)=>{
         getMyWithdrawals(loggedUser.phoneNumber,(withdrawalData)=>{
           let loanAmount = 0;
@@ -62,7 +62,7 @@ function MainDashboard(props) {
         });
       });
     })
-  },[])
+  },[loggedUser])
   return (
     <Typography>
         <Typography style={{background: "linear-gradient(to right, #bbc9f7, #c5fcb3, #acf7f4)",minHeight:250,borderRadius:10,padding:20}}>
