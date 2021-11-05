@@ -43,7 +43,7 @@ export default function AddInvestment() {
         const date = Date.now();
         const investmentNickname = investmentName === "" ? loggedUser.fname + Date.now() : investmentName;
         const docId = loggedUser.phoneNumber + Date.now();
-        const totalInvestments = {...investmentReturns,date,investmentNickname,phoneNumber:loggedUser.phoneNumber,docId,status:'MAKE PAYMENT'};
+        const totalInvestments = {...investmentReturns,date,investmentNickname,phoneNumber:loggedUser.phoneNumber,docId,status:'MAKE PAYMENT',paidOn:date};
         if(createData("investments",docId,totalInvestments)){
             setDialogData({visible:true,title:'MAKE PAYMENT FOR YOUR INVESTMENT',data:{amount:investmentAmount, docId }})
         }else{

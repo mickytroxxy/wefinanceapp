@@ -53,7 +53,7 @@ const useStyles = makeStyles(() => ({
 
 export default function Header() {
   const { header, logo,logoIconCss, menuButton, toolbar, drawerContainer } = useStyles();
-  const { setDialogData } = React.useContext(AppContext);
+  const { setDialogData, navigate } = React.useContext(AppContext);
   const [state, setState] = useState({
     mobileView: false,
     drawerOpen: false,
@@ -79,7 +79,7 @@ export default function Header() {
           <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
             <IconButton onClick={()=>setDialogData({visible:true,title:'TERMS & CONDITIONS',data:{isLoanTermsAccepted}})}> <span style={{fontSize:14}}>TERMS & CONDITIONS</span></IconButton>
             <IconButton onClick={()=>setDialogData({visible:true,title:'CONTACT US'})}> <span style={{fontSize:14}}>CONTACT US</span></IconButton>
-            <IconButton onClick={()=>setDialogData({visible:true,title:'GET STARTED'})}>
+            <IconButton onClick={()=> !mobileView ? setDialogData({visible:true,title:'GET STARTED'}) : navigate("login")}>
               <span style={{fontSize:14}}>LOG IN</span>
               <ExitToAppIcon style={{fill: "#bbc9f7",fontSize:36}}/>
             </IconButton>
@@ -95,7 +95,7 @@ export default function Header() {
           <div style={{marginTop:8}}>{femmecubatorLogo}</div>
         </div>
         <Box textAlign="right">
-          <IconButton onClick={()=>setDialogData({visible:true,title:'GET STARTED'})}>
+          <IconButton onClick={()=> !mobileView ? setDialogData({visible:true,title:'GET STARTED'}) : navigate("login")}>
             <ExitToAppIcon style={{fill: "#bbc9f7",fontSize:36}}/>
           </IconButton>
         </Box>

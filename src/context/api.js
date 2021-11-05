@@ -133,8 +133,8 @@ export const deleteData = async (tableName,docId) => {
 export const updateTransaction = async (tableName,docId,status) => {
     try {
         const docRef = doc(db, tableName, docId);
-        const res = await updateDoc(docRef, {
-            status
+        await updateDoc(docRef, {
+            status, paidOn:Date.now()
         });
         return true;
     } catch (e) {
