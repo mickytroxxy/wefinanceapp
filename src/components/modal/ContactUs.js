@@ -45,7 +45,7 @@ export default function ContactUs() {
                                 <PhoneIcon style={{fill: "#bbc9f7",fontSize:28}} />
                             </Grid>
                             <Grid item xs={10}>
-                                <span className="fontLight" style={{marginTop:6}}>+27 11 263 4849</span>
+                                <span className="fontLight" style={{marginTop:6}}>+27 10 335 0933</span>
                             </Grid>
                         </Grid>
                         <Grid container>
@@ -53,7 +53,7 @@ export default function ContactUs() {
                                 <LocationOnIcon style={{fill: "#bbc9f7",fontSize:28}} />
                             </Grid>
                             <Grid item xs={10}>
-                                <span className="fontLight" style={{marginTop:6}}>Nelson Mandela Square, Sandton, 2196</span>
+                                <span className="fontLight" style={{marginTop:6}}>75 Maude St, Sandown, Sandton, 2146</span>
                             </Grid>
                         </Grid>
                     </Box>
