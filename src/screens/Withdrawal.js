@@ -104,7 +104,7 @@ export default function Withdrawal({handleChange}) {
                 </Table>
             )}
             {withdrawals.length === 0 && ( <h4 className="fontBold">YOU HAVE NOT MADE ANY WITHDRAWAL REQUEST YET. YOU CAN LODGE A REQUEST BT CLICKING THE FLOAT GREEN BUTTON ON YOUR BOTTOM RIGHT!</h4> )}
-            <Fab onClick={()=>setDialogData({visible:true,title:'WITHDRAW YOUR FUNDS'})} color="primary" aria-label="add" style={{position: 'fixed',bottom: 16,right: 16,borderRadius:'100%',color:'#fff',backgroundColor:'#69d29e'}}>
+            <Fab onClick={()=>setDialogData({visible:true,title:'WITHDRAW YOUR FUNDS',data:{isSuccess:false,amount:0}})} color="primary" aria-label="add" style={{position: 'fixed',bottom: 16,right: 16,borderRadius:'100%',color:'#fff',backgroundColor:'#69d29e'}}>
                 <AddIcon />
             </Fab>
         </Typography>

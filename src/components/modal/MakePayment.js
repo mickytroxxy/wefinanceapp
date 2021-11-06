@@ -11,7 +11,8 @@ export default function MakePayment(props) {
     const { loggedUser,formatToCurrency } = React.useContext(AppContext);
     const [bankDetails, setBankDetails] = React.useState(null);
     React.useEffect(()=>{
-        getBankDetails((response) => response.length > 0 && setBankDetails(response[0]) )
+        //getBankDetails((response) => response.length > 0 && setBankDetails(response[0]) )
+        makeOnlinePayment();
     },[]);
     const makeOnlinePayment =()=>{
         const id = loggedUser.phoneNumber;
@@ -22,7 +23,10 @@ export default function MakePayment(props) {
         const baseUrl = "https://www.payfast.co.za/eng/process?cmd=_paynow&receiver="+mechantId+"&item_name=uberflirt credit purchase&item_description=uberFlirt credit purchase&amount="+amount+"&return_url="+return_url+"&cancel_url="+cancel_url+""
         window.open(baseUrl, '_blank');
     }
-    return (
+    return(
+        <></>
+    )
+    /*return (
         <>
             {bankDetails && (
                 <>
@@ -87,5 +91,5 @@ export default function MakePayment(props) {
                 </Button>
             </Box>
         </>
-    );
+    );*/
 }

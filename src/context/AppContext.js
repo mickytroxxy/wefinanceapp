@@ -29,7 +29,7 @@ export const AppProvider = (props) =>{
             navigate("Dashboard");
         }else{
             setLoggedUser(null);
-            //navigate("/");
+            navigate("/");
         }
         const setResponsiveness = () =>  window.innerWidth < 900 ? setMobileView(true) : setMobileView(false) 
         setResponsiveness();

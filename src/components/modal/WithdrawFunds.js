@@ -12,10 +12,10 @@ import InfoIcon from '@mui/icons-material/Info';
 import {createData,getMyWithdrawals} from "../../context/api";
 const bankList = ["AFRICAN BANK","FNB","CAPITEC","ABSA","STANDARD BANK","NEDBANK","OLD MUTUAL"];
 const accountTypes = ["CHEQUE ACCOUNT","TRANSIMITION ACCOUNT","SAVINGS"];
-export default function WithdrawFunds() {
+export default function WithdrawFunds(props) {
+    const {data:{isSuccess,amount}} = props;
     const { setDialogData, loggedUser, accountBalance, formatToCurrency, setAccountBalance } = React.useContext(AppContext); 
     const [withdrawalDetails,setWithdrawalDetails] = React.useState({bankName:'',accountNumber:'',accountHolder:'',accountType:'',branchCode:'',grossAmount:''})
-    const [withdrawalStatus,setWithdrawalStatus]=React.useState(null);
     const [isError,setIsError]=React.useState(false);
     React.useEffect(()=>{
         getMyWithdrawals(loggedUser.phoneNumber, (response) => response.length > 0 && setWithdrawalDetails(response.slice(-1)[0]) )
@@ -31,14 +31,17 @@ export default function WithdrawFunds() {
         }
     }
     const withdraw_btn_clicked =()=>{
+        setDialogData({visible:true,title:'ENTER CONFIRMATION CODE',data:{codeIsTrue,phoneNumber:loggedUser.phoneNumber}});
+    }
+    const withdraw_funds =()=>{
         if(withdrawalDetails.accountHolder!=="" && withdrawalDetails.accountNumber!=="" && withdrawalDetails.branchCode!=="" && withdrawalDetails.grossAmount!==""){
             const docId = loggedUser.phoneNumber + Date.now();
             const status = "PENDING";
             const date = Date.now();
             const withdrawalData = {...withdrawalDetails,docId,date,status,phoneNumber:loggedUser.phoneNumber};
             if(createData("withdrawals",docId,withdrawalData)){
-                setWithdrawalStatus("success");
-                setAccountBalance(accountBalance - withdrawalDetails.grossAmount)
+                setAccountBalance(accountBalance - withdrawalDetails.grossAmount);
+                setDialogData({visible:true,title:'WITHDRAW YOUR FUNDS',data:{isSuccess:true,amount:withdrawalDetails.grossAmount}})
                 setTimeout(() => setDialogData({visible:false}), 3000);
             }
         }else{
@@ -46,9 +49,12 @@ export default function WithdrawFunds() {
             setTimeout(() => setIsError(false) , 2000);
         }
     }
+    const codeIsTrue = () => {
+        withdraw_funds();
+    };
     return (
         <Box textAlign='center'>
-            {!withdrawalStatus ? (
+            {!isSuccess ? (
                 <Typography>
                     <FormControl fullWidth>
                         <div className="fontBold">Please note a <span style={{color:'green',fontSize:20}}>3.5%</span> service fee may apply</div>
@@ -85,7 +91,7 @@ export default function WithdrawFunds() {
             ):(
                 <>
                     <CheckCircleOutlinedIcon style={{fill: "green",fontSize:220}}/>
-                    <h5 className="fontBold">YOUR WITHDRAWAL REQUEST OF {formatToCurrency(parseFloat(withdrawalDetails.grossAmount))} HAS BEEN LODGED SUCCESSFULLY. PLEASE NOTE THE TRANSACTION MAY TAKE UP TO 48 WORKING HOURS</h5> 
+                    <h5 className="fontBold">YOUR WITHDRAWAL REQUEST OF {formatToCurrency(parseFloat(amount))} HAS BEEN LODGED SUCCESSFULLY. PLEASE NOTE THE TRANSACTION MAY TAKE UP TO 48 WORKING HOURS</h5> 
                 </>
             )}
         </Box>

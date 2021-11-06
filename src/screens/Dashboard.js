@@ -102,7 +102,7 @@ function Dashboard(props) {
       handleChange("event",index)
       setSideBarElem(sideBarElem.map(item => item.index !== index ? {...item,selected:false} : {...item,selected:true}))
     }else if(index === 3){
-      setToastData({visible:true,text:'Your account is not yet verified for transfers',severity:'error'})
+      setToastData({visible:true,text:'Your account is not yet verified for transfers',severity:'error'});
     }else if(index === 6){
       setDialogData({visible:true,title:'CONTACT US'})
     }
@@ -121,16 +121,7 @@ function Dashboard(props) {
         ))}
       </List>
       <Divider />
-      <List>
-        {['SIGN OUT'].map((text, index) => (
-          <ListItem button key={text} style={{margin:5,paddingTop:15,paddingBottom:15,paddingLeft:10,borderRadius:10,width:'90%',border: '2px solid tomato',marginTop:100}} onClick={signOutFn}>
-            <ListItemIcon style={{color: "tomato",fontSize:50}}>
-              <LockOpenIcon />
-            </ListItemIcon>
-            <ListItemText><div className="fontBold" style={{color: "tomato",fontWeight:'bold'}}>{text}</div></ListItemText>
-          </ListItem>
-        ))}
-      </List>
+      <Button variant="outlined" onClick={signOutFn} style={{borderTopRightRadius:30,borderBottomLeftRadius:30,border: '2px solid tomato',marginTop:50,padding:20,color:"tomato"}} className="fontBold1"  component="label"startIcon={<LockOpenIcon style={{fill: "tomato",fontSize:24}}/>}>LOGOUT</Button>
     </div>
   );     
   const container = window !== undefined ? () => window().document.body : undefined;

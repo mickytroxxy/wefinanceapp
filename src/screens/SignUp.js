@@ -40,7 +40,11 @@ const SignUp = () => {
         alert("Failed")
       }
     }
-    const isLoanTermsAccepted = isAccepted => isAccepted && createAccount();
+    const isLoanTermsAccepted = isAccepted => isAccepted && setDialogData({visible:true,title:'ENTER CONFIRMATION CODE',data:{codeIsTrue,phoneNumber:userDetails.phoneNumber}});
+    const codeIsTrue = () => {
+      setDialogData({visible:false})
+      createAccount();
+    }
     return (
         <Grid>
             <div style={paperStyle}>
