@@ -20,7 +20,7 @@ export default function MakePayment(props) {
         const return_url = encodeURIComponent('https://wefinancegroup.org/PaymentSuccess');
         const cancel_url = encodeURIComponent('https://wefinancegroup.org/PaymentFailed');
         const mechantId = 15759218;
-        const baseUrl = "https://www.payfast.co.za/eng/process?cmd=_paynow&receiver="+mechantId+"&item_name=Investments&item_description=paying "+formatToCurrency(amount)+" for my loan out&amount="+amount+"&return_url="+return_url+"&cancel_url="+cancel_url+""
+        const baseUrl = "https://www.payfast.co.za/eng/process?cmd=_paynow&receiver="+mechantId+"&item_name=Investments&item_description=paying for my loan out&amount="+amount+"&return_url="+return_url+"&cancel_url="+cancel_url+""
         window.open(baseUrl, '_blank');
     }
     return(
