@@ -99,7 +99,8 @@ const calculateInterest = (loanAmount,investmentAmount,currentLoanInterest,curre
             newRate = 0;
         }
         if(newRate >= currentInvestmentInterest ){
-            newRate = newRate - ((newRate - currentInvestmentInterest) + 3)
+            //newRate = newRate - ((newRate - currentInvestmentInterest) + 3)
+            newRate = Math.floor(Math.random()*3+5);
         }
         if(investmentAmountIsGreator > 1 && investmentAmountIsGreator < 3){
             canLoan = false
