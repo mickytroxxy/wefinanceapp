@@ -11,7 +11,6 @@ export default function LoanTerms(props) {
     React.useEffect(()=>{},[])
     const isLoanAccepted =(status)=>{
         isLoanTermsAccepted(status);
-        setDialogData({visible:false})
     }
     return (
         <Box textAlign='center'>

@@ -44,7 +44,7 @@ export default function Documents({handleChange}) {
         <Typography>
             <h3 className="fontBold">LOAN SECTION</h3>
             {isLoanAvailable?(
-                <p className="fontBold" style={{color:'tomato'}}>*NOTE: For your loan to be processed, you should be a south African citizen with legit documents. Your documents should also be clear!</p>
+                <p className="fontBold" style={{color:'tomato'}}>*NOTE: For your loan to be processed, you should be a south African citizen with valid documents. Your documents should also be clear!</p>
             ):(
                 <p className="fontBold" style={{color:'tomato',fontWeight:"bold"}}>We do not currently offer loans. Please try again in few minutes</p>
             )}

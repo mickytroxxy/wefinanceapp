@@ -45,6 +45,7 @@ export default function AddLoan() {
     }
     const isLoanTermsAccepted = isAccepted =>{
         if(isAccepted){
+            setDialogData({visible:false})
             const docId = loggedUser.phoneNumber + Date.now();
             const loanData = {...loanDetails,docId,phoneNumber:loggedUser.phoneNumber,date:Date.now(),status:"PENDING",interestAmount:loanRepayments.interestAmount,loanInterest:loanRepayments.interest,totalRepayments:loanRepayments.totalRepayments}
             createData("loans",docId,loanData) && setLoanSubmitted(true);
