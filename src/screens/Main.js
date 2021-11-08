@@ -28,11 +28,11 @@ function MainDashboard(props) {
     }
   }
   const data = {
-    labels: ['TOTAL LOAN ISSUED', 'TOTAL INVESTMENTS'],
+    labels: ['LOAN INTEREST', 'INVESTMENT INTEREST'],
     datasets: [
       {
         label: 'Total amount',
-        data: [currentInterests.loanAmount, currentInterests.investmentAmount],
+        data: [currentInterests.currentLoanInterest, currentInterests.currentInvestmentInterest],
         backgroundColor: [
           '#acf7f4',
           '#bbc9f7',
@@ -96,12 +96,12 @@ function MainDashboard(props) {
                         <CheckCircleOutlinedIcon style={{fill: "green",fontSize:100}}/>
                         </Typography>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                            <div className="fontLight" style={{fontWeight:"bold"}}>Current Interest is on {currentInterests.currentInvestmentInterest.toFixed(2)}% / Week</div>
+                            <div className="fontBold1" style={{color:"#757575",fontSize:14}}>Interest is on {currentInterests.currentInvestmentInterest.toFixed(2)}% per Week</div>
                         </Typography>
                     </CardContent>
                     <CardActions style={{backgroundColor:'#fff',borderRadius:10,padding:5,margin:5}}>
                         <Button style={{height:50}}>
-                            <h5 className="fontBold1" style={{color:'#757575',fontSize:12}}>TOTAL INVESTMENTS {formatToCurrency(currentInterests.investmentAmount)}</h5>
+                            <h5 className="fontBold1" style={{color:'#757575',fontSize:12}}>CURRENT INVESTMENT STATUS</h5>
                         </Button>
                     </CardActions>
                     </Card>
@@ -114,21 +114,23 @@ function MainDashboard(props) {
                         </Typography>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
                             {currentInterests.canLoan ? (
-                              <div className="fontLight" style={{fontWeight:"bold"}}>Current Interest is on {currentInterests.currentLoanInterest.toFixed(2)}% / Week</div>
+                              <div className="fontBold1" style={{color:"#757575",fontSize:14}}>Interest is on {currentInterests.currentLoanInterest.toFixed(2)}% per Week</div>
                             ):(
-                              <div className="fontLight" style={{fontWeight:"bold",color:"tomato"}}>Not available, check again later.</div>
+                              <div className="fontBold1" style={{color:"#757575"}}>Not available, check again later.</div>
                             )}
                         </Typography>
                     </CardContent>
                     <CardActions style={{backgroundColor:'#fff',borderRadius:10,padding:5,margin:5}}>
                         <Button style={{height:50}}>
-                            <h5 className="fontBold1" style={{color:'#757575',fontSize:12}}>TOTAL LOAN {formatToCurrency(currentInterests.loanAmount)}</h5>
+                            <h5 className="fontBold1" style={{color:'#757575',fontSize:12}}>CURRENT LOAN STATUS</h5>
                         </Button>
                     </CardActions>
                     </Card>
                 </Grid>
                 </Grid>
-                <p><b className="fontLight" style={{fontSize:13,fontWeight:'bold',color:'#757575'}}>The above graph indicates that the if you invest a certain amount, you will get {currentInterests.currentInvestmentInterest.toFixed(2)}% of that amount within the chosen period & the loan interest is on {currentInterests.currentLoanInterest.toFixed(2)}%</b></p>
+                <p className="fontBold1" style={{fontSize:13,color:'#757575'}}>
+                    Please note, current interests may change according to the amount of loan issued vs the amount of investments, your investment amount and the selected investment period
+                </p>
             </Grid>
             <Grid item xs={12} sm={12} md={4} lg={4}>
                 <Doughnut data={data} options={{responsive: true,maintainAspectRatio: true}}/>

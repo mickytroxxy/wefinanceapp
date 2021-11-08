@@ -70,7 +70,7 @@ export default function Header() {
     setResponsiveness();
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
-  const isLoanTermsAccepted = isAccepted => {}
+  const isLoanTermsAccepted = isAccepted => {setDialogData({visible:false})}
   const displayDesktop = () => {
     return (
       <Toolbar className={toolbar} style={{padding:0,margin:0}}>

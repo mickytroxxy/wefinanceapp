@@ -12,12 +12,16 @@ import InfoIcon from '@mui/icons-material/Info';
 import {createData} from "../../context/api";
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
+import FacebookIcon from '@mui/icons-material/Facebook';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import IconButton from '@mui/material/IconButton';
 const issueTypes = ["ACCOUNT ACCESS","LOAN ISSUE","INVESTMENT ISSUE","WITHDRAWAL ISSUE","OTHER"];
 export default function ContactUs() {
     const [contactStatus,setContactStatus]=React.useState(null);
     const [contactDetails,setContactDetails] = React.useState({issueType:'ACCOUNT ACCESS',fname:'',emailAddress:'',message:''})
     const [isError,setIsError]=React.useState(false);
+    const {socialMedia} = React.useContext(AppContext);
     const contact_btn_clicked =()=>{
         if(contactDetails.fname.length > 2 && contactDetails.emailAddress!=="" && contactDetails.message!==""){
             const docId = contactDetails.emailAddress + Math.floor(Math.random()*89999+10000);
@@ -32,6 +36,22 @@ export default function ContactUs() {
             {!contactStatus ? (
                 <Typography>
                     <Box textAlign="left" style={{border: '1px solid #ccc',borderRadius:7,marginBottom:20,padding:5,backgroundColor:'#f6f7fa'}}>
+                        <Grid container onClick={()=>socialMedia("whatsApp")}>
+                            <Grid item xs={2}>
+                                <WhatsAppIcon style={{fill: "green",fontSize:28}} />
+                            </Grid>
+                            <Grid item xs={10}>
+                                <span className="fontLight" style={{marginTop:6}}>+27 65 520 5898</span>
+                            </Grid>
+                        </Grid>
+                        <Grid container onClick={()=>socialMedia("facebook")}>
+                            <Grid item xs={2}>
+                                <FacebookIcon style={{fill: "blue",fontSize:28}} />
+                            </Grid>
+                            <Grid item xs={10}>
+                                <span className="fontLight" style={{marginTop:6}}>We Finance Group</span>
+                            </Grid>
+                        </Grid>
                         <Grid container>
                             <Grid item xs={2}>
                                 <EmailIcon style={{fill: "#bbc9f7",fontSize:28}} />

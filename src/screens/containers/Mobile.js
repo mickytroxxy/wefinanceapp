@@ -2,6 +2,7 @@ import React from "react";
 import SignInOutContainer from './index';
 import AddInvestment from '../../components/modal/AddInvestment';
 import WithdrawFunds from '../../components/modal/WithdrawFunds';
+import ContactUs from '../../components/modal/ContactUs';
 import { useLocation } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -27,6 +28,7 @@ export default function Mobile() {
                 {location.params.page === "GET STARTED" && <SignInOutContainer/>}
                 {location.params.page === "ADD NEW INVESTMENT" && <AddInvestment/>}
                 {location.params.page === "WITHDRAW YOUR FUNDS" && <WithdrawFunds data={location.params.data}/>}
+                {location.params.page === "CONTACT US" && <ContactUs/>}
             </div>
         </div>
     );

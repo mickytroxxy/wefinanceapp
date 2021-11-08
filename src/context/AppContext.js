@@ -65,7 +65,7 @@ export const AppProvider = (props) =>{
     const getCurrentInterests = (loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest,isInit) => isInit ? setCurrentInterests(calculateInterest(loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest)) : calculateInterest(loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest);
     
     return(
-        <AppContext.Provider value={{loggedUser,setLoggedUser,setToastData,signOutFn,navigate,userHasLoggedIn,mobileView,currentInterests,formatToCurrency,investmentInterests,loanInterests,getCurrentInterests,setInvestmentInterests,setLoanInterests,getMilSecsByPeriod,setDialogData,accountBalance,setAccountBalance}}>
+        <AppContext.Provider value={{loggedUser,socialMedia,setLoggedUser,setToastData,signOutFn,navigate,userHasLoggedIn,mobileView,currentInterests,formatToCurrency,investmentInterests,loanInterests,getCurrentInterests,setInvestmentInterests,setLoanInterests,getMilSecsByPeriod,setDialogData,accountBalance,setAccountBalance}}>
             {props.children}
             <CustomizedDialogs dialogData={dialogData} setDialogData={setDialogData}/>
             <ShowToast toastData={toastData} setToastData={setToastData}/>
@@ -73,6 +73,11 @@ export const AppProvider = (props) =>{
     )
 }
 const navigate = (pathname,params) => history.push({pathname,params});
+const socialMedia =type=>{
+    let link = "https://api.whatsapp.com/send?phone=27655205898&text=Hello%20there,%20thanks%20for%20contacting%20We%20Finance%20Group,%20How%20may%20we%20help?"
+    type === "facebook" ? link = "https://web.facebook.com/wefinancegroup" : link = link;
+    window.open(link, '_blank');
+}
 const formatToCurrency = (val) => {
     return "R " + val.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$& ");
 };

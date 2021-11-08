@@ -14,7 +14,7 @@ import expert from '../img/clients/expert-option.png';
 import betxchange from '../img/clients/betxchange.webp';
 import plus500 from '../img/clients/plus500_logo.png';
 import iqoption from '../img/clients/iqoption-logo.jpg';
-
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -64,7 +64,7 @@ export default function Body() {
     const [state, setState] = useState({mobileView: false});
     
     const [readMore,setReadMore]=useState(false);
-    const { setDialogData,navigate } = React.useContext(AppContext);
+    const { setDialogData,navigate, socialMedia } = React.useContext(AppContext);
     const { mobileView } = state;
     const [expanded, setExpanded] = React.useState(false);
     const handleChange = (panel) => (event, isExpanded) => {
@@ -89,6 +89,9 @@ export default function Body() {
                             <center><h1 style={{color:'#3f4750',fontWeight:"bolder",fontSize:36}} className="fontBold1">AN EASY WAY TO BECOME <span style={{color:"#bbc9f7"}}>A LOAN SHARK</span></h1></center>
                             <center><p style={{color:'#757575'}} className="fontBold">Easily apply for a quick loan or loan out your funds to our trusted clients all over the nation. Invest your money wisely and allow it to work for you and earn a massive interest within a short period of time! Loan in at low rate and loan out at high rate. Scroll down for more info</p></center>
                             <center><Button onClick={()=> !mobileView ? setDialogData({visible:true,title:'GET STARTED'}) : navigate("mobile",{page:'GET STARTED'})} style={{borderTopRightRadius:30,borderBottomLeftRadius:30}} className={classes.button} variant="outlined">GET STARTED</Button></center>
+                            <center>
+                                <Button style={{marginTop:10}} onClick={()=>socialMedia("whatsApp")}><WhatsAppIcon style={{fill: "green",fontSize:72}} /></Button>
+                            </center>
                         </div>
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -223,7 +226,7 @@ export default function Body() {
                             <Button variant="outlined" onClick={()=>setDialogData({visible:true,title:'TERMS & CONDITIONS',data:{isLoanTermsAccepted}})} style={{borderTopRightRadius:30,borderBottomLeftRadius:30}}  component="label"startIcon={<PrivacyTipIcon style={{fill: "#bbc9f7",fontSize:24}}/>}>TERMS & CONDITIONS</Button>
                         </Grid>
                         <Grid item xs={12} sm={12} style={{marginTop:30}}>
-                            <Button variant="outlined" onClick={()=>setDialogData({visible:true,title:'CONTACT US'})} style={{borderTopRightRadius:30,borderBottomLeftRadius:30}}  component="label"startIcon={<ContactPhoneIcon style={{fill: "#bbc9f7",fontSize:24}}/>}>CONTACT US</Button>
+                            <Button variant="outlined" onClick={()=> !mobileView ? setDialogData({visible:true,title:'CONTACT US'}) : navigate("mobile",{page:'CONTACT US'})} style={{borderTopRightRadius:30,borderBottomLeftRadius:30}}  component="label"startIcon={<ContactPhoneIcon style={{fill: "#bbc9f7",fontSize:24}}/>}>CONTACT US</Button>
                         </Grid>
                     </Grid>
                 )}

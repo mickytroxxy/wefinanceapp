@@ -16,6 +16,7 @@ import Toolbar from '@mui/material/Toolbar';
 import { Grid, Paper, Avatar, Typography, TextField, Button, makeStyles } from '@material-ui/core';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import DescriptionIcon from '@mui/icons-material/Description';
 import SendIcon from '@mui/icons-material/Send';
@@ -67,7 +68,7 @@ function Dashboard(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
-  const { loggedUser,accountBalance,formatToCurrency,signOutFn,mobileView, setToastData, setDialogData} = React.useContext(AppContext);
+  const { loggedUser,accountBalance,formatToCurrency,signOutFn,mobileView, setToastData, setDialogData, navigate} = React.useContext(AppContext);
   const [value,setValue]=React.useState(0)
   const handleChange = (event, newValue) => setValue(newValue);
   const [sideBarElem,setSideBarElem] = React.useState([
@@ -77,6 +78,7 @@ function Dashboard(props) {
     {name:'Transfers',selected:false,index:3},
     {name:'Documents',selected:false,index:4},
     {name:'Withdraw',selected:false,index:5},
+    {name:'Referral Bonus',selected:false,index:8},
     {name:'Contact Us',selected:false,index:6},
   ]);
   const renderDashboardIcons = name =>{
@@ -94,17 +96,23 @@ function Dashboard(props) {
       return <AtmIcon />
     }else if(name === "Contact Us"){
       return <MailIcon />
+    }else if(name === "Referral Bonus"){
+      return <LocalOfferIcon />
     }
   }
   const changeTabs = (index) =>{
-    if(index !== 3 && index!==6){
-      setMobileOpen(false)
+    setSideBarElem(sideBarElem.map(item => item.index !== index ? {...item,selected:false} : {...item,selected:true}))
+    setMobileOpen(false)
+    if(index !== 3 && index!==6 && index!==8){
       handleChange("event",index)
-      setSideBarElem(sideBarElem.map(item => item.index !== index ? {...item,selected:false} : {...item,selected:true}))
     }else if(index === 3){
-      setToastData({visible:true,text:'Your account is not yet verified for transfers',severity:'error'});
+      setToastData({visible:true,text:'Your account is not yet verified for transfers',severity:'success'});
+      handleChange("event",0)
     }else if(index === 6){
-      setDialogData({visible:true,title:'CONTACT US'})
+      !mobileView ? setDialogData({visible:true,title:'CONTACT US'}) : navigate("mobile",{page:'CONTACT US'})
+    }else if(index === 8){
+      handleChange("event",0)
+      setToastData({visible:true,text:'You do not have any referral bonus currently!',severity:'success'});
     }
   }
   const drawer = (
@@ -122,7 +130,7 @@ function Dashboard(props) {
       </List>
       <Divider />
       <Box textAlign="center">
-      <Button variant="outlined" onClick={signOutFn} style={{borderTopRightRadius:30,borderBottomLeftRadius:30,border: '2px solid tomato',marginTop:50,padding:20,color:"tomato"}} className="fontBold1"  component="label"startIcon={<LockOpenIcon style={{fill: "tomato",fontSize:24}}/>}>LOGOUT</Button>
+      <Button variant="outlined" onClick={signOutFn} style={{borderTopRightRadius:30,borderBottomLeftRadius:30,border: '2px solid tomato',marginTop:36,padding:20,color:"tomato"}} className="fontBold1"  component="label"startIcon={<LockOpenIcon style={{fill: "tomato",fontSize:24}}/>}>LOGOUT</Button>
       </Box>
     </div>
   );     

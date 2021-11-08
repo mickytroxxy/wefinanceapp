@@ -46,7 +46,7 @@ export default function Documents({handleChange}) {
             {isLoanAvailable?(
                 <p className="fontBold" style={{color:'tomato'}}>*NOTE: For your loan to be processed, you should be a south African citizen with valid documents. Your documents should also be clear!</p>
             ):(
-                <p className="fontBold" style={{color:'tomato',fontWeight:"bold"}}>We do not currently offer loans. Please try again in few minutes</p>
+                <p className="fontBold1" style={{color:'tomato',fontWeight:"bold"}}>We do not currently offer loans. Please try again in few minutes</p>
             )}
             <Paper elevation={0} style={{border: '3px solid #f2f8fb',borderRadius:10,marginBottom:10}}>
                 <Grid container spacing={1}>
