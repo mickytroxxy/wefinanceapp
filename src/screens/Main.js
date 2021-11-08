@@ -52,11 +52,15 @@ function MainDashboard(props) {
           let loanAmount = 0;
           let investAmount = 0;
           let withdrawalAmount = 0;
+          let completedInv = 0;
           if(loanData.length > 0){loanAmount = loanData.reduce((total, obj) => parseFloat(obj.loanAmount) + total,0)}
-          if(investData.length > 0){ investAmount = investData.reduce((total, obj) => parseFloat(obj.amount) + total,0)}
+          if(investData.length > 0){ 
+            investAmount = investData.reduce((total, obj) => parseFloat(obj.amount) + total,0);
+            completedInv = investData.filter(item => item.status !== "IN PROGRESS").reduce((total, obj) => parseFloat(obj.amount) + total,0)
+          }
           if(withdrawalData.length > 0){ withdrawalAmount = withdrawalData.reduce((total, obj) => parseFloat(obj.grossAmount) + total,0)}
-          const totalProfit = investData.reduce((total, obj) => parseFloat(obj.profit) + total,0);
-          const balance = (totalProfit + investAmount) - withdrawalAmount;
+          const totalProfit = investData.filter(item => item.status !== "IN PROGRESS").reduce((total, obj) => parseFloat(obj.profit) + total,0);
+          const balance = (totalProfit + completedInv) - withdrawalAmount;
           setFirstFourCards([{type:'Total Loan',value:loanAmount,icon:''},{type:'Total Investments',value:investAmount,icon:''},{type:'Total Withdrawals',value:withdrawalAmount,icon:''},{type:'Total Profit',value:totalProfit,icon:''}])
           setAccountBalance(balance)
         });

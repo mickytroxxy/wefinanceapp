@@ -68,7 +68,6 @@ export default function AddLoan() {
                 ):(
                     <p className="fontBold">Your loan amount is <span style={{fontWeight:'bold',color:'green'}}>{formatToCurrency(parseFloat(loanDetails.loanAmount))}</span>, your interest is <span style={{fontWeight:'bold',color:'green'}}>{parseFloat(loanRepayments.interest)}%</span>. You will have to repay <span style={{fontWeight:'bold',color:'green'}}>{formatToCurrency(parseFloat(loanRepayments.totalRepayments))}</span> with a period of {loanRepayments.period}</p>
                 )}
-                {fieldError && <p className="fontBold" style={{color:'tomato',fontWeight:'bold'}}>All fields are required to be filled properly. Please check your fields once!</p>}
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={12} md={4} lg={4}>
                         <FormControl fullWidth>
@@ -143,6 +142,7 @@ export default function AddLoan() {
                                 ))}
                             </Select>
                         </FormControl>
+                        {fieldError && <p className="fontBold" style={{color:'tomato',fontWeight:'bold'}}>All fields are required to be filled properly. Please check your fields once!</p>}
                         <Button variant="contained" onClick={()=>goToTerms()} style={{backgroundColor:'green',color:'#fff',marginTop:25,padding:15}}  component="label"startIcon={<CheckCircleOutlinedIcon style={{fill: "#fff"}}/>}>
                             <span className="fontBold">APPLY NOW</span>
                         </Button>
