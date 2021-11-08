@@ -32,8 +32,8 @@ const SignIn=({handleChange})=>{
                     <h2 className="fontBold1">Sign In</h2>
                 </Grid>
                 <FormControl fullWidth>
-                    <TextField style={{marginTop:25}} id="outlined-start-adornment" required onKeyUp={(e)=>setLoginDetails({...loginDetails,phoneNumber:e.target.value})} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><PhoneIcon style={{fill: "#b6b8b7",fontSize:25}} /></InputAdornment>}} label="ENTER PHONE NUMBER" variant="outlined"/>
-                    <TextField style={{marginTop:25}} id="outlined-start-adornment" required onKeyUp={(e)=>setLoginDetails({...loginDetails,password:e.target.value})} type='password' sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><LockOpenIcon style={{fill: "#b6b8b7",fontSize:25}} /></InputAdornment>}} label="ENTER PASSWORD" variant="outlined"/>
+                    <TextField style={{marginTop:25}} id="outlined-start-adornment" required onChange={(e)=>setLoginDetails({...loginDetails,phoneNumber:e.target.value})} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><PhoneIcon style={{fill: "#b6b8b7",fontSize:25}} /></InputAdornment>}} label="ENTER PHONE NUMBER" variant="outlined"/>
+                    <TextField style={{marginTop:25}} id="outlined-start-adornment" required onChange={(e)=>setLoginDetails({...loginDetails,password:e.target.value})} type='password' sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><LockOpenIcon style={{fill: "#b6b8b7",fontSize:25}} /></InputAdornment>}} label="ENTER PASSWORD" variant="outlined"/>
                 </FormControl>
 
                 <FormControlLabel

@@ -72,7 +72,7 @@ export const AppProvider = (props) =>{
         </AppContext.Provider>
     )
 }
-const navigate = location => history.push(location);
+const navigate = (pathname,params) => history.push({pathname,params});
 const formatToCurrency = (val) => {
     return "R " + val.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$& ");
 };

@@ -88,7 +88,7 @@ export default function Body() {
                         <div style={{paddingLeft:50,paddingRight:50,paddingBottom:30}}>
                             <center><h1 style={{color:'#3f4750',fontWeight:"bolder",fontSize:36}} className="fontBold1">AN EASY WAY TO BECOME <span style={{color:"#bbc9f7"}}>A LOAN SHARK</span></h1></center>
                             <center><p style={{color:'#757575'}} className="fontBold">Easily apply for a quick loan or loan out your funds to our trusted clients all over the nation. Invest your money wisely and allow it to work for you and earn a massive interest within a short period of time! Loan in at low rate and loan out at high rate. Scroll down for more info</p></center>
-                            <center><Button onClick={()=> !mobileView ? setDialogData({visible:true,title:'GET STARTED'}) : navigate("login")} style={{borderTopRightRadius:30,borderBottomLeftRadius:30}} className={classes.button} variant="outlined">GET STARTED</Button></center>
+                            <center><Button onClick={()=> !mobileView ? setDialogData({visible:true,title:'GET STARTED'}) : navigate("mobile",{page:'GET STARTED'})} style={{borderTopRightRadius:30,borderBottomLeftRadius:30}} className={classes.button} variant="outlined">GET STARTED</Button></center>
                         </div>
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -113,7 +113,7 @@ export default function Body() {
                                     </p>
                                     <p style={{paddingTop:10,paddingLeft:50,paddingRight:50,color:'#757575'}} className="fontBold">We believe in our moto which is <span className="fontBold1" style={{color:"#3488a7"}}>"ALLOW YOUR MONEY TO WORK FOR YOU"</span></p>
                                 </center>
-                                <center><Button onClick={()=> !mobileView ? setDialogData({visible:true,title:'GET STARTED'}) : navigate("login")} variant="outlined" className={classes.button} style={{borderRadius:20}}>I'M CURIOUS ALREADY</Button></center>
+                                <center><Button onClick={()=> !mobileView ? setDialogData({visible:true,title:'GET STARTED'}) : navigate("mobile",{page:'GET STARTED'})} variant="outlined" className={classes.button} style={{borderRadius:20}}>I'M CURIOUS ALREADY</Button></center>
                             </div>
                         </Grid>
                     </Grid>

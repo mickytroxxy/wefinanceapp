@@ -59,7 +59,7 @@ export default function WithdrawFunds(props) {
                     <FormControl fullWidth>
                         <div className="fontBold">Please note a <span style={{color:'green',fontSize:20}}>3.5%</span> service fee may apply</div>
                     </FormControl>
-                    <FormControl fullWidth>
+                    <FormControl fullWidth style={{marginTop:15}}>
                         <InputLabel id="demo-simple-select-label">BANK NAME</InputLabel>
                         <Select labelId="demo-simple-select-label" id="demo-simple-select" value={withdrawalDetails.bankName} label="BANK NAME">
                             {bankList.map((item) => (

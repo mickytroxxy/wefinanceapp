@@ -14,7 +14,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 const tableHeaders = ['DATE','AMOUNT','PROFIT','INTEREST','RETURNS','PERIOD','STATUS'];
 export default function Investment({handleChange}) {
-    const { loggedUser, formatToCurrency, setDialogData, mobileView } = React.useContext(AppContext);
+    const { loggedUser, formatToCurrency, setDialogData, mobileView, navigate } = React.useContext(AppContext);
     const [totalInvestments,setTotalInvestments] = React.useState(null);
     React.useEffect(()=>{
         getInvestments(loggedUser.phoneNumber, (response) => response.length > 0 && setTotalInvestments(response) )
@@ -116,7 +116,7 @@ export default function Investment({handleChange}) {
                     )}
                 </>
             )}
-            <Fab onClick={()=>setDialogData({visible:true,title:'ADD NEW INVESTMENT'})} color="primary" aria-label="add" style={{position: 'fixed',bottom: 16,right: 16,borderRadius:'100%',color:'#fff',backgroundColor:'#69d29e'}}>
+            <Fab onClick={()=> !mobileView ? setDialogData({visible:true,title:'ADD NEW INVESTMENT'}) : navigate("mobile",{page:'ADD NEW INVESTMENT'})} color="primary" aria-label="add" style={{position: 'fixed',bottom: 16,right: 16,borderRadius:'100%',color:'#fff',backgroundColor:'#69d29e'}}>
                 <AddIcon />
             </Fab>
         </Typography>

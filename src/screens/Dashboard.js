@@ -121,7 +121,9 @@ function Dashboard(props) {
         ))}
       </List>
       <Divider />
+      <Box textAlign="center">
       <Button variant="outlined" onClick={signOutFn} style={{borderTopRightRadius:30,borderBottomLeftRadius:30,border: '2px solid tomato',marginTop:50,padding:20,color:"tomato"}} className="fontBold1"  component="label"startIcon={<LockOpenIcon style={{fill: "tomato",fontSize:24}}/>}>LOGOUT</Button>
+      </Box>
     </div>
   );     
   const container = window !== undefined ? () => window().document.body : undefined;
