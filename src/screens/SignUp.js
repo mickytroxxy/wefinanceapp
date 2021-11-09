@@ -18,7 +18,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 import PersonIcon from '@mui/icons-material/Person';
 const SignUp = () => {
-    const { userHasLoggedIn,mobileView, setDialogData, setToastData } = React.useContext(AppContext);
+    const { userHasLoggedIn,mobileView, setDialogData, setToastData, navigate } = React.useContext(AppContext);
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e',marginTop:15 }
     const btnstyle={margin:'8px 0'}
@@ -40,7 +40,16 @@ const SignUp = () => {
         alert("Failed")
       }
     }
-    const isLoanTermsAccepted = isAccepted => isAccepted && setDialogData({visible:true,title:'ENTER CONFIRMATION CODE',data:{codeIsTrue,phoneNumber:userDetails.phoneNumber}});
+    const isLoanTermsAccepted = isAccepted => {
+      if(isAccepted){ 
+        if(!mobileView){
+          setDialogData({visible:true,title:'ENTER CONFIRMATION CODE',data:{codeIsTrue,phoneNumber:userDetails.phoneNumber}})
+        }else{
+          setDialogData({visible:false});
+          navigate("mobile",{page:'ENTER CONFIRMATION CODE',data:{codeIsTrue,phoneNumber:userDetails.phoneNumber}})
+        }
+      }
+    }
     const codeIsTrue = () => {
       setDialogData({visible:false})
       createAccount();

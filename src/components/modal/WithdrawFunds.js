@@ -14,7 +14,7 @@ const bankList = ["AFRICAN BANK","FNB","CAPITEC","ABSA","STANDARD BANK","NEDBANK
 const accountTypes = ["CHEQUE ACCOUNT","TRANSIMITION ACCOUNT","SAVINGS"];
 export default function WithdrawFunds(props) {
     const {data:{isSuccess,amount}} = props;
-    const { setDialogData, loggedUser, accountBalance, formatToCurrency, setAccountBalance } = React.useContext(AppContext); 
+    const { setDialogData, loggedUser, accountBalance, formatToCurrency, setAccountBalance, navigate, mobileView } = React.useContext(AppContext); 
     const [withdrawalDetails,setWithdrawalDetails] = React.useState({bankName:'',accountNumber:'',accountHolder:'',accountType:'',branchCode:'',grossAmount:''})
     const [isError,setIsError]=React.useState(false);
     React.useEffect(()=>{
@@ -31,7 +31,7 @@ export default function WithdrawFunds(props) {
         }
     }
     const withdraw_btn_clicked =()=>{
-        setDialogData({visible:true,title:'ENTER CONFIRMATION CODE',data:{codeIsTrue,phoneNumber:loggedUser.phoneNumber}});
+       !mobileView ? setDialogData({visible:true,title:'ENTER CONFIRMATION CODE',data:{codeIsTrue,phoneNumber:loggedUser.phoneNumber}}) : navigate("mobile",{page:'ENTER CONFIRMATION CODE',data:{codeIsTrue,phoneNumber:loggedUser.phoneNumber}});
     }
     const withdraw_funds =()=>{
         if(withdrawalDetails.accountHolder!=="" && withdrawalDetails.accountNumber!=="" && withdrawalDetails.branchCode!=="" && withdrawalDetails.grossAmount!==""){

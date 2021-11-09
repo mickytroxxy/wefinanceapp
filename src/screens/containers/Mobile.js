@@ -3,6 +3,7 @@ import SignInOutContainer from './index';
 import AddInvestment from '../../components/modal/AddInvestment';
 import WithdrawFunds from '../../components/modal/WithdrawFunds';
 import ContactUs from '../../components/modal/ContactUs';
+import Otp from '../../components/modal/Otp';
 import { useLocation } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -29,6 +30,7 @@ export default function Mobile() {
                 {location.params.page === "ADD NEW INVESTMENT" && <AddInvestment/>}
                 {location.params.page === "WITHDRAW YOUR FUNDS" && <WithdrawFunds data={location.params.data}/>}
                 {location.params.page === "CONTACT US" && <ContactUs/>}
+                {location.params.page === "ENTER CONFIRMATION CODE" && (<Otp data={location.params.data}/>)}
             </div>
         </div>
     );
