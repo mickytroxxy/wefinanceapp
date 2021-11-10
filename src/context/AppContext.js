@@ -75,7 +75,11 @@ export const AppProvider = (props) =>{
 const navigate = (pathname,params) => history.push({pathname,params});
 const socialMedia =type=>{
     let link = "https://api.whatsapp.com/send?phone=27655205898"
-    type === "facebook" ? link = "https://web.facebook.com/wefinancegroup" : link = link;
+    if(type === "whatsAppGroup"){
+        link = " https://chat.whatsapp.com/KKoI5FBVlGjHFo4DDcyIJm";
+    }else if(type === "facebook"){
+        link = "https://web.facebook.com/wefinancegroup"
+    }
     window.open(link, '_blank');
 }
 const formatToCurrency = (val) => {

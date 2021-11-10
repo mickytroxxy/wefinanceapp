@@ -3,6 +3,7 @@ import { Button, Box,Typography,Container,makeStyles, Card, CardContent, CardMed
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 import img1 from '../img/image1.png';
 import img2 from '../img/img2.png';
+import vision from '../img/vision.png';
 import funds from '../img/funds.png';
 import loan from '../img/loan.png';
 import { AppContext } from '../context/AppContext';
@@ -58,6 +59,8 @@ const faq = [
     {header:"HOW LONG DOES IT TAKE TO GET MY INVESTMENTS",text:"You can choose your investment period from 7,14,28 days then place a withdrawal request which can take up to 48 hours",panel:"panel5",controls:"panel5bh-content"},
     {header:"IS THIS FREE",text:"We only charge you 3.5% on every withdrawal made",panel:"panel3",controls:"panel3bh-content"},
     {header:"ARE INTEREST RATES STABLE",text:"Interest rates may vary according to demand, You can check before investing",panel:"panel4",controls:"panel4bh-content"},
+    {header:"WHAT KIND OF BUSINESSES DO WE FUND",text:"We only fund shops, eg retails, mini-supermarkets, fashion shops etc. We don't loan out to businesses which deals with non-tongible products",panel:"panel5",controls:"panel5bh-content"},
+    {header:"HOW DO WE ASSESS A BUSINESS",text:"Your business must be registered with CIPC and running at least 1 year, We also require a 6 months bank statement and that's it",panel:"panel6",controls:"panel6bh-content"},
 ]
 export default function Body() {
     const classes = useStyles();
@@ -114,14 +117,16 @@ export default function Body() {
                                         <span style={{color:"#3488a7"}} className="fontBold1">We Finance Group Pty Ltd</span> is a registered financial service provider founded in 2018. We aim to provide short-term loans to large financial institute, betting companies and South African citizens.
                                         We have managed to process over R 75 000 000.00 within 36 months with 100% client satisfaction. We have managed to aquire over 50 000 individual investors and few large organizations.
                                     </p>
-                                    <p style={{paddingTop:10,paddingLeft:50,paddingRight:50,color:'#757575'}} className="fontBold">We believe in our moto which is <span className="fontBold1" style={{color:"#3488a7"}}>"ALLOW YOUR MONEY TO WORK FOR YOU"</span></p>
+                                    <p style={{paddingTop:10,paddingLeft:50,paddingRight:50,color:'#757575'}} className="fontBold">We believe in our moto which is <span className="fontBold1" style={{color:"#3488a7"}}>"ALLOW YOUR MONEY TO WORK FOR YOU."</span> Want to know more? Join our new South African whatsApp group for discussions!</p>
                                 </center>
-                                <center><Button onClick={()=> !mobileView ? setDialogData({visible:true,title:'GET STARTED'}) : navigate("mobile",{page:'GET STARTED'})} variant="outlined" className={classes.button} style={{borderRadius:20}}>I'M CURIOUS ALREADY</Button></center>
+                                <center>
+                                <Button style={{marginTop:10}} onClick={()=>socialMedia("whatsAppGroup")}><WhatsAppIcon style={{fill: "green",fontSize:72}} /></Button>
+                                </center>
                             </div>
                         </Grid>
                     </Grid>
                 </Typography>
-                <Typography style={{background: "linear-gradient(to right, #effcfc, #fceff8, #eff2fc)",marginTop:20,borderRadius:50}} justify="flex-start">
+                <Typography style={{background: "linear-gradient(to right, #effcfc, #fceff8, #eff2fc)",marginTop:20,borderRadius:50,marginBottom:20}} justify="flex-start">
                     <Grid container >
                         <Grid item xs={12} sm={6} style={{padding:50}} order={{ xs: 2, lg: 1 }}>
                             <div>
@@ -136,14 +141,14 @@ export default function Body() {
                             </div>
                         </Grid>
                         <Grid item xs={12} sm={6} order={{ xs: 1, lg: 1 }}>
-                            <Box display={{ xs: 'block' }} m={1}>
-                                <center><img src={img2} style={{maxWidth:'75%'}} alt=""/></center>
+                            <Box display={{ xs: 'block' }} m={1} style={{paddingTop:45}}>
+                                <center><img src={vision} style={{maxWidth:300}} alt=""/></center>
                             </Box>
                         </Grid>
                     </Grid>
                 </Typography>
+                <Typography style={{backgroundColor:"#bbc9f7",paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150}}><h3 className="fontBold1" style={{color:"#fff",fontSize:15}}>WHAT WE OFFER</h3></Typography>
                 <Typography style={{width:'100%'}}>
-                    <center><h3 style={{color:'#737a81'}} className="fontBold1">OUR SERVICES</h3></center>
                     <Grid container >
                         <Grid item xs={12} md={6}>
                             <h5 style={{color:'#737a81'}} className="fontBold1">LOAN IN</h5>
@@ -209,9 +214,9 @@ export default function Body() {
                     </center>
                     <Box textAlign="left">
                         {faq.map(({header,text,panel,control})=>(
-                            <Accordion expanded={expanded === panel} onChange={handleChange(panel)} elevation={0} sx={{ borderRadius:0 }}>
+                            <Accordion style={{backgroundColor:"#efeffe"}} expanded={expanded === panel} onChange={handleChange(panel)} elevation={0} sx={{ borderRadius:0 }}>
                                 <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={control} id={panel}>
-                                    <Typography sx={{ width: '100%', flexShrink: 0 }}><span className="fontBold1" style={{fontSize:13}}>{header}</span></Typography>
+                                    <Typography sx={{ width: '100%', flexShrink: 0 }}><span className="fontBold1" style={{fontSize:13,paddingLeft:10}}>{header}</span></Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
                                     <Typography><span className="fontBold">{text}</span></Typography>
