@@ -74,7 +74,7 @@ export const AppProvider = (props) =>{
 }
 const navigate = (pathname,params) => history.push({pathname,params});
 const socialMedia =type=>{
-    let link = "https://api.whatsapp.com/send?phone=27655205898&text=Hello%20there,%20thanks%20for%20contacting%20We%20Finance%20Group,%20How%20may%20we%20help?"
+    let link = "https://api.whatsapp.com/send?phone=27655205898"
     type === "facebook" ? link = "https://web.facebook.com/wefinancegroup" : link = link;
     window.open(link, '_blank');
 }

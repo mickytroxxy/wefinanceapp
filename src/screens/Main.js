@@ -11,11 +11,19 @@ import '../App.css';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import Container from '@mui/material/Container';
+import {getInvestments} from "../context/api";
+import { makeStyles  } from '@material-ui/core';
 import { AppContext } from '../context/AppContext';
+import PaymentIcon from '@mui/icons-material/Payment';
+import CachedIcon from '@mui/icons-material/Cached';
 import {getApprovedInvestments,getApprovedLoans,getMyWithdrawals} from "../context/api";
 function MainDashboard(props) {
-  const { setAccountBalance, loggedUser, currentInterests, formatToCurrency } = React.useContext(AppContext);     
+  const classes = useStyles();
+  const { setAccountBalance, loggedUser, currentInterests, formatToCurrency, mobileView, setDialogData } = React.useContext(AppContext);     
   const [firstFourCards,setFirstFourCards] = React.useState([{type:'Total Loan',value:20000,icon:''},{type:'Total Investments',value:29000,icon:''},{type:'Total Payout',value:20000,icon:''},{type:'Total Profit',value:20000,icon:''}])
+  const [investmentData,setInvestmentData] = React.useState(null);
+  const [readMore,setReadMore]=React.useState(false);
   const renderFirstFourCardIcon = ({type}) => {
     if(type === "Total Loan"){
       return <AccountBalanceIcon style={{fill: "#bbc9f7",fontSize:80}} />
@@ -62,9 +70,10 @@ function MainDashboard(props) {
           const totalProfit = investData.filter(item => item.status !== "IN PROGRESS").reduce((total, obj) => parseFloat(obj.profit) + total,0);
           const balance = (totalProfit + completedInv) - withdrawalAmount;
           setFirstFourCards([{type:'Total Loan',value:loanAmount,icon:''},{type:'Total Investments',value:investAmount,icon:''},{type:'Total Withdrawals',value:withdrawalAmount,icon:''},{type:'Total Profit',value:totalProfit,icon:''}])
-          setAccountBalance(balance)
+          setAccountBalance(balance);
         });
       });
+      getInvestments(loggedUser.phoneNumber, (response) => response.length > 0 && setInvestmentData(response) )
     })
   },[loggedUser])
   return (
@@ -139,8 +148,112 @@ function MainDashboard(props) {
         </Typography>
         <Typography style={{marginTop:20}}>
             <Typography style={{backgroundColor:"#bbc9f7",padding:2,paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150,marginBottom:15}}><h2 className="fontBold1" style={{color:"#fff",fontSize:15}}>INVESTMENT HISTORY</h2></Typography>
+            <Typography>
+              <Container>
+                  <Grid container spacing={1}>
+                      {investmentData && investmentData.map((item,i) => {
+                          let maxLength = 4;
+                          readMore ? maxLength = investmentData.length : mobileView ? maxLength = 4 : maxLength = 4;
+                          if(i < maxLength){
+                              return(
+                                  <Grid item key={i} xs={12} md={3}>
+                                      <Card className={classes.card} elevation={0} style={{paddingBottom:10,borderRadius:10,backgroundColor:"#f7f7fb"}}>
+                                          <div style={{backgroundColor:"#bbc9f7"}}><h3 className="fontBold1" style={{fontSize:14,color:'#fff'}}>{formatToCurrency(parseFloat(item.amount))}</h3></div>
+                                          <CardContent className={classes.cardContent}>
+                                              <Typography gutterBottom variant="h5" component="h2">
+                                                <span className="fontBold1" style={{fontSize:14,color:'#757575'}}>RETURNS</span>
+                                              </Typography>
+                                              <Typography>
+                                                <span className="fontBold">{formatToCurrency(parseFloat(item.returns))}</span>
+                                              </Typography>
+                                              <Typography gutterBottom variant="h5" component="h2">
+                                                <span className="fontBold1" style={{fontSize:14,color:'#757575'}}>PROFIT</span>
+                                              </Typography>
+                                              <Typography>
+                                                <span className="fontBold">{formatToCurrency(parseFloat(item.profit))}</span>
+                                              </Typography>
+                                          </CardContent>
+                                          <div>
+                                            {item.status === "MAKE PAYMENT" ? (
+                                                  <Button variant="contained" onClick={()=>setDialogData({visible:true,title:'MAKE PAYMENT FOR YOUR INVESTMENT',data:{amount:item.amount, docId:item.docId }})} style={{backgroundColor:'tomato',color:'#fff'}}  component="label"startIcon={<PaymentIcon style={{fill: "#fff"}}/>}>
+                                                      <span className="fontBold">{item.status}</span>
+                                                  </Button>
+                                              ):(
+                                                  <Button variant="outlined"  component="label" startIcon={
+                                                      item.status === "COMPLETED" ? <CheckCircleOutlinedIcon style={{fill: "green"}}/> : <CachedIcon style={{fill: "#f0e136"}}/>
+                                                  }>
+                                                      <span className="fontBold">{item.status}</span>
+                                                  </Button>
+                                              )}
+                                          </div>
+                                      </Card>
+                                  </Grid>
+                              )
+                          } 
+                      })}
+                  </Grid>
+                <center><Button onClick={()=>setReadMore(!readMore)} variant="outlined" className={classes.button} style={{borderRadius:20}}>{readMore?(<span>Read Less</span>):(<span>Read More</span>)}</Button></center>
+              </Container>
+          </Typography>
         </Typography>
     </Typography>
   );
 }
+const useStyles = makeStyles((theme) => ({
+  '@global': {
+    ul: {
+      margin: 0,
+      padding: 0,
+      listStyle: 'none',
+    },
+  },
+  heroContent: {
+    padding: theme.spacing(8, 0, 6),
+  },
+  paper: {
+      padding: theme.spacing(2),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+  },
+  root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'space-around',
+      overflow: 'hidden'
+  },
+  gridList: {
+      flexWrap: 'nowrap'
+  },
+  icon: {
+      marginRight: theme.spacing(2),
+  },
+  heroButtons: {
+      marginTop: theme.spacing(4),
+  },
+  cardGrid: {
+      paddingTop: theme.spacing(8),
+      paddingBottom: theme.spacing(8),
+  },
+  card: {
+      display: 'flex',
+      flexDirection: 'column',
+  },
+      cardMedia: {
+      paddingTop: '56.25%', // 16:9
+  },
+      cardContent: {
+      flexGrow: 1,
+  },
+  button: {
+      marginTop:15,borderColor:'#3488a7',color:'#3488a7',outline:'none',
+      '&:hover': {
+        backgroundColor: '#3488a7',
+        color: '#fff',
+      }
+  },
+  footer: {
+      backgroundColor: theme.palette.background.paper,
+      padding: theme.spacing(6),
+  },
+}));
 export default MainDashboard;
