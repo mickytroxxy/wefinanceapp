@@ -7,6 +7,7 @@ import SignUp from "./screens/SignUp";
 import SignIn from "./screens/SignIn";
 import PaymentSuccess from "./screens/PaymentSuccess";
 import PaymentFailed from "./screens/PaymentFailed";
+import ReferredBy from "./screens/ReferredBy";
 import Mobile from "./screens/containers/Mobile";
 import history from './components/history';
 
@@ -22,6 +23,7 @@ export default class Routes extends Component {
                     <Route path="/PaymentSuccess" component={PaymentSuccess} />
                     <Route path="/PaymentFailed" component={PaymentFailed} />
                     <Route path="/Mobile" component={Mobile} />
+                    <Route path="/ReferredBy/:phoneNumber" component={ReferredBy} />
                 </Switch>
             </Router>
         )

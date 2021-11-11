@@ -8,6 +8,7 @@ export const AppProvider = (props) =>{
     const [loggedUser,setLoggedUser]=React.useState(null);
     const [mobileView, setMobileView] = useState(false);
     const [accountBalance,setAccountBalance]=useState(0);
+    const [referredBy, setReferredBy] = React.useState(null)
     const [toastData,setToastData]=useState({visible:false,text:'Test text in here',severity:'success'})
     const [currentInterests,setCurrentInterests] = useState({loanAmount:0,investmentAmount:0,currentLoanInterest:0,currentInvestmentInterest:0,canLoan:false});
     const [investmentInterests, setInvestmentInterests] = useState([
@@ -65,7 +66,7 @@ export const AppProvider = (props) =>{
     const getCurrentInterests = (loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest,isInit) => isInit ? setCurrentInterests(calculateInterest(loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest)) : calculateInterest(loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest);
     
     return(
-        <AppContext.Provider value={{loggedUser,socialMedia,setLoggedUser,setToastData,signOutFn,navigate,userHasLoggedIn,mobileView,currentInterests,formatToCurrency,investmentInterests,loanInterests,getCurrentInterests,setInvestmentInterests,setLoanInterests,getMilSecsByPeriod,setDialogData,accountBalance,setAccountBalance}}>
+        <AppContext.Provider value={{loggedUser,referredBy,setReferredBy,socialMedia,setLoggedUser,setToastData,signOutFn,navigate,userHasLoggedIn,mobileView,currentInterests,formatToCurrency,investmentInterests,loanInterests,getCurrentInterests,setInvestmentInterests,setLoanInterests,getMilSecsByPeriod,setDialogData,accountBalance,setAccountBalance}}>
             {props.children}
             <CustomizedDialogs dialogData={dialogData} setDialogData={setDialogData}/>
             <ShowToast toastData={toastData} setToastData={setToastData}/>
