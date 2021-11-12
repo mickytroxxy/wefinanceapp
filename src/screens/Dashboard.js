@@ -33,6 +33,7 @@ import Withdrawal from './Withdrawal'
 import Documents from './Documents'
 import AddLoan from '../components/AddLoan'
 import dashboard_logo from "../img/logo2.png";
+import {getReferrals} from "../context/api";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -68,7 +69,7 @@ function Dashboard(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
-  const { loggedUser,accountBalance,formatToCurrency,signOutFn,mobileView, setToastData, setDialogData, navigate} = React.useContext(AppContext);
+  const { loggedUser,accountBalance,formatToCurrency,signOutFn,mobileView, setToastData, setDialogData, navigate, setReferralBalance, referralBalance} = React.useContext(AppContext);
   const [value,setValue]=React.useState(0)
   const handleChange = (event, newValue) => setValue(newValue);
   const [sideBarElem,setSideBarElem] = React.useState([
@@ -78,7 +79,7 @@ function Dashboard(props) {
     {name:'Transfers',selected:false,index:3},
     {name:'Documents',selected:false,index:4},
     {name:'Withdraw',selected:false,index:5},
-    {name:'Referral Bonus',selected:false,index:8},
+    {name:'Referral Info',selected:false,index:8},
     {name:'Contact Us',selected:false,index:6},
   ]);
   const renderDashboardIcons = name =>{
@@ -96,7 +97,7 @@ function Dashboard(props) {
       return <AtmIcon />
     }else if(name === "Contact Us"){
       return <MailIcon />
-    }else if(name === "Referral Bonus"){
+    }else if(name === "Referral Info"){
       return <LocalOfferIcon />
     }
   }
@@ -111,10 +112,18 @@ function Dashboard(props) {
     }else if(index === 6){
       !mobileView ? setDialogData({visible:true,title:'CONTACT US'}) : navigate("mobile",{page:'CONTACT US'})
     }else if(index === 8){
-      handleChange("event",0)
-      setToastData({visible:true,text:'You do not have any referral bonus currently!',severity:'success'});
+      setDialogData({visible:true,title:'REFERRALS INFO'})
     }
   }
+  React.useEffect(() => {
+    loggedUser && getReferrals(loggedUser.phoneNumber,(response)=>{
+      if (response.length > 0) {
+        const addedAmount = response.filter(item => item.status === "ADD").reduce((total, obj) => parseFloat(obj.amount) + total,0);
+        const minusAmount = response.filter(item => item.status === "MINUS").reduce((total, obj) => parseFloat(obj.amount) + total,0);
+        setReferralBalance(addedAmount - minusAmount);
+      }
+    });
+  }, [])
   const drawer = (
     <div>
       <img src={dashboard_logo} style={{width:"96%",marginBottom:10}} alt=""/>
@@ -124,7 +133,16 @@ function Dashboard(props) {
             <ListItemIcon style={{color: selected ? "#fff" : "#787b79"}}>
               {renderDashboardIcons(name)}
             </ListItemIcon>
-            <ListItemText><div className="fontBold" style={{color: selected ? "#fff" : "#787b79"}}>{name}</div></ListItemText>
+            <ListItemText>
+              <div className="fontBold" style={{color: selected ? "#fff" : "#787b79"}}>
+                {name!=="Referral Info" ? name : (
+                  <div>
+                    <div>{name}</div>
+                    <div className="fontBold1" style={{color:"green"}}>{formatToCurrency(referralBalance)}</div>
+                  </div>
+                )}
+              </div>
+            </ListItemText>
           </ListItem>
         ))}
       </List>

@@ -6,6 +6,7 @@ import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import {getTransactionInProgress,updateTransaction,deleteData} from "../../context/api";
 import CircularProgress from '@mui/material/CircularProgress';
 import DoNotDisturbAltOutlinedIcon from '@mui/icons-material/DoNotDisturbAltOutlined';
+import {createData} from "../../context/api";
 export default function ProcessTransaction(props) {
     const {isSuccess} = props;
     const { loggedUser } = React.useContext(AppContext);
@@ -18,6 +19,13 @@ export default function ProcessTransaction(props) {
                         if(updateTransaction("investments", response[0].transactionId, "IN PROGRESS")){
                             setPaymentStatus("SUCCESS");
                             deleteData("paymentInProgress",loggedUser.phoneNumber);
+                            if(loggedUser.referredBy !==null && loggedUser.referredBy!==""){
+                                const docId = loggedUser.phoneNumber + Date.now();
+                                const date = Date.now();
+                                const amount = 0.125 * parseFloat(response[0].amount);
+                                const data = {phoneNumber:loggedUser.refferedBy,amount,status:"ADD",docId,date,transactionBy:loggedUser.phoneNumber}
+                                createData("referrals",docId,data);
+                            }
                         }else{
                             setPaymentStatus("ERROR");
                             deleteData("paymentInProgress",loggedUser.phoneNumber);

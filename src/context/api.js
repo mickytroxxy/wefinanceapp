@@ -47,6 +47,15 @@ export const getApprovedInvestments = async (phoneNumber,cb) => {
         cb(e);
     }
 }
+export const getReferrals = async (phoneNumber,cb) => {
+    try {
+        const querySnapshot = await getDocs(query(collection(db, "referrals"), where("phoneNumber", "==", phoneNumber) ));
+        const data = querySnapshot.docs.map(doc => doc.data());
+        cb(data)
+    } catch (e) {
+        cb(e);
+    }
+}
 export const getDocuments = async (phoneNumber,cb) => {
     try {
         const querySnapshot = await getDocs(query(collection(db, "documents"), where("phoneNumber", "==", phoneNumber)));

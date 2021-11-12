@@ -9,13 +9,14 @@ import Select from '@mui/material/Select';
 import { AppContext } from '../../context/AppContext';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import InfoIcon from '@mui/icons-material/Info';
-import {createData,getMyWithdrawals} from "../../context/api";
+import {createData,getMyWithdrawals,setReferral} from "../../context/api";
 const bankList = ["AFRICAN BANK","FNB","CAPITEC","ABSA","STANDARD BANK","NEDBANK","OLD MUTUAL"];
-const accountTypes = ["CHEQUE ACCOUNT","TRANSIMITION ACCOUNT","SAVINGS"];
+const accountTypes = ["CHEQUE ACCOUNT","TRANSIMITION ACCOUNT","SAVINGS ACCOUNT"];
+const withdrawFromArray = ["INVESTMENTS","REFERRALS"];
 export default function WithdrawFunds(props) {
     const {data:{isSuccess,amount}} = props;
-    const { setDialogData, loggedUser, accountBalance, formatToCurrency, setAccountBalance, navigate, mobileView } = React.useContext(AppContext); 
-    const [withdrawalDetails,setWithdrawalDetails] = React.useState({bankName:'',accountNumber:'',accountHolder:'',accountType:'',branchCode:'',grossAmount:''})
+    const { setDialogData, loggedUser, accountBalance, formatToCurrency, setToastData, setAccountBalance, navigate, mobileView, referralBalance, setReferralBalance} = React.useContext(AppContext); 
+    const [withdrawalDetails,setWithdrawalDetails] = React.useState({bankName:'',accountNumber:'',accountHolder:'',accountType:'',branchCode:'',grossAmount:'',withdrawFrom:'INVESTMENTS'})
     const [isError,setIsError]=React.useState(false);
     React.useEffect(()=>{
         getMyWithdrawals(loggedUser.phoneNumber, (response) => response.length > 0 && setWithdrawalDetails(response.slice(-1)[0]) )
@@ -31,18 +32,43 @@ export default function WithdrawFunds(props) {
         }
     }
     const withdraw_btn_clicked =()=>{
-       !mobileView ? setDialogData({visible:true,title:'ENTER CONFIRMATION CODE',data:{codeIsTrue,phoneNumber:loggedUser.phoneNumber}}) : navigate("mobile",{page:'ENTER CONFIRMATION CODE',data:{codeIsTrue,phoneNumber:loggedUser.phoneNumber}});
+        let availableAmount = accountBalance;
+        if(withdrawalDetails.withdrawFrom === "REFERRALS"){
+            availableAmount = referralBalance
+        }else if(withdrawalDetails.withdrawFrom === "INVESTMENTS"){
+            availableAmount = accountBalance;
+        }else{
+            availableAmount = "NONE";
+        }
+        if(availableAmount === "NONE"){
+            setToastData({visible:true,text:'Please select where you would like to withdraw from!',severity:'error'});
+        }else{
+            if(availableAmount >= withdrawalDetails.grossAmount){
+                !mobileView ? setDialogData({visible:true,title:'ENTER CONFIRMATION CODE',data:{codeIsTrue,phoneNumber:loggedUser.phoneNumber}}) : navigate("mobile",{page:'ENTER CONFIRMATION CODE',data:{codeIsTrue,phoneNumber:loggedUser.phoneNumber}});
+            }else{
+                setToastData({visible:true,text:'Please enter the amount which is equal to or less than '+formatToCurrency(availableAmount),severity:'error'});
+            }
+        }
     }
     const withdraw_funds =()=>{
         if(withdrawalDetails.accountHolder!=="" && withdrawalDetails.accountNumber!=="" && withdrawalDetails.branchCode!=="" && withdrawalDetails.grossAmount!==""){
             const docId = loggedUser.phoneNumber + Date.now();
-            const status = "PENDING";
             const date = Date.now();
-            const withdrawalData = {...withdrawalDetails,docId,date,status,phoneNumber:loggedUser.phoneNumber};
-            if(createData("withdrawals",docId,withdrawalData)){
-                setAccountBalance(accountBalance - withdrawalDetails.grossAmount);
-                setDialogData({visible:true,title:'WITHDRAW YOUR FUNDS',data:{isSuccess:true,amount:withdrawalDetails.grossAmount}})
-                setTimeout(() => setDialogData({visible:false}), 3000);
+            if(withdrawalDetails.withdrawFrom === "INVESTMENTS"){
+                const status = "PENDING";
+                const withdrawalData = {...withdrawalDetails,docId,date,status,phoneNumber:loggedUser.phoneNumber};
+                if(createData("withdrawals",docId,withdrawalData)){
+                    setAccountBalance(accountBalance - withdrawalDetails.grossAmount);
+                    setDialogData({visible:true,title:'WITHDRAW YOUR FUNDS',data:{isSuccess:true,amount:withdrawalDetails.grossAmount}})
+                    setTimeout(() => setDialogData({visible:false}), 3000);
+                }
+            }else{
+                const data = {phoneNumber:loggedUser.phoneNumber,amount:withdrawalDetails.grossAmount,status:"MINUS",docId,date,transactionBy:loggedUser.phoneNumber}
+                if(createData("referrals",docId,data)){
+                    setReferralBalance(referralBalance - withdrawalDetails.grossAmount);
+                    setDialogData({visible:true,title:'WITHDRAW YOUR FUNDS',data:{isSuccess:true,amount:withdrawalDetails.grossAmount}})
+                    setTimeout(() => setDialogData({visible:false}), 3000);
+                }
             }
         }else{
             setIsError("All fields are supposed to be filled correctly!");
@@ -60,6 +86,16 @@ export default function WithdrawFunds(props) {
                         <div className="fontBold">Please note a <span style={{color:'green',fontSize:20}}>3.5%</span> service fee may apply</div>
                     </FormControl>
                     <FormControl fullWidth style={{marginTop:15}}>
+                        <InputLabel id="demo-simple-select-label">WITHDRAW FROM</InputLabel>
+                        <Select labelId="demo-simple-select-label" id="demo-simple-select" value={withdrawalDetails.withdrawFrom} label="WITHDRAW FROM">
+                            {withdrawFromArray.map((item) => (
+                                <MenuItem key={item} onClick={()=>setWithdrawalDetails({...withdrawalDetails,withdrawFrom:item})} value={item}>
+                                    {item}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth style={{marginTop:20}}>
                         <InputLabel id="demo-simple-select-label">BANK NAME</InputLabel>
                         <Select labelId="demo-simple-select-label" id="demo-simple-select" value={withdrawalDetails.bankName} label="BANK NAME">
                             {bankList.map((item) => (

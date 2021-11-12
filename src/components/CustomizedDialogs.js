@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import WithdrawFunds from "./modal/WithdrawFunds";
 import ContactUs from "./modal/ContactUs";
 import Otp from "./modal/Otp";
+import Referrals from "./modal/Referrals";
 import ProcessTransaction from "./modal/ProcessTransaction";
 import SignInOutContainer from '../screens/containers/index';
 import "../App.css"
@@ -43,6 +44,7 @@ export default function CustomizedDialogs(props) {
             {dialogData.title === "CONTACT US" && (<ContactUs/>)}
             {dialogData.title === "PAYMENT STATUS" && (<ProcessTransaction isSuccess={dialogData.data}/>)}
             {dialogData.title === "ENTER CONFIRMATION CODE" && (<Otp data={dialogData.data}/>)}
+            {dialogData.title === "REFERRALS INFO" && (<Referrals/>)}
           </Typography>
         </DialogContent>
         <DialogActions>
