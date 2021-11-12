@@ -25,10 +25,13 @@ export default function MakePayment(props) {
     return (
         <>
             {bankDetails && (
-                <>
+                <Box>
+                    <Box textAlign="center">
+                        <p className="fontBold" style={{color:"orangered"}}>Please note bank transfers & direct deposits may take up to 3 hrs to reflect on your account.</p>
+                    </Box>
                     <Grid container>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
-                            <p className="fontBold">BANK NAME</p>
+                            <p className="fontBold1">BANK NAME</p>
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
                             <p className="fontLight">{bankDetails.bankName}</p>
@@ -37,7 +40,7 @@ export default function MakePayment(props) {
                     <Divider/>
                     <Grid container>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
-                            <p className="fontBold">ACCOUNT HOLDER NAME</p>
+                            <p className="fontBold1">ACCOUNT HOLDER NAME</p>
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
                             <p className="fontLight">{bankDetails.accountHolder}</p>
@@ -46,7 +49,7 @@ export default function MakePayment(props) {
                     <Divider/>
                     <Grid container>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
-                            <p className="fontBold">ACCOUNT NUMBER</p>
+                            <p className="fontBold1">ACCOUNT NUMBER</p>
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
                             <p className="fontLight">{bankDetails.accountNumber}</p>
@@ -55,7 +58,7 @@ export default function MakePayment(props) {
                     <Divider/>
                     <Grid container>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
-                            <p className="fontBold">BRANCH CODE</p>
+                            <p className="fontBold1">BRANCH CODE</p>
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
                             <p className="fontLight">{bankDetails.branchCode}</p>
@@ -64,7 +67,7 @@ export default function MakePayment(props) {
                     <Divider/>
                     <Grid container>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
-                            <p className="fontBold">REFERENCE</p>
+                            <p className="fontBold1">REFERENCE</p>
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
                             <p className="fontLight">{docId}</p>
@@ -73,13 +76,13 @@ export default function MakePayment(props) {
                     <Divider/>
                     <Grid container>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
-                            <p className="fontBold">TOTAL AMOUNT</p>
+                            <p className="fontBold1">TOTAL AMOUNT</p>
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
                             <p className="fontLight">{formatToCurrency(parseFloat(amount))}</p>
                         </Grid>
                     </Grid>
-                </>
+                </Box>
             )}
             <Box textAlign='center'>
                 <Button onClick={()=>makeOnlinePayment()} variant="contained" style={{backgroundColor:'green',color:'#fff'}}  component="label"startIcon={<PublicIcon style={{fill: "#fff"}}/>}>

@@ -21,7 +21,7 @@ import {getApprovedInvestments,getApprovedLoans,getMyWithdrawals} from "../conte
 function MainDashboard(props) {
   const classes = useStyles();
   const { setAccountBalance, loggedUser, currentInterests, formatToCurrency, mobileView, setDialogData } = React.useContext(AppContext);     
-  const [firstFourCards,setFirstFourCards] = React.useState([{type:'Total Loan',value:20000,icon:''},{type:'Total Investments',value:29000,icon:''},{type:'Total Payout',value:20000,icon:''},{type:'Total Profit',value:20000,icon:''}])
+  const [firstFourCards,setFirstFourCards] = React.useState([{type:'Total Loan',value:0,icon:''},{type:'Total Investments',value:0,icon:''},{type:'Total Payout',value:0,icon:''},{type:'Total Profit',value:0,icon:''}])
   const [investmentData,setInvestmentData] = React.useState(null);
   const [readMore,setReadMore]=React.useState(false);
   const renderFirstFourCardIcon = ({type}) => {
@@ -149,7 +149,7 @@ function MainDashboard(props) {
         <Typography style={{marginTop:20}}>
             <Typography style={{backgroundColor:"#bbc9f7",padding:2,paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150,marginBottom:15}}><h2 className="fontBold1" style={{color:"#fff",fontSize:15}}>INVESTMENT HISTORY</h2></Typography>
             <Typography>
-              <Container>
+              <div>
                   <Grid container spacing={1}>
                       {investmentData && investmentData.map((item,i) => {
                           let maxLength = 4;
@@ -157,7 +157,7 @@ function MainDashboard(props) {
                           if(i < maxLength){
                               return(
                                   <Grid item key={i} xs={12} md={3}>
-                                      <Card className={classes.card} elevation={0} style={{paddingBottom:10,borderRadius:10,backgroundColor:"#f7f7fb"}}>
+                                      <Card className={classes.card} elevation={0} style={{paddingBottom:10,borderRadius:10,backgroundColor:"#f7f7fb",border: '1px solid #bbc9f7'}}>
                                           <div style={{backgroundColor:"#bbc9f7"}}><h3 className="fontBold1" style={{fontSize:14,color:'#fff'}}>{formatToCurrency(parseFloat(item.amount))}</h3></div>
                                           <CardContent className={classes.cardContent}>
                                               <Typography gutterBottom variant="h5" component="h2">
@@ -193,7 +193,7 @@ function MainDashboard(props) {
                       })}
                   </Grid>
                 <center><Button onClick={()=>setReadMore(!readMore)} variant="outlined" className={classes.button} style={{borderRadius:20}}>{readMore?(<span>Read Less</span>):(<span>Read More</span>)}</Button></center>
-              </Container>
+              </div>
           </Typography>
         </Typography>
     </Typography>
