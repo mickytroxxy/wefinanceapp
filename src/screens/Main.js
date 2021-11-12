@@ -83,7 +83,7 @@ function MainDashboard(props) {
             {firstFourCards.map((item,i) => {
                 return(
                 <Grid Key={i} item xs={12} sm={12} md={3} lg={3}>
-                    <Paper elevation={0} style={{borderRadius:10,paddingTop:10,paddingBottom:10}}>
+                    <Paper elevation={15} style={{borderRadius:10,paddingTop:10,paddingBottom:10}}>
                     {renderFirstFourCardIcon(item)}
                     <h3 className="fontBold" style={{color:'#757575'}}>{formatToCurrency(item.value)}</h3>
                     <h5 className="fontBold" style={{color:'#757575'}}>{item.type}</h5>
