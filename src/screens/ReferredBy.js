@@ -8,7 +8,12 @@ export default function ReferredBy() {
     React.useEffect(()=>{
         if(!loggedUser){
             setReferredBy(phoneNumber);
-            !mobileView ? setDialogData({visible:true,title:'GET STARTED'}) : navigate("mobile",{page:'GET STARTED'})
+            if(!mobileView){
+                setDialogData({visible:true,title:'GET STARTED'})
+            }else{
+                setDialogData({visible:false})
+                navigate("mobile",{page:'GET STARTED'})
+            }
         }else{
             navigate("Dashboard");
         } 
