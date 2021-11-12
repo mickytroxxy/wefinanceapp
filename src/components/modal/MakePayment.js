@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import { AppContext } from '../../context/AppContext';
 import {getBankDetails,createData} from "../../context/api";
 import '../../App.css';
-import { Grid, Paper, Typography, Button } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import Divider from '@mui/material/Divider';
 import PublicIcon from '@mui/icons-material/Public';
 export default function MakePayment(props) {
@@ -11,8 +11,7 @@ export default function MakePayment(props) {
     const { loggedUser,formatToCurrency } = React.useContext(AppContext);
     const [bankDetails, setBankDetails] = React.useState(null);
     React.useEffect(()=>{
-        //getBankDetails((response) => response.length > 0 && setBankDetails(response[0]) )
-        makeOnlinePayment();
+        getBankDetails((response) => response.length > 0 && setBankDetails(response[0]) )
     },[]);
     const makeOnlinePayment =()=>{
         const id = loggedUser.phoneNumber;
@@ -23,10 +22,7 @@ export default function MakePayment(props) {
         const baseUrl = "https://www.payfast.co.za/eng/process?cmd=_paynow&receiver="+mechantId+"&item_name=Investments&item_description=paying for my loan out&amount="+amount+"&return_url="+return_url+"&cancel_url="+cancel_url+""
         window.open(baseUrl, '_blank');
     }
-    return(
-        <></>
-    )
-    /*return (
+    return (
         <>
             {bankDetails && (
                 <>
@@ -91,5 +87,5 @@ export default function MakePayment(props) {
                 </Button>
             </Box>
         </>
-    );*/
+    );
 }
