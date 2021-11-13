@@ -10,8 +10,9 @@ import { AppContext } from '../context/AppContext';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import InfoIcon from '@mui/icons-material/Info';
 import {createData} from "../context/api";
+import { parseDOB, parseCitizenship, parseGender, validateIdNumber } from "south-african-id-validator";
 export default function AddLoan() {
-    const { loanInterests, setLoanInterests, setDialogData, loggedUser, currentInterests, formatToCurrency, getCurrentInterests,getMilSecsByPeriod } = React.useContext(AppContext);
+    const { loanInterests,setToastData, setLoanInterests, setDialogData, loggedUser, currentInterests, formatToCurrency, getCurrentInterests,getMilSecsByPeriod } = React.useContext(AppContext);
     const [loanDetails,setLoanDetails]=React.useState({fname:'',lname:'',phoneNumber:'',idNo:'',companyNumber:'',maritalStatus:'',physicalAddress:'',companyName:'',companyAddress:'',gender:'',employmentStatus:'EMPLOYED',position:'',netSalary:'',totalExpenses:1000,loanAmount:1000,debtReview:'NO',loanPeriod:'7 DAYS'})
     const [interestObj, setInterestObj] = React.useState(loanInterests[0]);
     const [loanRepayments,setLoanRepayments]=React.useState(null);
@@ -31,17 +32,23 @@ export default function AddLoan() {
         setLoanRepayments({amount,interestAmount,interest:currentLoanInterest,totalRepayments,dueDate,period:obj.period});
     }
     const getNewInterest = value => {
-        let range = 2000;
-        if(value < 2000){
-            range = 2000;
-        }else if(value > 2000 && value < 5000){
-            range = 5000;
-        }else if(value > 5000){
-            range = 10000;
+        if(isNumeric(value)){
+            if(value < 15001){
+                let range = 2000;
+                if(value < 2000){
+                    range = 2000;
+                }else if(value > 2000 && value < 5000){
+                    range = 5000;
+                }else if(value > 5000){
+                    range = 10000;
+                }
+                const interestArray = interestObj.interestArray.map(item => item.amountBelow !== range ? {...item,selected:false} : {...item,selected:true});
+                setLoanInterests(loanInterests.map(item => item.period !== interestObj.period ? item : {...interestObj,interestArray}));
+                calculateReturns({period:interestObj.period,interestArray},value)
+            }else{
+                setToastData({visible:true,text:'Our max loan amount is R15 000.00',severity:'error'});
+            }
         }
-        const interestArray = interestObj.interestArray.map(item => item.amountBelow !== range ? {...item,selected:false} : {...item,selected:true});
-        setLoanInterests(loanInterests.map(item => item.period !== interestObj.period ? item : {...interestObj,interestArray}));
-        calculateReturns({period:interestObj.period,interestArray},value)
     }
     const isLoanTermsAccepted = isAccepted =>{
         if(isAccepted){
@@ -59,6 +66,15 @@ export default function AddLoan() {
             setTimeout(() => setFieldError(false) , 3000);
         }
     }
+    const check_id = () =>{
+        if(validateIdNumber(loanDetails.idNo).valid){
+            return true;
+        }else{
+            setToastData({visible:true,text:'The ID number entered is incorrect!',severity:'error'});
+            setLoanDetails({...loanDetails,idNo:""});
+            return false;
+        }
+    }
     if(!loanSubmitted){
         return (
             <div>
@@ -66,15 +82,15 @@ export default function AddLoan() {
                 {!loanRepayments ? (
                     <p className="fontBold" style={{color:'tomato'}}>* NOTE: For you to qualify you must be a RSA citizen who is not blacklisted. For us to be able to review your application you must have submitted your documents like your ID, proof of residence not old than 3 months, 3 months latest payslip & 3 months bank statement</p>
                 ):(
-                    <p className="fontBold">Your loan amount is <span style={{fontWeight:'bold',color:'green'}}>{formatToCurrency(parseFloat(loanDetails.loanAmount))}</span>, your interest is <span style={{fontWeight:'bold',color:'green'}}>{parseFloat(loanRepayments.interest)}%</span>. You will have to repay <span style={{fontWeight:'bold',color:'green'}}>{formatToCurrency(parseFloat(loanRepayments.totalRepayments))}</span> with a period of {loanRepayments.period}</p>
+                    <p className="fontBold">Your loan amount is <span style={{fontWeight:'bold',color:'green'}}>{formatToCurrency(parseFloat(loanDetails.loanAmount))}</span>, your interest is <span style={{fontWeight:'bold',color:'green'}}>{parseFloat(loanRepayments.interest).toFixed(2)}%</span>. You will have to repay <span style={{fontWeight:'bold',color:'green'}}>{formatToCurrency(parseFloat(loanRepayments.totalRepayments))}</span> within a period of {loanRepayments.period}</p>
                 )}
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={12} md={4} lg={4}>
                         <FormControl fullWidth>
                             <TextField id="outlined-start-adornment" value={loanDetails.fname} onChange={(e)=>setLoanDetails({...loanDetails,fname:e.target.value})} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><InfoIcon style={{fill: "#ade8f4",fontSize:20}} /></InputAdornment>}} label="FIRST NAME" variant="outlined"/>
                             <TextField style={{marginTop:20}} id="outlined-start-adornment" value={loanDetails.lname} onChange={(e)=>setLoanDetails({...loanDetails,lname:e.target.value})} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><InfoIcon style={{fill: "#ade8f4",fontSize:20}} /></InputAdornment>}} label="YOUR SURNAME" variant="outlined"/>
-                            <TextField style={{marginTop:20}} id="outlined-start-adornment" value={loanDetails.idNo} onChange={(e)=>setLoanDetails({...loanDetails,idNo:e.target.value})} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><InfoIcon style={{fill: "#ade8f4",fontSize:20}} /></InputAdornment>}} label="ID NUMBER" variant="outlined"/>
-                            <TextField style={{marginTop:20}} id="outlined-start-adornment" value={loanDetails.phoneNumber} onChange={(e)=>setLoanDetails({...loanDetails,phoneNumber:e.target.value})} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><InfoIcon style={{fill: "#ade8f4",fontSize:20}} /></InputAdornment>}} label="PHONE NUMBER" variant="outlined"/>
+                            <TextField style={{marginTop:20}} id="outlined-start-adornment" value={loanDetails.idNo} onChange={(e)=> isNumeric(e.target.value) && setLoanDetails({...loanDetails,idNo:e.target.value})} onMouseOut={check_id} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><InfoIcon style={{fill: "#ade8f4",fontSize:20}} /></InputAdornment>}} inputProps={{minlength:13, maxLength: 13}} label="ID NUMBER" variant="outlined"/>
+                            <TextField style={{marginTop:20}} id="outlined-start-adornment" value={loanDetails.phoneNumber} onChange={(e)=> isNumeric(e.target.value) && setLoanDetails({...loanDetails,phoneNumber:e.target.value})} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><InfoIcon style={{fill: "#ade8f4",fontSize:20}} /></InputAdornment>}} inputProps={{minlength:10, maxLength: 10}} label="PHONE NUMBER" variant="outlined"/>
                             <TextField style={{marginTop:20}} id="outlined-start-adornment" value={loanDetails.physicalAddress} onChange={(e)=>setLoanDetails({...loanDetails,physicalAddress:e.target.value})} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><InfoIcon style={{fill: "#ade8f4",fontSize:20}} /></InputAdornment>}} label="PHYSICAL ADDRESS" variant="outlined"/>
                         </FormControl>
                         <FormControl fullWidth style={{marginTop:20}}>
@@ -128,8 +144,8 @@ export default function AddLoan() {
                             </Select>
                         </FormControl>
                         <FormControl fullWidth>
-                            <TextField style={{marginTop:20}} id="outlined-start-adornment" value={loanDetails.netSalary} onChange={(e)=>setLoanDetails({...loanDetails,netSalary:e.target.value})} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><InfoIcon style={{fill: "#ade8f4",fontSize:20}} /></InputAdornment>}} label="NET SALARY" variant="outlined"/>
-                            <TextField style={{marginTop:20}} id="outlined-start-adornment" value={loanDetails.totalExpenses} onChange={(e)=>setLoanDetails({...loanDetails,totalExpenses:e.target.value})} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><InfoIcon style={{fill: "#ade8f4",fontSize:20}} /></InputAdornment>}} label="TOTAL EXPENSES" variant="outlined"/>
+                            <TextField style={{marginTop:20}} id="outlined-start-adornment" value={loanDetails.netSalary} onChange={(e)=> isNumeric(e.target.value) && setLoanDetails({...loanDetails,netSalary:e.target.value})} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><InfoIcon style={{fill: "#ade8f4",fontSize:20}} /></InputAdornment>}} label="NET SALARY" variant="outlined"/>
+                            <TextField style={{marginTop:20}} id="outlined-start-adornment" value={loanDetails.totalExpenses} onChange={(e)=> isNumeric(e.target.value) && setLoanDetails({...loanDetails,totalExpenses:e.target.value})} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><InfoIcon style={{fill: "#ade8f4",fontSize:20}} /></InputAdornment>}} label="TOTAL EXPENSES" variant="outlined"/>
                             <TextField style={{marginTop:20}} id="outlined-start-adornment" value={loanDetails.loanAmount} onChange={(e)=>getNewInterest(e.target.value)} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><InfoIcon style={{fill: "#ade8f4",fontSize:20}} /></InputAdornment>}} label="LOAN AMOUNT" placeholder="From R 1 000.00 - R 15 000.00" variant="outlined"/>
                         </FormControl>
                         <FormControl fullWidth style={{marginTop:20}}>
@@ -158,4 +174,7 @@ export default function AddLoan() {
             </Box>
         )
     }
+}
+function isNumeric(value) {
+    return /^-?\d+$/.test(value);
 }

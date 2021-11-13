@@ -60,14 +60,14 @@ export default function ContactUs() {
                                 <span className="fontLight" style={{marginTop:6}}>info@wefinancegroup.org</span>
                             </Grid>
                         </Grid>
-                        <Grid container>
+                        {/*<Grid container>
                             <Grid item xs={2}>
                                 <PhoneIcon style={{fill: "#bbc9f7",fontSize:28}} />
                             </Grid>
                             <Grid item xs={10}>
                                 <span className="fontLight" style={{marginTop:6}}>+27 10 335 0933</span>
                             </Grid>
-                        </Grid>
+                        </Grid>*/}
                         <Grid container>
                             <Grid item xs={2}>
                                 <LocationOnIcon style={{fill: "#bbc9f7",fontSize:28}} />

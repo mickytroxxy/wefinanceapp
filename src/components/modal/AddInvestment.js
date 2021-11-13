@@ -27,17 +27,27 @@ export default function AddInvestment() {
         setInvestmentReturns({amount,profit,interest:currentInvestmentInterest,returns,dueDate,period:obj.period})
     }
     const getNewInterest = value => {
-        let range = 2000;
-        if(value < 2000){
-            range = 2000;
-        }else if(value > 2000 && value < 5000){
-            range = 5000;
-        }else if(value > 5000){
-            range = 10000;
+        if(isNumeric(value)){
+            let range = 2000;
+            if(value < 2000){
+                range = 2000;
+            }else if(value > 2000 && value < 5000){
+                range = 5000;
+            }else if(value > 5000){
+                range = 10000;
+            }
+            if(value > 999){
+                if(value < 100001){
+                    const interestArray = interestObj.interestArray.map(item => item.amountBelow !== range ? {...item,selected:false} : {...item,selected:true});
+                    setInvestmentInterests(investmentInterests.map(item => item.period !== interestObj.period ? item : {...interestObj,interestArray}));
+                    calculateReturns({period:interestObj.period,interestArray},value);
+                }else{
+                    setToastData({visible:true,text:'The investment max amount is R100 000.00',severity:'error'});
+                }
+            }else{
+                setToastData({visible:true,text:'The investment min amount is R1 000.00',severity:'error'});
+            }
         }
-        const interestArray = interestObj.interestArray.map(item => item.amountBelow !== range ? {...item,selected:false} : {...item,selected:true});
-        setInvestmentInterests(investmentInterests.map(item => item.period !== interestObj.period ? item : {...interestObj,interestArray}));
-        calculateReturns({period:interestObj.period,interestArray},value)
     }
     const invest_btn_clicked = () =>{
         const date = Date.now();
@@ -69,11 +79,14 @@ export default function AddInvestment() {
                             </MenuItem>
                         ))}
                     </Select>
-                    <TextField style={{marginTop:25}} id="outlined-start-adornment" onKeyUp={(e)=>setInvestmentName(e.target.value)} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><LocalAtmOutlinedIcon style={{fill: "#b6b8b7",fontSize:25}} /></InputAdornment>}} label="INVESTMENT NICKNAME" variant="outlined"/>
-                    <TextField style={{marginTop:25}} id="outlined-start-adornment" onKeyUp={(e)=>{getNewInterest(e.target.value)}} placeholder={investmentAmount} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start">ZAR</InputAdornment>}} label="ENTER INVESTMENT AMOUNT" variant="outlined"/>
+                    <TextField style={{marginTop:25}} id="outlined-start-adornment" onChange={(e)=>setInvestmentName(e.target.value)} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><LocalAtmOutlinedIcon style={{fill: "#b6b8b7",fontSize:25}} /></InputAdornment>}} label="INVESTMENT NICKNAME" variant="outlined"/>
+                    <TextField style={{marginTop:25}} id="outlined-start-adornment" value={investmentAmount} onChange={(e)=>{getNewInterest(e.target.value)}} placeholder={investmentAmount} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start">ZAR</InputAdornment>}} label="ENTER INVESTMENT AMOUNT" variant="outlined"/>
                     <div style={{marginTop:25}}><Button><CheckCircleOutlinedIcon style={{fill: "green",fontSize:100}} onClick={invest_btn_clicked} /></Button></div>
                 </FormControl>
             </Typography>
         </Box>
     );
+}
+function isNumeric(value) {
+    return /^-?\d+$/.test(value);
 }
