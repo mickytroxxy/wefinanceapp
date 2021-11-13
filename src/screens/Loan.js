@@ -31,7 +31,7 @@ export default function Documents({handleChange}) {
         }
     }
     const goToLoanPage = () =>{
-        if(!currentInterests.canLoan){
+        if(currentInterests.canLoan){
             handleChange("event",7)
         }else{
             setIsLoanAvailable(false);
