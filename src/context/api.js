@@ -150,6 +150,15 @@ export const updateTransaction = async (tableName,docId,status) => {
         return false;
     }
 }
+export const close_investment = async (tableName,docId,status) => {
+    try {
+        const docRef = doc(db, tableName, docId);
+        await updateDoc(docRef, { status });
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
 export const uploadFile = (file,path,cb) =>{
     const storage = getStorage();
     const storageRef = ref(storage, path);

@@ -12,7 +12,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
-import {getInvestments} from "../context/api";
+import {getInvestments,close_investment} from "../context/api";
 import { makeStyles  } from '@material-ui/core';
 import { AppContext } from '../context/AppContext';
 import PaymentIcon from '@mui/icons-material/Payment';
@@ -53,6 +53,15 @@ function MainDashboard(props) {
       },
     ],
   };
+  const check_withdrawal_date = item =>{
+    const period = item.period.split(" ")[0];
+    const dayInMils = 1000 * 60 * 60 * 24;
+    const allowed_period = parseFloat(period) * dayInMils;
+    if((Date.now() - parseFloat(item.date)) > allowed_period){
+      setInvestmentData(investmentData.map(i => i.docId === item.docId ? {...i,status:'COMPLETED'} : i));
+      close_investment("investments",item.docId,"COMPLETED");
+    }
+  }
   React.useEffect(()=>{
     loggedUser && getApprovedLoans(loggedUser.phoneNumber,(loanData)=>{
       getApprovedInvestments(loggedUser.phoneNumber,(investData)=>{
@@ -153,6 +162,9 @@ function MainDashboard(props) {
                   <Grid container spacing={1}>
                       {investmentData && investmentData.map((item,i) => {
                           let maxLength = 4;
+                          if(item.status === "IN PROGRESS"){
+                            check_withdrawal_date(item);
+                          }
                           readMore ? maxLength = investmentData.length : mobileView ? maxLength = 4 : maxLength = 4;
                           if(i < maxLength){
                               return(

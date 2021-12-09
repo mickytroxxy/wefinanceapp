@@ -76,7 +76,7 @@ export const AppProvider = (props) =>{
 }
 const navigate = (pathname,params) => history.push({pathname,params});
 const socialMedia =type=>{
-    let link = "https://api.whatsapp.com/send?phone=27655205898"
+    let link = "https://api.whatsapp.com/send?phone=27734660029"
     if(type === "whatsAppGroup"){
         link = " https://chat.whatsapp.com/KKoI5FBVlGjHFo4DDcyIJm";
     }else if(type === "facebook"){

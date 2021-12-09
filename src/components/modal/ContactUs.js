@@ -41,7 +41,7 @@ export default function ContactUs() {
                                 <WhatsAppIcon style={{fill: "green",fontSize:28}} />
                             </Grid>
                             <Grid item xs={10}>
-                                <span className="fontLight" style={{marginTop:6}}>+27 65 520 5898</span>
+                                <span className="fontLight" style={{marginTop:6}}>+27 73 466 0029</span>
                             </Grid>
                         </Grid>
                         <Grid container onClick={()=>socialMedia("facebook")}>
