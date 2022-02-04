@@ -11,11 +11,12 @@ import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import LocalAtmOutlinedIcon from '@mui/icons-material/LocalAtmOutlined';
 import {createData} from "../../context/api";
 export default function AddInvestment() {
-    const { investmentInterests, setToastData, setDialogData, loggedUser, currentInterests, formatToCurrency, getCurrentInterests,setInvestmentInterests,getMilSecsByPeriod } = React.useContext(AppContext); 
+    const { investmentInterests, setToastData, setDialogData, loggedUser, currentInterests, setAccountBalance, formatToCurrency, getCurrentInterests,setInvestmentInterests,getMilSecsByPeriod, accountBalance } = React.useContext(AppContext); 
     const [interestObj, setInterestObj] = React.useState(investmentInterests[0]);
-    const [investmentAmount,setInvestmentAmount]=React.useState(1000);
+    const [investmentAmount,setInvestmentAmount]=React.useState('');
     const [investmentReturns,setInvestmentReturns]=React.useState(null);
     const [investmentName,setInvestmentName]=React.useState("");
+    const [fromBalance,setFromBalance] = React.useState("NO");
     const calculateReturns = (obj,amount) =>{
         const basicInterest = obj.interestArray.filter(item => item.selected === true)[0].interest;
         const {currentInvestmentInterest} = getCurrentInterests(currentInterests.loanAmount,currentInterests.investmentAmount,50,basicInterest,false);
@@ -27,7 +28,7 @@ export default function AddInvestment() {
         setInvestmentReturns({amount,profit,interest:currentInvestmentInterest,returns,dueDate,period:obj.period})
     }
     const getNewInterest = value => {
-        if(isNumeric(value)){
+        if(isNumeric(value) || value === ''){
             let range = 2000;
             if(value < 2000){
                 range = 2000;
@@ -36,28 +37,49 @@ export default function AddInvestment() {
             }else if(value > 5000){
                 range = 10000;
             }
-            if(value > 999){
-                if(value < 100001){
-                    const interestArray = interestObj.interestArray.map(item => item.amountBelow !== range ? {...item,selected:false} : {...item,selected:true});
-                    setInvestmentInterests(investmentInterests.map(item => item.period !== interestObj.period ? item : {...interestObj,interestArray}));
-                    calculateReturns({period:interestObj.period,interestArray},value);
-                }else{
-                    setToastData({visible:true,text:'The investment max amount is R100 000.00',severity:'error'});
-                }
+            if(value < 100001){
+                const interestArray = interestObj.interestArray.map(item => item.amountBelow !== range ? {...item,selected:false} : {...item,selected:true});
+                setInvestmentInterests(investmentInterests.map(item => item.period !== interestObj.period ? item : {...interestObj,interestArray}));
+                calculateReturns({period:interestObj.period,interestArray},value);
             }else{
+                setToastData({visible:true,text:'The investment max amount is R100 000.00',severity:'error'});
+            }
+            if(value < 1000){
                 setToastData({visible:true,text:'The investment min amount is R1 000.00',severity:'error'});
             }
         }
     }
     const invest_btn_clicked = () =>{
-        const date = Date.now();
-        const investmentNickname = investmentName === "" ? loggedUser.fname + Date.now() : investmentName;
-        const docId = loggedUser.fname[0] + loggedUser.lname[0] + Math.floor(Math.random()*899999+100000);;
-        const totalInvestments = {...investmentReturns,date,investmentNickname,phoneNumber:loggedUser.phoneNumber,docId,status:'MAKE PAYMENT',paidOn:date};
-        if(createData("investments",docId,totalInvestments)){
-            setDialogData({visible:true,title:'MAKE PAYMENT FOR YOUR INVESTMENT',data:{amount:investmentAmount, docId }})
+        if(investmentAmount > 999){
+            let canContinue = true;
+            let status = "MAKE PAYMENT";
+            if(fromBalance === "YES"){
+                if(accountBalance < investmentAmount){
+                    canContinue = false;
+                }
+                status = "IN PROGRESS";
+            }
+            if(canContinue){
+                const date = Date.now();
+                const investmentNickname = investmentName === "" ? loggedUser.fname + Date.now() : investmentName;
+                const docId = loggedUser.fname[0] + loggedUser.lname[0] + Math.floor(Math.random()*899999+100000);;
+                const totalInvestments = {...investmentReturns,date,investmentNickname,phoneNumber:loggedUser.phoneNumber,docId,status,paidOn:date,fromBalance};
+                if(createData("investments",docId,totalInvestments)){
+                    if(fromBalance === "NO"){
+                        setDialogData({visible:true,title:'MAKE PAYMENT FOR YOUR INVESTMENT',data:{amount:investmentAmount, docId }})
+                    }else{
+                        setDialogData({visible:false});
+                        setAccountBalance(accountBalance - investmentAmount);
+                        setToastData({visible:true,text:'You have successfully funded your investment!',severity:'success'});
+                    }
+                }else{
+                    setToastData({visible:true,text:'Sorry there was an error while trying to process your request',severity:'error'})
+                }
+            }else{
+                setToastData({visible:true,text:'You do not have enough balance to fund this investment!',severity:'error'});
+            }
         }else{
-            setToastData({visible:true,text:'Sorry there was an error while trying to process your request',severity:'error'})
+            setToastData({visible:true,text:'The investment min amount is R1 000.00',severity:'error'});
         }
     }
     React.useEffect(()=>{})
@@ -70,6 +92,17 @@ export default function AddInvestment() {
                     )}
                 </FormControl>
                 <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">INVEST FROM YOUR BALANCE</InputLabel>
+                    <Select labelId="demo-simple-select-label" id="demo-simple-select" value={fromBalance} label="INVEST FROM YOUR BALANCE">
+                        <MenuItem value="NO" onClick={()=>setFromBalance("NO")}>NO</MenuItem>
+                        {['YES'].map((option) => (
+                            <MenuItem key={option} onClick={()=>setFromBalance(option)} value={option}>
+                                {option}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <FormControl fullWidth  style={{marginTop:25}}>
                     <InputLabel id="demo-simple-select-label">INVESTMENT PERIOD</InputLabel>
                     <Select labelId="demo-simple-select-label" id="demo-simple-select" value={interestObj.period} label="INVESTMENT PERIOD">
                         <MenuItem value="SELECT PERIOD">SELECT PERIOD</MenuItem>

@@ -67,7 +67,7 @@ export const AppProvider = (props) =>{
     const getCurrentInterests = (loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest,isInit) => isInit ? setCurrentInterests(calculateInterest(loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest)) : calculateInterest(loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest);
     
     return(
-        <AppContext.Provider value={{loggedUser,referredBy,referralBalance, setReferralBalance,setReferredBy,socialMedia,setLoggedUser,setToastData,signOutFn,navigate,userHasLoggedIn,mobileView,currentInterests,formatToCurrency,investmentInterests,loanInterests,getCurrentInterests,setInvestmentInterests,setLoanInterests,getMilSecsByPeriod,setDialogData,accountBalance,setAccountBalance}}>
+        <AppContext.Provider value={{loggedUser,referredBy,referralBalance, setReferralBalance,setReferredBy,socialMedia,setLoggedUser,setToastData,signOutFn,navigate,userHasLoggedIn,mobileView,currentInterests,formatToCurrency,investmentInterests,loanInterests,getCurrentInterests,setInvestmentInterests,setLoanInterests,getMilSecsByPeriod,setDialogData,accountBalance,setAccountBalance,sendSms}}>
             {props.children}
             <CustomizedDialogs dialogData={dialogData} setDialogData={setDialogData}/>
             <ShowToast toastData={toastData} setToastData={setToastData}/>
@@ -78,7 +78,8 @@ const navigate = (pathname,params) => history.push({pathname,params});
 const socialMedia =type=>{
     let link = "https://api.whatsapp.com/send?phone=27734660029"
     if(type === "whatsAppGroup"){
-        link = " https://chat.whatsapp.com/KKoI5FBVlGjHFo4DDcyIJm";
+        //link = " https://chat.whatsapp.com/KKoI5FBVlGjHFo4DDcyIJm";
+        link = "https://api.whatsapp.com/send?phone=27734660029"
     }else if(type === "facebook"){
         link = "https://web.facebook.com/wefinancegroup"
     }
@@ -90,6 +91,8 @@ const formatToCurrency = (val) => {
 const getMilSecsByPeriod = period => parseInt(period.split(" ")[0]) * (1000 * 60 * 60 * 24);
 
 const calculateInterest = (loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest) => {
+    currentInvestmentInterest = currentInvestmentInterest + 8.3
+    currentLoanInterest = currentLoanInterest + 9
     const investmentAmountIsGreator =  ((investmentAmount - loanAmount) / investmentAmount ) * 100;
     const loanAmountIsGreator =  ((loanAmount - investmentAmount) / loanAmount ) * 100;
     if(investmentAmount > loanAmount){
@@ -138,6 +141,56 @@ const calculateInterest = (loanAmount,investmentAmount,currentLoanInterest,curre
         }
         currentInvestmentInterest = currentInvestmentInterest + newRate;
         currentLoanInterest = currentLoanInterest + newRate;
-        return {loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest,canLoan:false}
+        return {loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest,canLoan:true}
+    }
+}
+function sendSms(phoneNo,msg,cb){
+    phoneNo = phoneNoValidation(phoneNo)
+    var request = new XMLHttpRequest();
+    request.open('POST', 'https://rest.clicksend.com/v3/sms/send');
+    request.setRequestHeader('Content-Type', 'application/json');
+    request.setRequestHeader('Authorization', 'Basic '+btoa("info@empiredigitals.com:empireDigitals1!@"));
+    request.onreadystatechange = function (response) {
+      if (this.readyState == 4) {
+        cb(true)
+      }
+    };
+    var body = {
+      'messages': [
+        {
+          'source': 'javascript',
+          'from': "uberFlirt",
+          'body': msg,
+          'to': phoneNo,
+          'schedule': '',
+          'custom_string': ''
+        }
+      ]
+    };
+    request.send(JSON.stringify(body));
+}
+function phoneNoValidation(phone,countryCode){
+    countryCode = "+27"
+    var phoneNumber = phone.replace(/ /g, '');
+    if ((phoneNumber.length < 16) && (phoneNumber.length > 7)) {
+      if(phoneNumber[0] === "0" && phoneNumber[1] !== "0"){
+        phoneNumber = phoneNumber.slice(1,phoneNumber.length)
+      }else if(phoneNumber[0] !== "0"){
+        phoneNumber = phoneNumber;
+      }
+      if(countryCode !== ""){
+        if(countryCode[0] === "+"){
+          countryCode=countryCode.slice(1,countryCode.length)
+        }else{
+          if(countryCode[0] === "0" && countryCode[1] === "0"){
+            countryCode=countryCode.slice(2,countryCode.length)
+          }
+        }
+        return countryCode+phoneNumber;
+      }else{
+        return "Incorrect phone number";
+      }
+    }else{
+      return "Incorrect phone number";
     }
 }

@@ -11,8 +11,8 @@ export default function MakePayment(props) {
     const { loggedUser,formatToCurrency } = React.useContext(AppContext);
     const [bankDetails, setBankDetails] = React.useState(null);
     React.useEffect(()=>{
-        //getBankDetails((response) => response.length > 0 && setBankDetails(response[0]) )
-        makeOnlinePayment();
+        getBankDetails((response) => response.length > 0 && setBankDetails(response[0]) )
+        //makeOnlinePayment();
     },[]);
     const makeOnlinePayment =()=>{
         const id = loggedUser.phoneNumber;
@@ -24,14 +24,11 @@ export default function MakePayment(props) {
         window.open(baseUrl, '_blank');
     }
     return (
-        <div></div>
-    )
-    /*return (
         <>
             {bankDetails && (
                 <Box>
                     <Box textAlign="center">
-                        <p className="fontBold" style={{color:"orangered"}}>Please note bank transfers & direct deposits may take up to 3 hrs to reflect on your account.</p>
+                        <p className="fontBold" style={{color:"orangered"}}>Please note bank transfers & direct deposits may take up to 6 hours to reflect on your account. Kindly whatsApp us your proof of payment on +27 73 466 0029</p>
                     </Box>
                     <Grid container>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -94,5 +91,5 @@ export default function MakePayment(props) {
                 </Button>
             </Box>
         </>
-    );*/
+    );
 }

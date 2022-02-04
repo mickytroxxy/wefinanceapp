@@ -180,7 +180,7 @@ function Dashboard(props) {
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
-              <p style={{fontWeight:'bold', border: '1px solid #bbc9f7',borderRadius:7,padding:3,paddingLeft:12,paddingRight:12,backgroundColor:'#f6fafb',color:'tomato'}}  className="fontBold">{formatToCurrency(accountBalance)}</p>
+              <p style={{fontWeight:'bold', border: '1px solid #bbc9f7',borderRadius:7,padding:3,paddingLeft:12,paddingRight:12,backgroundColor:'#f6fafb',color:'green'}}  className="fontBold">{formatToCurrency(accountBalance)}</p>
               {!mobileView && (
                 <IconButton>
                   <AccountBalanceWalletIcon style={{fill: "#bbc9f7",fontSize:36}}/>

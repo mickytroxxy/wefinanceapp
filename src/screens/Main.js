@@ -57,7 +57,7 @@ function MainDashboard(props) {
     const period = item.period.split(" ")[0];
     const dayInMils = 1000 * 60 * 60 * 24;
     const allowed_period = parseFloat(period) * dayInMils;
-    if((Date.now() - parseFloat(item.date)) > allowed_period){
+    if((Date.now() - parseFloat(item.paidOn)) > allowed_period){
       setInvestmentData(investmentData.map(i => i.docId === item.docId ? {...i,status:'COMPLETED'} : i));
       close_investment("investments",item.docId,"COMPLETED");
     }
@@ -70,14 +70,16 @@ function MainDashboard(props) {
           let investAmount = 0;
           let withdrawalAmount = 0;
           let completedInv = 0;
+          let fromBalance = 0;
           if(loanData.length > 0){loanAmount = loanData.reduce((total, obj) => parseFloat(obj.loanAmount) + total,0)}
           if(investData.length > 0){ 
             investAmount = investData.reduce((total, obj) => parseFloat(obj.amount) + total,0);
             completedInv = investData.filter(item => item.status !== "IN PROGRESS").reduce((total, obj) => parseFloat(obj.amount) + total,0)
+            fromBalance = investData.filter(item => (item.status === "IN PROGRESS" && item.fromBalance === "YES")).reduce((total, obj) => parseFloat(obj.amount) + total,0)
           }
           if(withdrawalData.length > 0){ withdrawalAmount = withdrawalData.reduce((total, obj) => parseFloat(obj.grossAmount) + total,0)}
           const totalProfit = investData.filter(item => item.status !== "IN PROGRESS").reduce((total, obj) => parseFloat(obj.profit) + total,0);
-          const balance = (totalProfit + completedInv) - withdrawalAmount;
+          const balance = (totalProfit + completedInv) - withdrawalAmount - fromBalance;
           setFirstFourCards([{type:'Total Loan',value:loanAmount,icon:''},{type:'Total Investments',value:investAmount,icon:''},{type:'Total Withdrawals',value:withdrawalAmount,icon:''},{type:'Total Profit',value:totalProfit,icon:''}])
           setAccountBalance(balance);
         });
