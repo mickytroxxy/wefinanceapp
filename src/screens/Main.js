@@ -21,13 +21,13 @@ import {getApprovedInvestments,getApprovedLoans,getMyWithdrawals} from "../conte
 function MainDashboard(props) {
   const classes = useStyles();
   const { setAccountBalance, loggedUser, currentInterests, formatToCurrency, mobileView, setDialogData } = React.useContext(AppContext);     
-  const [firstFourCards,setFirstFourCards] = React.useState([{type:'Total Loan',value:0,icon:''},{type:'Total Investments',value:0,icon:''},{type:'Total Payout',value:0,icon:''},{type:'Total Profit',value:0,icon:''}])
+  const [firstFourCards,setFirstFourCards] = React.useState([{type:'Total Loan In',value:0,icon:''},{type:'Total Loan Out',value:0,icon:''},{type:'Total Payout',value:0,icon:''},{type:'Total Profit',value:0,icon:''}])
   const [investmentData,setInvestmentData] = React.useState(null);
   const [readMore,setReadMore]=React.useState(false);
   const renderFirstFourCardIcon = ({type}) => {
-    if(type === "Total Loan"){
+    if(type === "Total Loan In"){
       return <AccountBalanceIcon style={{fill: "#bbc9f7",fontSize:80}} />
-    }else if(type === "Total Investments"){
+    }else if(type === "Total Loan Out"){
       return <MonetizationOnOutlinedIcon style={{fill: "#bbc9f7",fontSize:80}} />
     }else if(type === "Total Withdrawals"){
       return <AtmIcon style={{fill: "#bbc9f7",fontSize:80}} />
@@ -36,7 +36,7 @@ function MainDashboard(props) {
     }
   }
   const data = {
-    labels: ['LOAN INTEREST', 'INVESTMENT INTEREST'],
+    labels: ['LOAN IN INTEREST', 'LOAN OUT INTEREST'],
     datasets: [
       {
         label: 'Total amount',
@@ -80,7 +80,7 @@ function MainDashboard(props) {
           if(withdrawalData.length > 0){ withdrawalAmount = withdrawalData.reduce((total, obj) => parseFloat(obj.grossAmount) + total,0)}
           const totalProfit = investData.filter(item => item.status !== "IN PROGRESS").reduce((total, obj) => parseFloat(obj.profit) + total,0);
           const balance = (totalProfit + completedInv) - withdrawalAmount - fromBalance;
-          setFirstFourCards([{type:'Total Loan',value:loanAmount,icon:''},{type:'Total Investments',value:investAmount,icon:''},{type:'Total Withdrawals',value:withdrawalAmount,icon:''},{type:'Total Profit',value:totalProfit,icon:''}])
+          setFirstFourCards([{type:'Total Loan In',value:loanAmount,icon:''},{type:'Total Loan Out',value:investAmount,icon:''},{type:'Total Withdrawals',value:withdrawalAmount,icon:''},{type:'Total Profit',value:totalProfit,icon:''}])
           setAccountBalance(balance);
         });
       });
@@ -121,7 +121,7 @@ function MainDashboard(props) {
                     </CardContent>
                     <CardActions style={{backgroundColor:'#fff',borderRadius:10,padding:5,margin:5}}>
                         <Button style={{height:50}}>
-                            <h5 className="fontBold1" style={{color:'#757575',fontSize:12}}>CURRENT INVESTMENT STATUS</h5>
+                            <h5 className="fontBold1" style={{color:'#757575',fontSize:12}}>CURRENT LOAN OUT STATUS</h5>
                         </Button>
                     </CardActions>
                     </Card>
@@ -142,14 +142,14 @@ function MainDashboard(props) {
                     </CardContent>
                     <CardActions style={{backgroundColor:'#fff',borderRadius:10,padding:5,margin:5}}>
                         <Button style={{height:50}}>
-                            <h5 className="fontBold1" style={{color:'#757575',fontSize:12}}>CURRENT LOAN STATUS</h5>
+                            <h5 className="fontBold1" style={{color:'#757575',fontSize:12}}>CURRENT LOAN IN STATUS</h5>
                         </Button>
                     </CardActions>
                     </Card>
                 </Grid>
                 </Grid>
                 <p className="fontBold1" style={{fontSize:13,color:'#757575'}}>
-                    Please note, current interests may change according to the amount of loan issued vs the amount of investments, your investment amount and the selected investment period
+                    Please note, current interests may change according to the amount of loan in issued vs the amount of loan out, your loan out amount and the selected loan out period
                 </p>
             </Grid>
             <Grid item xs={12} sm={12} md={4} lg={4}>
@@ -158,7 +158,7 @@ function MainDashboard(props) {
             </Grid>
         </Typography>
         <Typography style={{marginTop:20}}>
-            <Typography style={{backgroundColor:"#bbc9f7",padding:2,paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150,marginBottom:15}}><h2 className="fontBold1" style={{color:"#fff",fontSize:15}}>INVESTMENT HISTORY</h2></Typography>
+            <Typography style={{backgroundColor:"#bbc9f7",padding:2,paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150,marginBottom:15}}><h2 className="fontBold1" style={{color:"#fff",fontSize:15}}>LOAN OUT HISTORY</h2></Typography>
             <Typography>
               <div>
                   <Grid container spacing={1}>
@@ -189,7 +189,7 @@ function MainDashboard(props) {
                                           </CardContent>
                                           <div>
                                             {item.status === "MAKE PAYMENT" ? (
-                                                  <Button variant="contained" onClick={()=>setDialogData({visible:true,title:'MAKE PAYMENT FOR YOUR INVESTMENT',data:{amount:item.amount, docId:item.docId }})} style={{backgroundColor:'tomato',color:'#fff'}}  component="label"startIcon={<PaymentIcon style={{fill: "#fff"}}/>}>
+                                                  <Button variant="contained" onClick={()=>setDialogData({visible:true,title:'LOAN OUT PAYMENT',data:{amount:item.amount, docId:item.docId }})} style={{backgroundColor:'tomato',color:'#fff'}}  component="label"startIcon={<PaymentIcon style={{fill: "#fff"}}/>}>
                                                       <span className="fontBold">{item.status}</span>
                                                   </Button>
                                               ):(

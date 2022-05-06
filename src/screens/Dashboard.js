@@ -74,8 +74,8 @@ function Dashboard(props) {
   const handleChange = (event, newValue) => setValue(newValue);
   const [sideBarElem,setSideBarElem] = React.useState([
     {name:'Dashboard',selected:true,index:0},
-    {name:'Loans',selected:false,index:1},
-    {name:'Investments',selected:false,index:2},
+    {name:'Loan In',selected:false,index:1},
+    {name:'Loan Out',selected:false,index:2},
     {name:'Transfers',selected:false,index:3},
     {name:'Documents',selected:false,index:4},
     {name:'Withdraw',selected:false,index:5},
@@ -85,9 +85,9 @@ function Dashboard(props) {
   const renderDashboardIcons = name =>{
     if(name === "Dashboard"){
       return <DashboardIcon />
-    }else if(name === "Loans"){
+    }else if(name === "Loan In"){
       return <AccountBalanceIcon />
-    }else if(name === "Investments"){
+    }else if(name === "Loan Out"){
       return <MonetizationOnOutlinedIcon />
     }else if(name === "Transfers"){
       return <SendIcon />

@@ -11,8 +11,8 @@ export default function MakePayment(props) {
     const { loggedUser,formatToCurrency } = React.useContext(AppContext);
     const [bankDetails, setBankDetails] = React.useState(null);
     React.useEffect(()=>{
-        getBankDetails((response) => response.length > 0 && setBankDetails(response[0]) )
-        //makeOnlinePayment();
+        //getBankDetails((response) => response.length > 0 && setBankDetails(response[0]) )
+        makeOnlinePayment();
     },[]);
     const makeOnlinePayment =()=>{
         const id = loggedUser.phoneNumber;
@@ -24,6 +24,9 @@ export default function MakePayment(props) {
         window.open(baseUrl, '_blank');
     }
     return (
+        <Box></Box>
+    )
+    /*return (
         <>
             {bankDetails && (
                 <Box>
@@ -91,5 +94,5 @@ export default function MakePayment(props) {
                 </Button>
             </Box>
         </>
-    );
+    );*/
 }

@@ -16,7 +16,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import IconButton from '@mui/material/IconButton';
-const issueTypes = ["ACCOUNT ACCESS","LOAN ISSUE","INVESTMENT ISSUE","WITHDRAWAL ISSUE","OTHER"];
+const issueTypes = ["ACCOUNT ACCESS","LOAN IN ISSUE","LOAN OUT ISSUE","WITHDRAWAL ISSUE","OTHER"];
 export default function ContactUs() {
     const [contactStatus,setContactStatus]=React.useState(null);
     const [contactDetails,setContactDetails] = React.useState({issueType:'ACCOUNT ACCESS',fname:'',emailAddress:'',message:''})
@@ -42,6 +42,14 @@ export default function ContactUs() {
                             </Grid>
                             <Grid item xs={10}>
                                 <span className="fontLight" style={{marginTop:6}}>+27 73 466 0029</span>
+                            </Grid>
+                        </Grid>
+                        <Grid container>
+                            <Grid item xs={2}>
+                                <PhoneIcon style={{fill: "green",fontSize:28}} />
+                            </Grid>
+                            <Grid item xs={10}>
+                                <span className="fontLight" style={{marginTop:6}}>+27 10 510 2699</span>
                             </Grid>
                         </Grid>
                         <Grid container onClick={()=>socialMedia("facebook")}>

@@ -21,8 +21,8 @@ export default function Investment({handleChange}) {
     },[])
     return (
         <Typography>
-            <h3 className="fontBold">INVESTMENT SECTION</h3>
-            <p className="fontBold" style={{color:'tomato'}}>*NOTE: If your investment list still has a MAKE PAYMENT button. Please click on the button to make your payment for the investment process to start.</p>
+            <h3 className="fontBold">LOAN OUT SECTION</h3>
+            <p className="fontBold" style={{color:'tomato'}}>*NOTE: If your Loan Out list still has a MAKE PAYMENT button. Please click on the button to make your payment for the Loan Out process to start.</p>
             {mobileView?(
                 <Box sx={{ minWidth: 275 }} textAlign='left'>
                     {totalInvestments && totalInvestments.map(({ date, amount, profit, interest, returns, period, status, docId },i) => (
@@ -34,7 +34,7 @@ export default function Investment({handleChange}) {
                                         <Grid item xs={10} sm={10} md={6} lg={6} spacing={0}>
                                             <Box textAlign="right" style={{padding:5}}>
                                                 {status === "MAKE PAYMENT" ? (
-                                                    <Button variant="contained" onClick={()=>setDialogData({visible:true,title:'MAKE PAYMENT FOR YOUR INVESTMENT',data:{amount, docId }})} style={{backgroundColor:'tomato',color:'#fff'}}  component="label"startIcon={<PaymentIcon style={{fill: "#fff"}}/>}>
+                                                    <Button variant="contained" onClick={()=>setDialogData({visible:true,title:'LOAN OUT PAYMENT',data:{amount, docId }})} style={{backgroundColor:'tomato',color:'#fff'}}  component="label"startIcon={<PaymentIcon style={{fill: "#fff"}}/>}>
                                                         <span className="fontBold">{status}</span>
                                                     </Button>
                                                 ):(
@@ -96,7 +96,7 @@ export default function Investment({handleChange}) {
                                         <TableCell numeric><span className="fontBold">{period}</span></TableCell>
                                         <TableCell numeric>
                                             {status === "MAKE PAYMENT" ? (
-                                                <Button variant="contained" onClick={()=>setDialogData({visible:true,title:'MAKE PAYMENT FOR YOUR INVESTMENT',data:{amount, docId }})} style={{backgroundColor:'tomato',color:'#fff'}}  component="label"startIcon={<PaymentIcon style={{fill: "#fff"}}/>}>
+                                                <Button variant="contained" onClick={()=>setDialogData({visible:true,title:'LOAN OUT PAYMENT',data:{amount, docId }})} style={{backgroundColor:'tomato',color:'#fff'}}  component="label"startIcon={<PaymentIcon style={{fill: "#fff"}}/>}>
                                                     <span className="fontBold">{status}</span>
                                                 </Button>
                                             ):(
@@ -112,11 +112,11 @@ export default function Investment({handleChange}) {
                             </TableBody>
                         </Table>
                     ) : (
-                        <h2 className="fontBold">You do not have any previous investments under your account. To start investing please click on the green icon on your bottom right corner !</h2>
+                        <h2 className="fontBold">You do not have any previous Loan Out under your account. To start a new Loan Out please click on the green icon on your bottom right corner!</h2>
                     )}
                 </>
             )}
-            <Fab onClick={()=> !mobileView ? setDialogData({visible:true,title:'ADD NEW INVESTMENT'}) : navigate("mobile",{page:'ADD NEW INVESTMENT'})} color="primary" aria-label="add" style={{position: 'fixed',bottom: 16,right: 16,borderRadius:'100%',color:'#fff',backgroundColor:'#69d29e'}}>
+            <Fab onClick={()=> !mobileView ? setDialogData({visible:true,title:'ADD NEW LOAN OUT'}) : navigate("mobile",{page:'ADD NEW LOAN OUT'})} color="primary" aria-label="add" style={{position: 'fixed',bottom: 16,right: 16,borderRadius:'100%',color:'#fff',backgroundColor:'#69d29e'}}>
                 <AddIcon />
             </Fab>
         </Typography>

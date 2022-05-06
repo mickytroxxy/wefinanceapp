@@ -81,7 +81,7 @@ export default function Header() {
             <IconButton onClick={()=>setDialogData({visible:true,title:'CONTACT US'})}> <span style={{fontSize:14}}>CONTACT US</span></IconButton>
             <IconButton onClick={()=> !mobileView ? setDialogData({visible:true,title:'GET STARTED'}) : navigate("mobile",{page:'GET STARTED'})}>
               <span style={{fontSize:14}}>LOG IN</span>
-              <ExitToAppIcon style={{fill: "#bbc9f7",fontSize:36}}/>
+              <ExitToAppIcon style={{fill: "green",fontSize:36}}/>
             </IconButton>
           </Box>
       </Toolbar>
@@ -96,7 +96,7 @@ export default function Header() {
         </div>
         <Box textAlign="right">
           <IconButton onClick={()=> !mobileView ? setDialogData({visible:true,title:'GET STARTED'}) : navigate("mobile",{page:'GET STARTED'})}>
-            <ExitToAppIcon style={{fill: "#bbc9f7",fontSize:36}}/>
+            <ExitToAppIcon style={{fill: "green",fontSize:36}}/>
           </IconButton>
         </Box>
       </Toolbar>
@@ -105,7 +105,7 @@ export default function Header() {
 
   const femmecubatorLogo = (
     <Typography variant="h6" component="h1" className={logo}>
-      <img src={dashboard_logo} height="72" alt="" />
+      <img src={dashboard_logo} height="50" alt="" />
     </Typography>
   );
   return (

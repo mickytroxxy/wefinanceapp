@@ -91,8 +91,8 @@ const formatToCurrency = (val) => {
 const getMilSecsByPeriod = period => parseInt(period.split(" ")[0]) * (1000 * 60 * 60 * 24);
 
 const calculateInterest = (loanAmount,investmentAmount,currentLoanInterest,currentInvestmentInterest) => {
-    currentInvestmentInterest = currentInvestmentInterest + 8.3
-    currentLoanInterest = currentLoanInterest + 9
+    currentInvestmentInterest = currentInvestmentInterest - 10
+    currentLoanInterest = currentLoanInterest - 11
     const investmentAmountIsGreator =  ((investmentAmount - loanAmount) / investmentAmount ) * 100;
     const loanAmountIsGreator =  ((loanAmount - investmentAmount) / loanAmount ) * 100;
     if(investmentAmount > loanAmount){

@@ -89,7 +89,7 @@ export default function Body() {
                 <Grid container style={{marginTop:50}}>
                     <Grid item xs={12} sm={6}>
                         <div style={{paddingLeft:50,paddingRight:50,paddingBottom:30}}>
-                            <center><h1 style={{color:'#3f4750',fontWeight:"bolder",fontSize:36}} className="fontBold1">AN EASY WAY TO BECOME <span style={{color:"#bbc9f7"}}>A LOAN SHARK</span></h1></center>
+                            <center><h1 style={{color:'#3f4750',fontWeight:"bolder",fontSize:36}} className="fontBold1">AN EASY WAY TO BECOME <span style={{color:"orange"}}>A LOAN SHARK</span></h1></center>
                             <center><p style={{color:'#757575'}} className="fontBold">Easily apply for a quick loan or loan out your funds to our trusted clients all over the nation. Invest your money wisely and allow it to work for you and earn a massive interest within a short period of time! Loan in at low rate and loan out at high rate. Scroll down for more info</p></center>
                             <center><Button onClick={()=> !mobileView ? setDialogData({visible:true,title:'GET STARTED'}) : navigate("mobile",{page:'GET STARTED'})} style={{borderTopRightRadius:30,borderBottomLeftRadius:30}} className={classes.button} variant="outlined">GET STARTED</Button></center>
                             <center>
@@ -101,7 +101,7 @@ export default function Body() {
                         <center><img src={img1} style={{maxWidth:'90%',borderRadius:50}} alt="" /></center>
                     </Grid>
                 </Grid>
-                <Typography style={{backgroundColor:'#bbc9f7',borderTopLeftRadius:1200,paddingBottom:15,borderBottomLeftRadius:100,borderBottomRightRadius:100,marginTop:15}}>
+                <Typography style={{backgroundColor:'#7390ef',borderTopLeftRadius:1200,paddingBottom:15,borderBottomLeftRadius:100,borderBottomRightRadius:100,marginTop:15}}>
                     <div  style={{color: !mobileView ? '#fff' : "#3488a7",marginTop:50}} className="fontBold1"><h2>ABOUT US</h2></div>
                     <Grid container style={{marginTop:50}} >
                         <Grid item xs={12} sm={6} >
@@ -111,16 +111,14 @@ export default function Body() {
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <div>
-                                <center><h3 style={{color:'#737a81'}} className="fontBold1">How would you proceed before knowing us ?</h3></center>
+                                <center><h3 style={{color:'#000'}} className="fontBold1">Why would you proceed before knowing us?</h3></center>
                                 <center>
-                                    <p style={{color:'#757575',paddingTop:20,paddingLeft:50,paddingRight:50}} className="fontBold">
-                                        <span style={{color:"#3488a7"}} className="fontBold1">We Finance Group Pty Ltd</span> is a registered financial service provider founded in 2018. We aim to provide short-term loans to large financial institute, betting companies and South African citizens.
-                                        We have managed to process over R 75 000 000.00 within 36 months with 100% client satisfaction. We have managed to aquire over 50 000 individual investors and few large organizations.
+                                    <p style={{color:'#fff',paddingTop:20,paddingLeft:50,paddingRight:50}} className="fontBold">
+                                        <span style={{color:"#86ef73"}} className="fontBold1">We Finance Group</span> is a product under "Worldwide Capital (Pty) Ltd" registered as a FSP under the FAIS Act, FSP 16577 founded in 2000. We aim to provide short-term loans to large financial institute, small businesses, betting companies and South African citizens.
+                                        We have managed to process over R 75 000 000.00 within 36 months with 100% client satisfaction and we have managed to aquire over 50 000 individual investors and few large organizations.
+                                        Worldwide Capital Limited operates as an investment company that specializes in capital markets trading, asset management, and tailor made investment products for money managers, institutional clients, and high net worth individuals. The company focuses on a range of asset management and investment techniques. It trades fixed income and money market securities on behalf of its clients; and offers stock broking services.
                                     </p>
-                                    <p style={{paddingTop:10,paddingLeft:50,paddingRight:50,color:'#757575'}} className="fontBold">We believe in our moto which is <span className="fontBold1" style={{color:"#3488a7"}}>"ALLOW YOUR MONEY TO WORK FOR YOU."</span> Want to know more? Join our new South African whatsApp group for discussions!</p>
-                                </center>
-                                <center>
-                                <Button style={{marginTop:10}} onClick={()=>socialMedia("whatsAppGroup")}><WhatsAppIcon style={{fill: "green",fontSize:72}} /></Button>
+                                    <p style={{paddingTop:10,paddingLeft:50,paddingRight:50,color:'#fff'}} className="fontBold">We believe in our moto which is <span className="fontBold1" style={{color:"#86ef73"}}>"ALLOW YOUR MONEY TO WORK FOR YOU."</span></p>
                                 </center>
                             </div>
                         </Grid>
@@ -133,10 +131,10 @@ export default function Body() {
                                 <center><h3 style={{color:'#737a81'}} className="fontBold1">VISION & MISSION</h3></center>
                                 <center>
                                     <p style={{color:'#757575'}} className="fontBold">
-                                        <span style={{color:"#bbc9f7"}} className="fontBold1">We Finance Group Pty Ltd</span> was founded to help people and organization in urgent need of financial services. We believe our lives are powered up by funds and this is why our loan application is easy and the payout is within hours.
+                                        <span style={{color:"#7390ef"}} className="fontBold1">We Finance Group</span> was formed to help people and organization in urgent need of financial services. We believe our lives are powered up by funds and this is why our loan application is easy and the payout is within hours.
                                         We also believe in unity as a nation, when you loan out your funds to someone you are actually impacting their lives positively and you deserve to be rewarded for your good deed and because of that, our loan out interest are slightly high.
                                     </p>
-                                    <p style={{color:'#757575'}} className="fontBold">Our vision is to be able to<span className="fontBold1" style={{color:"#bbc9f7"}}>" help as many people as we can financially"</span></p>
+                                    <p style={{color:'#757575'}} className="fontBold">Our vision is to be able to<span className="fontBold1" style={{color:"#7390ef"}}>" help as many people as we can financially"</span></p>
                                 </center>
                             </div>
                         </Grid>
@@ -147,7 +145,7 @@ export default function Body() {
                         </Grid>
                     </Grid>
                 </Typography>
-                <Typography style={{backgroundColor:"#bbc9f7",paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150}}><h3 className="fontBold1" style={{color:"#fff",fontSize:15}}>WHAT WE OFFER</h3></Typography>
+                <Typography style={{backgroundColor:"#7390ef",paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150}}><h3 className="fontBold1" style={{color:"#fff",fontSize:15}}>WHAT WE OFFER</h3></Typography>
                 <Typography style={{width:'100%'}}>
                     <Grid container >
                         <Grid item xs={12} md={6}>
@@ -164,7 +162,7 @@ export default function Body() {
                         </Grid>
                     </Grid>
                 </Typography>
-                <Typography style={{backgroundColor:"#bbc9f7",paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150}}><h3 className="fontBold1" style={{color:"#fff",fontSize:15}}>WHAT OUR PARTNERS SAY</h3></Typography>
+                <Typography style={{backgroundColor:"#7390ef",paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150}}><h3 className="fontBold1" style={{color:"#fff",fontSize:15}}>WHAT OUR PARTNERS SAY</h3></Typography>
                 <Typography style={{padding:10,backgroundColor:'#eef1f4',width:'100%',marginTop:15}}>
                     <div className={classes.root}>
                         <ScrollMenu
@@ -210,7 +208,7 @@ export default function Body() {
                 </Typography>
                 <Typography>
                     <center>
-                        <Typography style={{backgroundColor:"#bbc9f7",padding:2,paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150,width:'76%',marginBottom:30}}><h3 className="fontBold1" style={{color:"#fff",fontSize:15}}>FREQUENTLY ASKED QUESTIONS</h3></Typography>
+                        <Typography style={{backgroundColor:"#7390ef",padding:2,paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150,width:'76%',marginBottom:30}}><h3 className="fontBold1" style={{color:"#fff",fontSize:15}}>FREQUENTLY ASKED QUESTIONS</h3></Typography>
                     </center>
                     <Box textAlign="left">
                         {faq.map(({header,text,panel,control})=>(
@@ -228,10 +226,10 @@ export default function Body() {
                 {mobileView && (
                     <Grid container style={{marginTop:20}}>
                         <Grid item xs={12} sm={12}>
-                            <Button variant="outlined" onClick={()=>setDialogData({visible:true,title:'TERMS & CONDITIONS',data:{isLoanTermsAccepted}})} style={{borderTopRightRadius:30,borderBottomLeftRadius:30}}  component="label"startIcon={<PrivacyTipIcon style={{fill: "#bbc9f7",fontSize:24}}/>}>TERMS & CONDITIONS</Button>
+                            <Button variant="outlined" onClick={()=>setDialogData({visible:true,title:'TERMS & CONDITIONS',data:{isLoanTermsAccepted}})} style={{borderTopRightRadius:30,borderBottomLeftRadius:30}}  component="label"startIcon={<PrivacyTipIcon style={{fill: "#7390ef",fontSize:24}}/>}>TERMS & CONDITIONS</Button>
                         </Grid>
                         <Grid item xs={12} sm={12} style={{marginTop:30}}>
-                            <Button variant="outlined" onClick={()=> !mobileView ? setDialogData({visible:true,title:'CONTACT US'}) : navigate("mobile",{page:'CONTACT US'})} style={{borderTopRightRadius:30,borderBottomLeftRadius:30}}  component="label"startIcon={<ContactPhoneIcon style={{fill: "#bbc9f7",fontSize:24}}/>}>CONTACT US</Button>
+                            <Button variant="outlined" onClick={()=> !mobileView ? setDialogData({visible:true,title:'CONTACT US'}) : navigate("mobile",{page:'CONTACT US'})} style={{borderTopRightRadius:30,borderBottomLeftRadius:30}}  component="label"startIcon={<ContactPhoneIcon style={{fill: "#7390ef",fontSize:24}}/>}>CONTACT US</Button>
                         </Grid>
                     </Grid>
                 )}
