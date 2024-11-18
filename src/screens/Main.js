@@ -18,6 +18,7 @@ import { AppContext } from '../context/AppContext';
 import PaymentIcon from '@mui/icons-material/Payment';
 import CachedIcon from '@mui/icons-material/Cached';
 import {getApprovedInvestments,getApprovedLoans,getMyWithdrawals} from "../context/api";
+import { colors } from '../context/colors';
 function MainDashboard(props) {
   const classes = useStyles();
   const { setAccountBalance, loggedUser, currentInterests, formatToCurrency, mobileView, setDialogData } = React.useContext(AppContext);     
@@ -43,7 +44,7 @@ function MainDashboard(props) {
         data: [currentInterests.currentLoanInterest, currentInterests.currentInvestmentInterest],
         backgroundColor: [
           '#acf7f4',
-          '#bbc9f7',
+          colors.primary,
         ],
         borderColor: [
           '#bbc9f7',
@@ -89,7 +90,7 @@ function MainDashboard(props) {
   },[loggedUser])
   return (
     <Typography>
-        <Typography style={{background: "linear-gradient(to right, #bbc9f7, #c5fcb3, #acf7f4)",minHeight:250,borderRadius:10,padding:20}}>
+        <Typography style={{background: `linear-gradient(to right, ${colors.primary}, #acf7f4, ${colors.primary})`,minHeight:250,borderRadius:10,padding:20}}>
             <Grid container spacing={2}>
             {firstFourCards.map((item,i) => {
                 return(
@@ -107,16 +108,16 @@ function MainDashboard(props) {
         <Typography style={{marginTop:20}}>
             <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={8} lg={8}>
-                <Typography style={{backgroundColor:"#bbc9f7",padding:2,paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150,marginBottom:15}}><h2 className="fontBold1" style={{color:"#fff",fontSize:15}}>CURRENT STATISTICS</h2></Typography>
+                <Typography style={{backgroundColor:colors.primary,padding:2,paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150,marginBottom:15}}><h2 className="fontBold1" style={{color:"#fff",fontSize:15}}>CURRENT STATISTICS</h2></Typography>
                 <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={6} lg={6}>
-                    <Card sx={{ minWidth: 275 }} style={{backgroundColor:'#bbc9f7',borderRadius:10}} elevation={0}>
+                    <Card sx={{ minWidth: 275 }} style={{backgroundColor:colors.primary,borderRadius:10}} elevation={0}>
                     <CardContent>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                         <CheckCircleOutlinedIcon style={{fill: "green",fontSize:100}}/>
                         </Typography>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                            <div className="fontBold1" style={{color:"#757575",fontSize:14}}>Interest is on {currentInterests.currentInvestmentInterest.toFixed(2)}% per Week</div>
+                            <div className="fontBold1" style={{color:colors.white,fontSize:14}}>Interest is on {currentInterests.currentInvestmentInterest.toFixed(2)}% per Week</div>
                         </Typography>
                     </CardContent>
                     <CardActions style={{backgroundColor:'#fff',borderRadius:10,padding:5,margin:5}}>
@@ -134,7 +135,7 @@ function MainDashboard(props) {
                         </Typography>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
                             {currentInterests.canLoan ? (
-                              <div className="fontBold1" style={{color:"#757575",fontSize:14}}>Interest is on {currentInterests.currentLoanInterest.toFixed(2)}% per Week</div>
+                              <div className="fontBold1" style={{color:colors.white,fontSize:14}}>Interest is on {currentInterests.currentLoanInterest.toFixed(2)}% per Week</div>
                             ):(
                               <div className="fontBold1" style={{color:"#757575"}}>Not available, check again later.</div>
                             )}
@@ -158,7 +159,7 @@ function MainDashboard(props) {
             </Grid>
         </Typography>
         <Typography style={{marginTop:20}}>
-            <Typography style={{backgroundColor:"#bbc9f7",padding:2,paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150,marginBottom:15}}><h2 className="fontBold1" style={{color:"#fff",fontSize:15}}>LOAN OUT HISTORY</h2></Typography>
+            <Typography style={{backgroundColor:colors.primary,padding:2,paddingLeft:30,paddingRight:30, borderRadius:10,borderBottomLeftRadius:150,borderTopRightRadius:150,marginBottom:15}}><h2 className="fontBold1" style={{color:"#fff",fontSize:15}}>LOAN OUT HISTORY</h2></Typography>
             <Typography>
               <div>
                   <Grid container spacing={1}>
@@ -172,7 +173,7 @@ function MainDashboard(props) {
                               return(
                                   <Grid item key={i} xs={12} md={3}>
                                       <Card className={classes.card} elevation={0} style={{paddingBottom:10,borderRadius:10,backgroundColor:"#f7f7fb",border: '1px solid #bbc9f7'}}>
-                                          <div style={{backgroundColor:"#bbc9f7"}}><h3 className="fontBold1" style={{fontSize:14,color:'#fff'}}>{formatToCurrency(parseFloat(item.amount))}</h3></div>
+                                          <div style={{backgroundColor:colors.primary}}><h3 className="fontBold1" style={{fontSize:14,color:'#fff'}}>{formatToCurrency(parseFloat(item.amount))}</h3></div>
                                           <CardContent className={classes.cardContent}>
                                               <Typography gutterBottom variant="h5" component="h2">
                                                 <span className="fontBold1" style={{fontSize:14,color:'#757575'}}>RETURNS</span>

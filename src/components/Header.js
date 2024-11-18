@@ -14,7 +14,7 @@ import { AppContext } from '../context/AppContext';
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { useState, useEffect } from "react";
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
-import dashboard_logo from '../img/logo2.png';
+import dashboard_logo from '../img/logo-2.png';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 const useStyles = makeStyles(() => ({

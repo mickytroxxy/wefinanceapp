@@ -32,8 +32,9 @@ import Investment from './Investment'
 import Withdrawal from './Withdrawal'
 import Documents from './Documents'
 import AddLoan from '../components/AddLoan'
-import dashboard_logo from "../img/logo2.png";
+import dashboard_logo from "../img/logo-2.png";
 import {getReferrals} from "../context/api";
+import { colors } from '../context/colors';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -126,10 +127,10 @@ function Dashboard(props) {
   }, [])
   const drawer = (
     <div>
-      <img src={dashboard_logo} style={{width:"96%",marginBottom:10}} alt=""/>
+      <img src={dashboard_logo} style={{width:"90%",marginBottom:10}} alt=""/>
       <List>
         {sideBarElem.map(({name,selected,index}, i) => (
-          <ListItem button key={name} onClick={() => changeTabs(index)} style={{background: selected ? "#bbc9f7" : "none",margin:5,padding:5,borderRadius:10,width:'90%'}} >
+          <ListItem button key={name} onClick={() => changeTabs(index)} style={{background: selected ? colors.primary : "none",margin:5,padding:5,borderRadius:10,width:'90%'}} >
             <ListItemIcon style={{color: selected ? "#fff" : "#787b79"}}>
               {renderDashboardIcons(name)}
             </ListItemIcon>
@@ -163,9 +164,9 @@ function Dashboard(props) {
           ml: { sm: `${drawerWidth}px` },
         }}
         elevation={0}
-        style={{borderBottom: '1px solid #f2f8fb'}}
+        style={{borderBottom: '3px solid '+colors.orange}}
       >
-        <Toolbar style={{backgroundColor:'#fff'}}>
+        <Toolbar style={{backgroundColor:colors.primary}}>
           <IconButton
             style={{color:'#757575'}}
             aria-label="open drawer"
@@ -176,14 +177,14 @@ function Dashboard(props) {
             <MenuIcon />
           </IconButton>
           <Typography noWrap>
-            <h4 className="fontBold1" style={{color:"#757575"}}>Hi, {loggedUser && loggedUser.fname.toUpperCase()}</h4>
+            <h4 className="fontBold1" style={{color:colors.white}}>Hi, {loggedUser && loggedUser.fname.toUpperCase()}</h4>
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
-              <p style={{fontWeight:'bold', border: '1px solid #bbc9f7',borderRadius:7,padding:3,paddingLeft:12,paddingRight:12,backgroundColor:'#f6fafb',color:'green'}}  className="fontBold">{formatToCurrency(accountBalance)}</p>
+              <p style={{fontWeight:'bold', border: '2px solid '+colors.orange,borderRadius:5,padding:3,paddingLeft:12,paddingRight:12,backgroundColor:'#f6fafb',color:'green'}}  className="fontBold">{formatToCurrency(accountBalance)}</p>
               {!mobileView && (
                 <IconButton>
-                  <AccountBalanceWalletIcon style={{fill: "#bbc9f7",fontSize:36}}/>
+                  <AccountBalanceWalletIcon style={{fill: colors.white,fontSize:36}}/>
                 </IconButton>
               )}
             </Box>

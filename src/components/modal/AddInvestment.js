@@ -50,7 +50,7 @@ export default function AddInvestment() {
         }
     }
     const invest_btn_clicked = () =>{
-        if(investmentAmount > 999){
+        if(investmentAmount > 499){
             let canContinue = true;
             let status = "MAKE PAYMENT";
             if(fromBalance === "YES"){
@@ -79,7 +79,7 @@ export default function AddInvestment() {
                 setToastData({visible:true,text:'You do not have enough balance to fund this investment!',severity:'error'});
             }
         }else{
-            setToastData({visible:true,text:'The investment min amount is R1 000.00',severity:'error'});
+            setToastData({visible:true,text:'The investment min amount is R500.00',severity:'error'});
         }
     }
     React.useEffect(()=>{})
