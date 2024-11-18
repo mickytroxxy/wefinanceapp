@@ -7,8 +7,10 @@ import FormControl from '@mui/material/FormControl';
 import { AppContext } from '../../context/AppContext';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import InfoIcon from '@mui/icons-material/Info';
+import useFetch from "../../context/useFetch";
 export default function Otp(props) {
     const {data:{phoneNumber,codeIsTrue}} = props;
+    const {fetchData} = useFetch();
     const { setToastData, setDialogData } = React.useContext(AppContext);
     const [confirmationCode,setConfirmationCode]=React.useState(null);
     const [code,setCode]=React.useState(null);
@@ -26,29 +28,9 @@ export default function Otp(props) {
         setCode(theCode);
         sendCode(phoneNoValidation(phoneNumber),text,()=>{});
     },[]);
-    function sendCode(phoneNo,msg,cb){
-        var request = new XMLHttpRequest();
-        request.open('POST', 'https://rest.clicksend.com/v3/sms/send');
-        request.setRequestHeader('Content-Type', 'application/json');
-        request.setRequestHeader('Authorization', 'Basic '+btoa("info@empiredigitals.com:empireDigitals1!@"));
-        request.onreadystatechange = function (response) {
-          if (this.readyState == 4) {
-            cb(true)
-          }
-        };
-        var body = {
-          'messages': [
-            {
-              'source': 'javascript',
-              'from': "uberFlirt",
-              'body': msg,
-              'to': phoneNo,
-              'schedule': '',
-              'custom_string': ''
-            }
-          ]
-        };
-        request.send(JSON.stringify(body));
+    async function sendCode(phoneNo,msg,cb){
+      const response = await fetchData({endPoint:'/sendsms',method:'POST',data:{to:phoneNo, email:'', accountType:'INDIVIDUAL',body:msg}});
+      cb(true)
     }
     return (
         <Box textAlign='center'>
