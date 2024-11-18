@@ -6,13 +6,14 @@ import '../../App.css';
 import { Grid, Button } from '@material-ui/core';
 import Divider from '@mui/material/Divider';
 import PublicIcon from '@mui/icons-material/Public';
+import { Typography } from '@mui/material';
 export default function MakePayment(props) {
     const {data:{amount,docId}} = props;
     const { loggedUser,formatToCurrency } = React.useContext(AppContext);
     const [bankDetails, setBankDetails] = React.useState(null);
     React.useEffect(()=>{
         //getBankDetails((response) => response.length > 0 && setBankDetails(response[0]) )
-        makeOnlinePayment();
+        //makeOnlinePayment();
     },[]);
     const makeOnlinePayment =()=>{
         const id = loggedUser.phoneNumber;
@@ -24,7 +25,22 @@ export default function MakePayment(props) {
         window.open(baseUrl, '_blank');
     }
     return (
-        <Box></Box>
+        <Box>
+            <Typography>
+                Your loan investment of ZAR {amount} has been successfully submitted. Please complete the payment to activate the investment.
+            </Typography>
+            <Box textAlign="center">
+                <Button 
+                onClick={() => makeOnlinePayment()} 
+                variant="contained" 
+                style={{ backgroundColor: 'green', color: '#fff' }} 
+                startIcon={<PublicIcon style={{ fill: "#fff" }} />}
+                >
+                <span className="fontBold">Pay via PayFast</span>
+                </Button>
+            </Box>
+        </Box>
+
     )
     /*return (
         <>

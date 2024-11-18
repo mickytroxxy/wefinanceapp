@@ -27,7 +27,7 @@ export default function Mobile() {
             </AppBar>
             <div style={{padding:10,paddingTop:100}}>
                 {location.params.page === "GET STARTED" && <SignInOutContainer/>}
-                {location.params.page === "ADD NEW INVESTMENT" && <AddInvestment/>}
+                {location.params.page === "ADD NEW LOAN OUT" && <AddInvestment/>}
                 {location.params.page === "WITHDRAW YOUR FUNDS" && <WithdrawFunds data={location.params.data}/>}
                 {location.params.page === "CONTACT US" && <ContactUs/>}
                 {location.params.page === "ENTER CONFIRMATION CODE" && (<Otp data={location.params.data}/>)}

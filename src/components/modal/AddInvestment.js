@@ -66,7 +66,7 @@ export default function AddInvestment() {
                 const totalInvestments = {...investmentReturns,date,investmentNickname,phoneNumber:loggedUser.phoneNumber,docId,status,paidOn:date,fromBalance};
                 if(createData("investments",docId,totalInvestments)){
                     if(fromBalance === "NO"){
-                        setDialogData({visible:true,title:'MAKE PAYMENT FOR YOUR INVESTMENT',data:{amount:investmentAmount, docId }})
+                        setDialogData({visible:true,title:'LOAN OUT PAYMENT',data:{amount:investmentAmount, docId }})
                     }else{
                         setDialogData({visible:false});
                         setAccountBalance(accountBalance - investmentAmount);
@@ -88,7 +88,7 @@ export default function AddInvestment() {
             <Typography>
                 <FormControl fullWidth>
                     {investmentReturns && (
-                        <div className="fontBold">The current interest is on <span style={{color:'green',fontSize:20}}>{investmentReturns.interest.toFixed(2)}%</span> & may vary according to your investment amount & investment period. Your total return will be <span style={{color:'green',fontSize:20}}> {formatToCurrency(investmentReturns.returns)} </span></div>
+                        <div className="fontBold">The current interest is on <span style={{color:'green',fontSize:20}}>{investmentReturns.interest.toFixed(2)}%</span> & may vary according to your investment amount & investment period. Your total return will be <span style={{color:'green',fontSize:20}}> {formatToCurrency(investmentReturns?.returns || 0)} </span></div>
                     )}
                 </FormControl>
                 <FormControl fullWidth>
