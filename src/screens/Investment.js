@@ -21,8 +21,8 @@ export default function Investment({handleChange}) {
     },[])
     return (
         <Typography>
-            <h3 className="fontBold">LOAN OUT SECTION</h3>
-            <p className="fontBold" style={{color:'tomato'}}>*NOTE: If your Loan Out list still has a MAKE PAYMENT button. Please click on the button to make your payment for the Loan Out process to start.</p>
+            <h3 className="fontBold">INVESTMENT SECTION</h3>
+            <p className="fontBold" style={{color:'tomato'}}>*NOTE: If your Loan Out or investment list, still has a MAKE PAYMENT status button. Please click on the button to make your payment for the Loan Out process to start.</p>
             {mobileView?(
                 <Box sx={{ minWidth: 275 }} textAlign='left'>
                     {totalInvestments && totalInvestments.map(({ date, amount, profit, interest, returns, period, status, docId },i) => (
