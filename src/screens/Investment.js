@@ -13,10 +13,17 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 const tableHeaders = ['DATE','AMOUNT','PROFIT','INTEREST','RETURNS','PERIOD','STATUS'];
+const changeTime = () => {
+    const now = Date.now();
+    const date = 1000 * 60 * 60 * 24 * 1;
+    const sevenDaysAgoTime = now - date;
+    alert(sevenDaysAgoTime)
+}
 export default function Investment({handleChange}) {
     const { loggedUser, formatToCurrency, setDialogData, mobileView, navigate } = React.useContext(AppContext);
     const [totalInvestments,setTotalInvestments] = React.useState(null);
     React.useEffect(()=>{
+        //changeTime()
         getInvestments(loggedUser.phoneNumber, (response) => response.length > 0 && setTotalInvestments(response) )
     },[])
     return (

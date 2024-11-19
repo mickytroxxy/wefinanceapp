@@ -20,6 +20,7 @@ export default function AddInvestment() {
     const calculateReturns = (obj,amount) =>{
         const basicInterest = obj.interestArray.filter(item => item.selected === true)[0].interest;
         const {currentInvestmentInterest} = getCurrentInterests(currentInterests.loanAmount,currentInterests.investmentAmount,50,basicInterest,false);
+        //alert(JSON.stringify(currentInvestmentInterest))
         const profit = (currentInvestmentInterest / 100 ) * amount;
         const returns = parseFloat(amount) + parseFloat(profit);
         setInvestmentAmount(amount);
@@ -42,15 +43,15 @@ export default function AddInvestment() {
                 setInvestmentInterests(investmentInterests.map(item => item.period !== interestObj.period ? item : {...interestObj,interestArray}));
                 calculateReturns({period:interestObj.period,interestArray},value);
             }else{
-                setToastData({visible:true,text:'The investment max amount is R100 000.00',severity:'error'});
+                setToastData({visible:true,text:'The investment max amount is ZAR 100 000.00',severity:'error'});
             }
-            if(value < 1000){
-                setToastData({visible:true,text:'The investment min amount is R1 000.00',severity:'error'});
+            if(value < 100){
+                setToastData({visible:true,text:'The investment min amount is ZAR 100.00',severity:'error'});
             }
         }
     }
     const invest_btn_clicked = () =>{
-        if(investmentAmount > 499){
+        if(investmentAmount > 99){
             let canContinue = true;
             let status = "MAKE PAYMENT";
             if(fromBalance === "YES"){
@@ -79,7 +80,7 @@ export default function AddInvestment() {
                 setToastData({visible:true,text:'You do not have enough balance to fund this investment!',severity:'error'});
             }
         }else{
-            setToastData({visible:true,text:'The investment min amount is R500.00',severity:'error'});
+            setToastData({visible:true,text:'The investment min amount is R100.00',severity:'error'});
         }
     }
     React.useEffect(()=>{})
@@ -91,7 +92,7 @@ export default function AddInvestment() {
                         <div className="fontBold">The current interest is on <span style={{color:'green',fontSize:20}}>{investmentReturns.interest.toFixed(2)}%</span> & may vary according to your investment amount & investment period. Your total return will be <span style={{color:'green',fontSize:20}}> {formatToCurrency(investmentReturns?.returns || 0)} </span></div>
                     )}
                 </FormControl>
-                <FormControl fullWidth>
+                {/* <FormControl fullWidth style={{marginTop:24}}>
                     <InputLabel id="demo-simple-select-label">INVEST FROM YOUR BALANCE</InputLabel>
                     <Select labelId="demo-simple-select-label" id="demo-simple-select" value={fromBalance} label="INVEST FROM YOUR BALANCE">
                         <MenuItem value="NO" onClick={()=>setFromBalance("NO")}>NO</MenuItem>
@@ -101,7 +102,7 @@ export default function AddInvestment() {
                             </MenuItem>
                         ))}
                     </Select>
-                </FormControl>
+                </FormControl> */}
                 <FormControl fullWidth  style={{marginTop:25}}>
                     <InputLabel id="demo-simple-select-label">INVESTMENT PERIOD</InputLabel>
                     <Select labelId="demo-simple-select-label" id="demo-simple-select" value={interestObj.period} label="INVESTMENT PERIOD">

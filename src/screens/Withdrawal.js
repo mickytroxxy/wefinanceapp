@@ -21,7 +21,7 @@ export default function Withdrawal({handleChange}) {
     },[loggedUser])
     const renderStatusIcon = (status) =>{
         if(status === "PENDING"){
-            return <PendingIcon style={{fill: "yellow",fontSize:36}} />
+            return <PendingIcon style={{fill: "orange",fontSize:36}} />
         }else if(status === "APPROVED"){
             return <CheckCircleOutlinedIcon style={{fill: "green",fontSize:36}} />
         }else if(status === "REJECTED"){
@@ -31,7 +31,7 @@ export default function Withdrawal({handleChange}) {
     return (
         <Typography>
             <h3 className="fontBold">WITHDRAWAL SECTION</h3>
-            <p className="fontBold" style={{color:'tomato'}}>*NOTE: For your loan to be processed, you should be a south African citizen with legit documents. Your documents should also be clear!</p>
+            {/* <p className="fontBold" style={{color:'tomato'}}>*NOTE: For your loan to be processed, you should be a south African citizen with legit documents. Your documents should also be clear!</p> */}
             <Paper elevation={0} style={{border: '3px solid #f2f8fb',borderRadius:10,marginBottom:10}}>
                 <Grid container spacing={1}>
                     <Grid item xs={4} sm={4} md={2} lg={4}>
@@ -40,7 +40,7 @@ export default function Withdrawal({handleChange}) {
                     </Grid>
                     <Grid item xs={4} sm={4} md={2} lg={4}>
                         <h4 className="fontLight">PENDING</h4>
-                        <PendingIcon style={{fill: "yellow",fontSize:50}} />
+                        <PendingIcon style={{fill: "orange",fontSize:50}} />
                     </Grid>
                     <Grid item xs={4} sm={4} md={2} lg={4}>
                         <h4 className="fontLight">COMPLETED</h4>
@@ -103,7 +103,11 @@ export default function Withdrawal({handleChange}) {
                     </TableBody>
                 </Table>
             )}
-            {withdrawals.length === 0 && ( <h4 className="fontBold">YOU HAVE NOT MADE ANY WITHDRAWAL REQUEST YET. YOU CAN LODGE A REQUEST BT CLICKING THE FLOAT GREEN BUTTON ON YOUR BOTTOM RIGHT!</h4> )}
+            {withdrawals.length === 0 && ( 
+                <h4 className="fontBold">
+                    YOU HAVE NOT MADE ANY WITHDRAWAL REQUESTS YET. YOU CAN LODGE A REQUEST BY CLICKING THE GREEN FLOATING BUTTON AT THE BOTTOM RIGHT!
+                </h4> 
+            )}
             <Fab onClick={()=> !mobileView ? setDialogData({visible:true,title:'WITHDRAW YOUR FUNDS',data:{isSuccess:false,amount:0}}) : navigate("mobile",{page:'WITHDRAW YOUR FUNDS',data:{isSuccess:false,amount:0}})} color="primary" aria-label="add" style={{position: 'fixed',bottom: 16,right: 16,borderRadius:'100%',color:'#fff',backgroundColor:'#69d29e'}}>
                 <AddIcon />
             </Fab>

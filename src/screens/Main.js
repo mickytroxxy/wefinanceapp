@@ -117,7 +117,7 @@ function MainDashboard(props) {
                         <CheckCircleOutlinedIcon style={{fill: "green",fontSize:100}}/>
                         </Typography>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                            <div className="fontBold1" style={{color:colors.white,fontSize:14}}>Interest is on {currentInterests.currentInvestmentInterest.toFixed(2)}% per Week</div>
+                            <div className="fontBold1" style={{color:colors.white,fontSize:14}}>Interest is on {currentInterests.currentInvestmentInterest.toFixed()} % per Week</div>
                         </Typography>
                     </CardContent>
                     <CardActions style={{backgroundColor:'#fff',borderRadius:10,padding:5,margin:5}}>
@@ -135,7 +135,7 @@ function MainDashboard(props) {
                         </Typography>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
                             {currentInterests.canLoan ? (
-                              <div className="fontBold1" style={{color:colors.white,fontSize:14}}>Interest is on {currentInterests.currentLoanInterest.toFixed(2)}% per Week</div>
+                              <div className="fontBold1" style={{color:colors.white,fontSize:14}}>Interest is on {currentInterests.currentLoanInterest.toFixed()} % per Week</div>
                             ):(
                               <div className="fontBold1" style={{color:"#757575"}}>Not available, check again later.</div>
                             )}

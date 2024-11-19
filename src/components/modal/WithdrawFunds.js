@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, Paper, Typography, Box, Button, MenuItem , TableBody, TableCell, TableHead, TableRow,  } from '@material-ui/core';
 import '../../App.css';
 import TextField from '@material-ui/core/TextField';
@@ -18,9 +18,11 @@ export default function WithdrawFunds(props) {
     const { setDialogData, loggedUser, accountBalance, formatToCurrency, setToastData, setAccountBalance, navigate, mobileView, referralBalance, setReferralBalance} = React.useContext(AppContext); 
     const [withdrawalDetails,setWithdrawalDetails] = React.useState({bankName:'',accountNumber:'',accountHolder:'',accountType:'',branchCode:'',grossAmount:'',withdrawFrom:'INVESTMENTS'})
     const [isError,setIsError]=React.useState(false);
+
     React.useEffect(()=>{
         getMyWithdrawals(loggedUser.phoneNumber, (response) => response.length > 0 && setWithdrawalDetails(response.slice(-1)[0]) )
     },[loggedUser])
+
     const calculateWithdrawal = (amount) =>{
         if(accountBalance >= amount){
             const netAmount = parseFloat(amount) - ((3.5 / 100) * parseFloat(amount));
@@ -33,21 +35,33 @@ export default function WithdrawFunds(props) {
     }
     const withdraw_btn_clicked =()=>{
         let availableAmount = accountBalance;
-        if(withdrawalDetails.withdrawFrom === "REFERRALS"){
-            availableAmount = referralBalance
-        }else if(withdrawalDetails.withdrawFrom === "INVESTMENTS"){
-            availableAmount = accountBalance;
-        }else{
-            availableAmount = "NONE";
-        }
-        if(availableAmount === "NONE"){
-            setToastData({visible:true,text:'Please select where you would like to withdraw from!',severity:'error'});
-        }else{
-            if(availableAmount >= withdrawalDetails.grossAmount){
-                !mobileView ? setDialogData({visible:true,title:'ENTER CONFIRMATION CODE',data:{codeIsTrue,phoneNumber:loggedUser.phoneNumber}}) : navigate("mobile",{page:'ENTER CONFIRMATION CODE',data:{codeIsTrue,phoneNumber:loggedUser.phoneNumber}});
+        if(availableAmount > 0){
+            if(withdrawalDetails.withdrawFrom === "REFERRALS"){
+                availableAmount = referralBalance
+            }else if(withdrawalDetails.withdrawFrom === "INVESTMENTS"){
+                availableAmount = accountBalance;
             }else{
-                setToastData({visible:true,text:'Please enter the amount which is equal to or less than '+formatToCurrency(availableAmount),severity:'error'});
+                availableAmount = "NONE";
             }
+            if(availableAmount === "NONE"){
+                setToastData({visible:true,text:'Please select where you would like to withdraw from!',severity:'error'});
+            }else{
+                if(withdrawalDetails?.accountNumber !== ''){
+                    if(withdrawalDetails?.bankName !== ''){
+                        if(availableAmount >= withdrawalDetails.grossAmount){
+                            !mobileView ? setDialogData({visible:true,title:'ENTER CONFIRMATION CODE',data:{codeIsTrue,phoneNumber:loggedUser.phoneNumber}}) : navigate("mobile",{page:'ENTER CONFIRMATION CODE',data:{codeIsTrue,phoneNumber:loggedUser.phoneNumber}});
+                        }else{
+                            setToastData({visible:true,text:'Please enter the amount which is equal to or less than '+formatToCurrency(availableAmount),severity:'error'});
+                        }
+                    }else{
+                        setToastData({visible:true,text:`Please select your bank`,severity:'error'});
+                    }
+                }else{
+                    setToastData({visible:true,text:`Please enter your account number`,severity:'error'});
+                }
+            }
+        }else{
+            setToastData({visible:true,text:`You do not have sufficient funds to withdraw at this moment`,severity:'error'});
         }
     }
     const withdraw_funds =()=>{
@@ -78,6 +92,9 @@ export default function WithdrawFunds(props) {
     const codeIsTrue = () => {
         withdraw_funds();
     };
+    useEffect(() => {
+        calculateWithdrawal(accountBalance)
+    },[])
     return (
         <Box textAlign='center'>
             {!isSuccess ? (
@@ -117,7 +134,7 @@ export default function WithdrawFunds(props) {
                         <TextField style={{marginTop:20}} id="outlined-start-adornment" onChange={(e)=>setWithdrawalDetails({...withdrawalDetails,accountNumber:e.target.value})} value={withdrawalDetails.accountNumber} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><InfoIcon style={{fill: "#ade8f4",fontSize:20}} /></InputAdornment>}} label="ENTER ACCOUNT NUMBER" variant="outlined"/>
                         <TextField style={{marginTop:20}} id="outlined-start-adornment" onChange={(e)=>setWithdrawalDetails({...withdrawalDetails,accountHolder:e.target.value})} value={withdrawalDetails.accountHolder} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><InfoIcon style={{fill: "#ade8f4",fontSize:20}} /></InputAdornment>}} label="ACCOUNT HOLDER NAME" variant="outlined"/>
                         <TextField style={{marginTop:20}} id="outlined-start-adornment" onChange={(e)=>setWithdrawalDetails({...withdrawalDetails,branchCode:e.target.value})} value={withdrawalDetails.branchCode} sx={{ m: 1, width: '25ch' }} InputProps={{ startAdornment: <InputAdornment position="start"><InfoIcon style={{fill: "#ade8f4",fontSize:20}} /></InputAdornment>}} label="ENTER BRANCH CODE" variant="outlined"/>
-                        <TextField style={{marginTop:20}} id="outlined-start-adornment" onChange={(e)=>calculateWithdrawal(e.target.value)} sx={{ m: 1, width: '25ch' }} value={withdrawalDetails.grossAmount} InputProps={{ startAdornment: <InputAdornment position="start">ZAR</InputAdornment>}} label="ENTER WITHDRAWAL AMOUNT" variant="outlined"/>
+                        {/* <TextField style={{marginTop:20}} id="outlined-start-adornment" onChange={(e)=>calculateWithdrawal(e.target.value)} sx={{ m: 1, width: '25ch' }} value={withdrawalDetails.grossAmount} InputProps={{ startAdornment: <InputAdornment position="start">ZAR</InputAdornment>}} label="ENTER WITHDRAWAL AMOUNT" variant="outlined"/> */}
                         {isError &&(
                             <div className="fontBold"><span style={{color:'tomato',fontSize:20}}>{isError}</span></div>
                         )}
