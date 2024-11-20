@@ -75,3 +75,7 @@
 .linearGradient{
   background-image: linear-gradient(to bottom right, red, yellow);
 }
+a {
+  text-decoration: none;
+  font-weight: bold;
+}

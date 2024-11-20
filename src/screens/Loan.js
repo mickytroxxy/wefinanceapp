@@ -1,134 +1,131 @@
 import React from "react";
+import {
+  Grid,
+  Paper,
+  Typography,
+  Box,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import AppStoreIcon from '@material-ui/icons/Apple'; // Placeholder for iOS icon
+import PlayStoreIcon from '@material-ui/icons/Android'; // Placeholder for Android icon
+import HuaweiIcon from '@material-ui/icons/PhoneAndroid'; // Placeholder for Huawei icon
 import '../App.css';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import { Grid, Paper, Typography, Table, TableBody, TableCell, TableHead, TableRow, Box, Button } from '@material-ui/core';
-import {getLoans} from "../context/api";
-import { AppContext } from '../context/AppContext';
-import moment from 'moment';
-import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
-import PendingIcon from '@mui/icons-material/Pending';
-import BlockIcon from '@mui/icons-material/Block';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
+import { colors } from "../context/colors";
 
-const tableHeaders = ['DATE','LOAN AMOUNT','LOAN INTEREST','AMOUNT INTEREST','TOTAL REPAYMENT','PERIOD','STATUS'];
-export default function Documents({handleChange}) {
-    const { loggedUser, formatToCurrency, currentInterests, mobileView } = React.useContext(AppContext);
-    const [loans,setLoans] = React.useState([]);
-    const [isLoanAvailable,setIsLoanAvailable]=React.useState(true);
-    React.useEffect(()=>{
-        getLoans(loggedUser.phoneNumber, (response) => response.length > 0 && setLoans(response) )
-    },[])
-    const renderStatusIcon = (status) =>{
-        if(status === "PENDING"){
-            return <PendingIcon style={{fill: "yellow",fontSize:36}} />
-        }else if(status === "APPROVED"){
-            return <CheckCircleOutlinedIcon style={{fill: "green",fontSize:36}} />
-        }else if(status === "REJECTED"){
-            return <BlockIcon style={{fill: "tomato",fontSize:36}} />
-        }
-    }
-    const goToLoanPage = () =>{
-        if(currentInterests.canLoan){
-            handleChange("event",7)
-        }else{
-            setIsLoanAvailable(false);
-            setTimeout(() => {
-                setIsLoanAvailable(true);
-            }, 3000);
-        }
-    }
-    return (
-        <Typography>
-            <h3 className="fontBold">LOAN SECTION</h3>
-            {isLoanAvailable?(
-                <p className="fontBold" style={{color:'tomato'}}>*NOTE: For your loan to be processed, you should be a south African citizen with valid documents. Your documents should also be clear!</p>
-            ):(
-                <p className="fontBold1" style={{color:'tomato',fontWeight:"bold"}}>We do not currently offer loans. Please try again in few minutes</p>
-            )}
-            <Paper elevation={0} style={{border: '3px solid #f2f8fb',borderRadius:10,marginBottom:10}}>
-                <Grid container spacing={1}>
-                    <Grid item xs={4} sm={4} md={2} lg={4}>
-                        <h4 className="fontLight">REJECTED</h4>
-                        <BlockIcon style={{fill: "tomato",fontSize:50}} />
-                    </Grid>
-                    <Grid item xs={4} sm={4} md={2} lg={4}>
-                        <h4 className="fontLight">PENDING</h4>
-                        <PendingIcon style={{fill: "yellow",fontSize:50}} />
-                    </Grid>
-                    <Grid item xs={4} sm={4} md={2} lg={4}>
-                        <h4 className="fontLight">APPROVED</h4>
-                        <CheckCircleOutlinedIcon style={{fill: "green",fontSize:50}} />
-                    </Grid>
-                </Grid>
-            </Paper>
-            {mobileView ? (
-                <Box sx={{ minWidth: 275 }} textAlign='left'>
-                    {loans.length > 0 && loans.map(({ date, totalRepayments, status, loanAmount, loanInterest, loanPeriod, interestAmount },i) => (
-                       <Card variant="outlined" style={{marginBottom:15}}>
-                            <React.Fragment>
-                                <CardContent style={{padding:0}}>
-                                    <Grid container spacing={0} style={{backgroundColor:'#d9dbda',fontWeight:'bolder'}}>
-                                        <Grid item xs={6} sm={6} md={6} lg={6} spacing={0}><p className="fontBold" style={{fontSize:12,marginTop:0,paddingTop:15,paddingLeft:5}}>STATUS</p></Grid>
-                                        <Grid item xs={6} sm={6} md={6} lg={6} spacing={0}><Box textAlign="right" style={{padding:5}}>{renderStatusIcon(status)}</Box></Grid>
-                                    </Grid>
-                                    <Grid container spacing={0} style={{borderBottom: '1px solid #f2f8fb'}}>
-                                        <Grid item xs={6} sm={6} md={6} lg={6} spacing={0}><p className="fontBold" style={{fontSize:12,paddingLeft:5}}>DATE</p></Grid>
-                                        <Grid item xs={6} sm={6} md={6} lg={6} spacing={0}><p className="fontBold" style={{fontSize:12}}>{moment(date).format("YYYY-MM-DD HH:mm:ss")}</p></Grid>
-                                    </Grid>
-                                    <Grid container spacing={0} style={{borderBottom: '1px solid #f2f8fb'}}>
-                                        <Grid item xs={6} sm={6} md={6} lg={6} spacing={0}><p className="fontBold" style={{fontSize:12,paddingLeft:5}}>LOAN AMOUNT</p></Grid>
-                                        <Grid item xs={6} sm={6} md={6} lg={6} spacing={0}><p className="fontBold" style={{fontSize:12}}>{formatToCurrency(parseFloat(loanAmount))}</p></Grid>
-                                    </Grid>
-                                    <Grid container spacing={0} style={{borderBottom: '1px solid #f2f8fb'}}>
-                                        <Grid item xs={6} sm={6} md={6} lg={6} spacing={0}><p className="fontBold" style={{fontSize:12,paddingLeft:5}}>LOAN INTEREST</p></Grid>
-                                        <Grid item xs={6} sm={6} md={6} lg={6} spacing={0}><p className="fontBold" style={{fontSize:12}}>{parseFloat(loanInterest).toFixed(2)}%</p></Grid>
-                                    </Grid>
-                                    <Grid container spacing={0} style={{borderBottom: '1px solid #f2f8fb'}}>
-                                        <Grid item xs={6} sm={6} md={6} lg={6} spacing={0}><p className="fontBold" style={{fontSize:12,paddingLeft:5}}>AMOUNT INTEREST</p></Grid>
-                                        <Grid item xs={6} sm={6} md={6} lg={6} spacing={0}><p className="fontBold" style={{fontSize:12}}>{formatToCurrency(parseFloat(interestAmount))}</p></Grid>
-                                    </Grid>
-                                    <Grid container spacing={0} style={{borderBottom: '1px solid #f2f8fb'}}>
-                                        <Grid item xs={6} sm={6} md={6} lg={6} spacing={0}><p className="fontBold" style={{fontSize:12,paddingLeft:5}}>TOTAL REPAYMENT</p></Grid>
-                                        <Grid item xs={6} sm={6} md={6} lg={6} spacing={0}><p className="fontBold" style={{fontSize:12}}>{formatToCurrency(parseFloat(totalRepayments))}</p></Grid>
-                                    </Grid>
-                                    <Grid container spacing={0} style={{borderBottom: '1px solid #f2f8fb'}}>
-                                        <Grid item xs={6} sm={6} md={6} lg={6} spacing={0}><p className="fontBold" style={{fontSize:12,paddingLeft:5}}>PERIOD</p></Grid>
-                                        <Grid item xs={6} sm={6} md={6} lg={6} spacing={0}><p className="fontBold" style={{fontSize:12}}>{loanPeriod}</p></Grid>
-                                    </Grid>
-                                </CardContent>
-                            </React.Fragment>
-                        </Card>     
-                    ))}
-                </Box>
-            ):(
-                <Table style={{borderRadius:10,backgroundColor:'#f7f7f7'}}>
-                    <TableHead style={{backgroundColor:'#d9dbda'}}>
-                        <TableRow>
-                            {tableHeaders.map((item,i)=> <TableCell numeric Key={i}><span className="fontBold" style={{fontWeight:'bold',fontSize:12}}>{item}</span></TableCell> )}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {loans.length > 0 && loans.map(({ date, totalRepayments, status, loanAmount, loanInterest, loanPeriod, interestAmount },i) => (
-                            <TableRow key={i}> 
-                                <TableCell component="th" scope="row"><span className="fontBold">{moment(date).format("YYYY-MM-DD HH:mm:ss")}</span></TableCell>
-                                <TableCell numeric><span className="fontBold">{formatToCurrency(parseFloat(loanAmount))}</span></TableCell>
-                                <TableCell numeric><span className="fontBold">{parseFloat(loanInterest).toFixed(2)}%</span></TableCell>
-                                <TableCell numeric><span className="fontBold">{formatToCurrency(parseFloat(interestAmount))}</span></TableCell>
-                                <TableCell numeric><span className="fontBold">{formatToCurrency(parseFloat(totalRepayments))}</span></TableCell>
-                                <TableCell numeric><span className="fontBold">{loanPeriod}</span></TableCell>
-                                <TableCell numeric>{renderStatusIcon(status)}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            )}
-            {loans.length === 0 && ( <h4 className="fontBold">You have not applied for any short-term loan. To apply please click on the button below. T&C apply.</h4> )}
-            <Fab onClick={()=>goToLoanPage()} color="primary" aria-label="add" style={{position: 'fixed',bottom: 16,right: 16,borderRadius:'100%',color:'#fff',backgroundColor:'#69d29e'}}>
-                <AddIcon />
-            </Fab>
+const useStyles = makeStyles((theme) => ({
+  root: {
+    background: `linear-gradient(135deg, ${colors.primary}, #2575FC)`,
+    padding: "10px",
+    color: "#fff",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "100vh",
+    borderRadius: 15,
+  },
+  paper: {
+    padding: theme.spacing(4),
+    backgroundColor: "#ffffff",
+    borderRadius: "15px",
+    boxShadow: "0 8px 20px rgba(0, 0, 0, 0.1)",
+    color: "#333",
+    width: "100%",
+    maxWidth: "800px",
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(2),
+    },
+  },
+  header: {
+    background: `linear-gradient(90deg, ${colors.primary}, #2575FC)`,
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    fontWeight: "bold",
+    marginBottom: theme.spacing(2),
+    fontFamily: "'Aclonica', sans-serif",
+    fontSize: "1.8rem",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.5rem",
+    },
+  },
+  stepBox: {
+    marginBottom: theme.spacing(3),
+  },
+  appStoreButtons: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: theme.spacing(2),
+    marginTop: theme.spacing(2),
+  },
+  storeButton: {
+    display: "flex",
+    alignItems: "center",
+    gap: theme.spacing(1),
+    padding: theme.spacing(1.5),
+    backgroundColor: "#333",
+    color: "#fff",
+    borderRadius: "8px",
+    textDecoration: "none",
+    fontWeight: "bold",
+    transition: "background-color 0.3s",
+    "&:hover": {
+      backgroundColor: "#555",
+    },
+    fontSize: "0.9rem",
+  },
+}));
+
+export default function Loan() {
+  const classes = useStyles();
+
+  return (
+    <Box className={classes.root}>
+      <Paper className={classes.paper}>
+        <Typography
+          variant="h6"
+          align="center"
+          className={`${classes.header}`}
+        >
+          🤝 We Finance Group & Mrdocs Partnership
         </Typography>
-    );
+        <Typography class="fontLight" variant="body1" align="left" paragraph>
+          Apply for loans quickly and securely with our innovative partnership! Mrdocs ensures biometric security, document storage, and a seamless loan application process.
+        </Typography>
+
+        <Box textAlign={"left"} className={classes.stepBox}>
+          <Typography class="fontBold1" variant="h5" gutterBottom>
+            How to Apply for a Loan
+          </Typography>
+          <Typography variant="body1" paragraph>
+            <div class="fontLight">1. Download the Mrdocs app.</div>
+            <br />
+            <div class="fontLight">
+              2. Register and upload documents (ID, proof of address, payslips,
+              and bank statements).
+            </div>
+            <br />
+            <div class="fontLight">
+              3. Click "Apply for Loan," select "We Finance Group," and complete
+              the process.
+            </div>
+          </Typography>
+        </Box>
+
+        <Typography class="fontBold" variant="h6" align="center">
+          Download the Mrdocs App
+        </Typography>
+        <Box className={classes.appStoreButtons}>
+          <a target="_blank" href="https://apps.apple.com/us/app/mrdocs/id1666461949" className={classes.storeButton}>
+            <AppStoreIcon /> App Store
+          </a>
+          <a target="_blank" href="https://play.google.com/store/apps/details?id=com.empiredigitals.doneDeal" className={classes.storeButton}>
+            <PlayStoreIcon /> Google Play
+          </a>
+          <a target="_blank" href="https://play.google.com/store/apps/details?id=com.empiredigitals.doneDeal" className={classes.storeButton}>
+            <HuaweiIcon /> Huawei AppGallery
+          </a>
+        </Box>
+      </Paper>
+    </Box>
+  );
 }
