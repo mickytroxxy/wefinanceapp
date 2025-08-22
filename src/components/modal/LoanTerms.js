@@ -6,12 +6,14 @@ import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { AppContext } from '../../context/AppContext';
 export default function LoanTerms(props) {
-    const {data:{isLoanTermsAccepted}} = props;
-    const { setDialogData } = React.useContext(AppContext); 
-    React.useEffect(()=>{},[])
-    const isLoanAccepted =(status)=>{
-        isLoanTermsAccepted(status);
-    }
+    const { data } = props || {};
+    const { setDialogData } = React.useContext(AppContext);
+    const isLoanTermsAcceptedFn = data && typeof data.isLoanTermsAccepted === 'function'
+        ? data.isLoanTermsAccepted
+        : () => setDialogData({ visible: false });
+    const isLoanAccepted = (status) => {
+        isLoanTermsAcceptedFn(status);
+    };
     return (
         <Box textAlign='center'>
             <div className="fontBold">

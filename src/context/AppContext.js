@@ -26,12 +26,17 @@ export const AppProvider = (props) =>{
     const [dialogData,setDialogData] = React.useState({visible:false});
     const [referralBalance, setReferralBalance] = React.useState(0);
     React.useEffect(()=>{
-        if(getLoggedUser()){
+        const currentPath = history.location.pathname;
+
+        // ⛔️ Don't redirect if route is /privacy
+        if (currentPath !== "/privacy") {
+            if (getLoggedUser()) {
             setLoggedUser(JSON.parse(getLoggedUser()));
             navigate("Dashboard");
-        }else{
+            } else {
             setLoggedUser(null);
             navigate("/");
+            }
         }
         const setResponsiveness = () =>  window.innerWidth < 900 ? setMobileView(true) : setMobileView(false) 
         setResponsiveness();

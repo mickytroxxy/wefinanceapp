@@ -20,6 +20,7 @@ import CalculateIcon from '@mui/icons-material/Calculate';
 import ArticleIcon from '@mui/icons-material/Article';
 import ForumIcon from '@mui/icons-material/Forum';
 import { AppContext } from '../context/AppContext';
+import { Link as RouterLink } from 'react-router-dom';
 import '../styles/Landing.css';
 
 // Images
@@ -416,8 +417,19 @@ export default function Landing() {
                 </SecondaryButton>
               </Box>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Box className="hero-image-container">
+            <Grid item xs={12} md={6} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              
+              <Box sx={{
+                textAlign: 'center',
+                p: 4,
+                background: 'rgba(255, 255, 255, 0.1)',
+                borderRadius: '20px',
+                backdropFilter: 'blur(10px)',
+                boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+                maxWidth: '400px',
+                width: '100%'
+              }}>
+                <Box className="hero-image-container">
                 <div className="finance-illustration">
                   <div className="finance-circle"></div>
                   <div className="finance-chart"></div>
@@ -429,6 +441,39 @@ export default function Landing() {
                   </div>
                 </div>
               </Box>
+                <Typography variant="h5" sx={{ color: 'white', mb: 3, fontWeight: 'bold' }}>
+                  Get Our Mobile App
+                </Typography>
+                <GradientButton
+                  variant="contained"
+                  href="https://play.google.com/store/apps/details?id=com.wefinancegroup"
+                  target="_blank"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 2,
+                    mb: 2,
+                    width: '100%',
+                    background: '#000',
+                    '&:hover': {
+                      background: '#222'
+                    }
+                  }}
+                >
+                  <img 
+                    src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" 
+                    alt="Get it on Google Play" 
+                    style={{ height: '44px' }} 
+                  />
+                </GradientButton>
+                <Typography variant="body2" color="rgba(255,255,255,0.8)">
+                  Download our mobile app to apply for loans and manage your investments on the go!
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              
             </Grid>
           </Grid>
         </Container>
@@ -1053,7 +1098,8 @@ export default function Landing() {
           width: '100%',
           height: '100%',
           background: 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z\' fill=\'%23ffffff\' fill-opacity=\'0.05\' fill-rule=\'evenodd\'/%3E%3C/svg%3E")',
-          opacity: 0.5,
+          opacity: 0.3,
+          pointerEvents: 'none',
         }
       }}>
         <Container maxWidth="lg">
@@ -1469,6 +1515,11 @@ export default function Landing() {
               <Typography variant="body2" paragraph>
                 Office Hours: Monday-Friday, 9am-5pm
               </Typography>
+              <Box>
+                <Box component={RouterLink} to="/privacy" color="inherit" display="block" sx={{ mt: 1, textDecoration: 'underline' }}>
+                  Privacy Policy
+                </Box>
+              </Box>
               <Box display="flex" gap={2} mt={2}>
                 <Button
                   variant="outlined"
